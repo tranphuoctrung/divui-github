@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+    <title>Product Detail</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="dist/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fontello/css/fontello.css">
+    <!--<link rel="stylesheet" href="fonts/fontello/css/icon_set_1.css">-->
+    <link href="dist/style/date_time_picker.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header class="dv-page-header">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-static-top dv-nav-bar">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="#"><img src="http://divui.com/Content/images/logo.png"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle navbar-pick-place" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chọn điểm đến <span class="caret"></span></a>
+                <ul class="dropdown-menu dv-dropdown-menu">
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Thái Lan</li>
+                    <li><a href="#">Bangkok</a></li>
+                    <li><a href="#">Pattaya</a></li>
+                    <li><a href="#">Chiengmai</a></li>
+                    <li><a href="#">Phuket</a></li>
+                    <li><a href="#">Krabi</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dv-dropdown-header">Singapore</li>
+                    <li><a href="#">Singapore</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Việt Nam</li>
+                    <li><a href="#">Tp. Hồ Chí Minh</a></li>
+                    <li><a href="#">Đà Nẵng</a></li>
+                    <li><a href="#">Huế</a></li>
+                    <li><a href="#">Hội An</a></li>
+                    <li><a href="#">Nha Trang</a></li>
+                    <li><a href="#">Phú Quốc</a></li>
+                    <li><a href="#">Đà Lạt</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Hongkong</li>
+                    <li><a href="#">Hongkong <span class="label-bs label-warning">MỚI!</span></a></li>
+                    <li role="separator" class="divider"></li></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="country.html">Country</a></li>
+                    <li><a href="city.html">City </a></li>
+                    <li><a href="attraction.html">Attraction</a></li>
+                    <li><a href="collection.html">Collection </a></li>
+                    <li><a href="search-result.html">Search-Result </a></li>
+                    <li><a href="detail.html">Details</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="cart-info.html">Payment</a></li>
+                  </div> 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#">
+                  <i class="icon icon-cart"></i>Giỏ hàng
+                  <span class="navbar-cart-ammount">6</span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon icon-question"></i>Hỗ trợ <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon icon-phone"></i>Hotline: <strong>0908 1080 98</strong></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon  icon-info-circled-2"></i>Câu hỏi thường gặp</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon icon-email"></i>Liên hệ</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon icon-user-6"></i>Đăng nhập/Đăng ký</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </header>
+
+    <Main>
+      <div itemscope itemtype="http://schema.org/Product">
+        <!-- Schema -->
+        <meta itemprop="name" content="this is product content">
+        <meta itemprop="description" content="this is product description">
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta content="300.000" itemprop="price">
+          <meta content="VND" itemprop="priceCurrency">
+        </div>
+        <div itemprop="aggregateRating" itemscop itemtype="http://schema.org/AggregateRating">
+          <meta content="4.587" itemprop="ratingValue">
+          <meta content="5" itemprop="bestRating">
+          <meta content="452" itemprop="reviewCount">
+        </div><!-- /Schema -->
+        <header class="product-header">
+          <div class="product-header-container container">
+            <div class="product-header-content">
+              <div class="product-feature-price-review">
+                <div class="product-feature-price-review-placement"></div>
+                <div class="product-feature-price-review-content">
+                  <div class="product-feature-review">
+                    <div class="top"></div>
+                    <article class="review">
+                      <h4 class="title">
+                        "Lịch diễn dày đặc, coi đã đời!!!"
+                      </h4>
+                      <div class="review-rating">
+                        <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                        </span>
+                        <span class="date">19/10/2015</span>
+                      </div>
+                      <div class="review-info">
+                        <span class="reviewed-by">Nhận xét bởi</span>
+                        <strong class="author">Nguyen Minh Phuc</strong>
+                      </div>    
+                    </article>  
+                  </div>
+                  <div class="product-feature-price">
+                    <div class="bottom"></div>
+                    <div class="price-details">
+                      <div class="price-from">
+                        <span>Giá chỉ từ</span>
+                        <span class="old-price">200.000đ</span>
+                      </div>
+                      <div class="actual-price">
+                        <strong class="actual-price-display">300.000đ</strong>
+                        <span class="price-explanation">/ người lớn</span>
+                      </div>
+                      <span class="price-saving">
+                        <i class="icon-thumbs-up"></i> Tiết kiệm 20% so với đặt trực tiếp
+                      </span>
+                    </div>
+                    <div class="product-feature-booking">
+                      <a class="btn btn-lg btn-block btn-warning"><strong>ĐẶT VÉ NGAY</strong></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="product-feature-price-review-sm row">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="product-feature-price-review-sm-container container">
+            <div class="col-sm-6">  
+              <div class="product-feature-review">
+                <article class="review">
+                  <h4 class="title">
+                    "Lịch diễn dày đặc, coi đã đời!!!"
+                  </h4>
+                  <div class="review-rating">
+                    <span class="rating">
+                        <i class="icon-star-8 voted"></i>
+                        <i class="icon-star-8 voted"></i>
+                        <i class="icon-star-8 voted"></i>
+                        <i class="icon-star-8 voted"></i>
+                        <i class="icon-star-8 devote"></i>
+                    </span>
+                    <span class="date">19/10/2015</span>
+                  </div>
+                  <div class="review-info">
+                    <span class="reviewed-by">Nhận xét bởi</span>
+                    <strong class="author">Nguyen Minh Phuc</strong>
+                  </div>    
+                </article>   
+              </div>
+            </div>
+            <hr class="product-feature-price-review-seperator">
+            <div class="col-sm-6">  
+              <div class="product-feature-price">
+                <div class="price-details">
+                  <div class="price-from">
+                    <span>Giá chỉ từ</span>
+                    <span class="old-price">200.000đ</span>
+                  </div>
+                  <div class="actual-price">
+                    <strong class="actual-price-display">300.000đ</strong>
+                    <span class="price-explanation">/ người lớn</span>
+                  </div>
+                  <span class="price-saving">
+                    <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
+                  </span>
+                </div>
+                <div class="product-feature-booking">
+                  <a class="btn btn-lg btn-block btn-warning"><strong>ĐẶT VÉ NGAY</strong></a>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li class="active">Data</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="product-content-container container">
+          <div class="row">
+            <div class="col-md-8">
+              <h1 class="product-title">
+                Vé Safari World Bangkok – Tham quan vườn thú mở độc đáo & thưởng thức các show diễn hoành tráng
+              </h1>
+              <div class="product-rating-location">
+                <div class="product-rating">
+                  <span class="rating">
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 devote"></i>
+                  </span>
+                  <span class="review-count"><a href="#">432 Nhận xét</a></span>
+                </div>
+                <div class="product-location">
+                  <span class="icon icon-location-2"></span>
+                  <span class="location-label">Khu vực:</span>
+                  <span class="location-value">Ngoại ô Bangkok</span>
+                </div>
+              </div>
+              <section class="key-details">
+                <h2>Thông tin chính</h2>
+                <div class="key-details-content">
+                  <div class="key-details-item tour-duration">
+                    <div class="label">Thời lượng</div>
+                    <div class="info">2 Giờ (Ước lượng)</div>
+                  </div>
+                  <div class="key-details-item min-traveller">
+                    <div class="label">Số khách tối thiểu</div>
+                    <div class="info">1</div>
+                  </div>
+                  <div class="key-details-item language">
+                    <div class="label">Ngôn ngữ</div>
+                    <div class="info">Tiếng Anh</div>
+                  </div>
+                  <div class="key-details-item skip-the-line">
+                    <div class="label">Không phải xếp hàng</div>
+                    <div class="info">Tiết kiệm 20 phút</div>
+                  </div>
+                  <div class="key-details-item tour-guide">
+                    <div class="label">Hướng dẫn viên</div>
+                    <div class="info">Người Thái nói tiếng Anh</div>
+                  </div>
+                  <div class="key-details-item tour-confirmation">
+                    <div class="label">Thời gian nhận Voucher</div>
+                    <div class="info">Trong vòng 24h</div>
+                  </div>
+                  <div class="key-details-item mobile-voucher">
+                    <div class="label">Chấp nhận xuất trình Voucher trên điện thoại!</div>
+                    <div class="info"></div>
+                  </div>
+                  <div class="key-details-item cancellation-policy">
+                    <div class="label">Huỷ Voucher/Thay đổi thông tin?</div>
+                    <div class="info">Không được phép</div>
+                  </div>
+                </div>
+              </section>
+              <section class="product-booking">
+                <div class="product-book-wrp">
+                  <div class="box offers-form">
+                    <div class="availability-container">
+                      <header class="box-title">
+                        <h2>Kiểm tra giá các lựa chọn cho sản phẩm này</h2>
+                      </header>
+                      <div class="validation-alert"></div>
+                      <div class="availability-criteria">
+                        <form id="offers-form">
+                          <fieldset class="data-fields form-group">
+                            <label>
+                              <span class="label">Chọn ngày sử dụng dịch vụ</span>
+                              <input class="date-pick form-control" type="text" placeholder="ngay/thang/nam" data-name="starDate">
+                              <span class="icon icon-calendar"></span>
+                            </label>
+                            <button type="submit" class="btn btn-warning"><strong>KIỂM TRA GIÁ</strong></button>
+                          </fieldset>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Begin Box Offer -->
+                  <div class="box offers">
+                    <div class="offers-container">
+                      <div class="offers-table">
+                        <div class="offers-table-row">
+                          <div class="offers-table-row-title row">
+                            <div class="col-md-8 col-sm-8">
+                              <div class="offers-title-wrp">
+                                <header class="offers-title">
+                                  <h3 class="title">Sở thú Safari & Thủy cung Marine World +Buffet trưa +Đưa đón</h3>
+                                </header>
+                                <div class="offers-feature-info">
+                                  <span class="offer-duration">
+                                    <i class="icon icon-clock-5"></i>Thời lượng: 2h (Ước lượng)   
+                                  </span>
+                                </div>
+                                <span class="offers-desc">
+                                  This is offer desc
+                                </span>
+                              </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 offers-title-price">
+                              <div class="offers-price-details">
+                                <!--
+                                <div class="price-from">
+                                  <span>Giá chỉ từ</span>
+                                  <span class="old-price">200.000đ</span>
+                                </div>-->
+                                <div class="actual-price">
+                                  <strong class="actual-price-display">693.000đ</strong>
+                                  <span class="price-explanation">Giá cho 1 người lớn</span>
+                                </div>
+                                <!--
+                                <span class="price-saving">
+                                  <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
+                                </span>-->
+                              </div>
+                            </div>    
+                          </div>
+                          <div class="offers-type-row row">
+                            <div class="error-msgs-offers alert alert-danger alert-dismissible" role="alert" style="display:none">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Chu y! Vui long chon ngay khoi hanh....</strong>
+                            </div>
+                            <div class="col-md-8 col-sm-8 offer-types-wrp">
+                              <div class="offer-types">
+                                
+                                <label class="select">
+                                  <span class="label">Chọn thời gian</span>
+                                  <span class="label-description">&nbsp</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>10h - 20h</option>
+                                    <option>12h - 14h</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+
+                                <!--
+                                <label class="select">
+                                  <span class="label">Người lớn</span>
+                                  <span class="label-description">Từ 12 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>-->
+                                <label class="select">
+                                  <span class="label">Trẻ em</span>
+                                  <span class="label-description">Từ 3-5 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>Chọn số lượng</option>
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+                                <label class="select">
+                                  <span class="label">Trẻ em</span>
+                                  <span class="label-description">Từ 3-5 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>Chọn số lượng</option>
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 book-offer-wrp">
+                              <div class="price-total">
+                                <span>Tổng cộng:</span>
+                                <span class="total-value">300.000đ</span>
+                              </div>
+                              <button class="btn btn-warning"><strong>CHỌN LOẠI VÉ NÀY</strong></button>
+                              <p class="price-promise"><i class=" icon-ok-circled"></i>Cam kết giá rẻ nhất!</p>
+                            </div>    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- End Box Offer -->
+                  <!-- Begin Box Offer -->
+                  <div class="box offers">
+                    <div class="offers-container">
+                      <div class="offers-table">
+                        <div class="offers-table-row">
+                          <div class="offers-table-row-title row">
+                            <div class="col-md-8 col-sm-8">
+                              <div class="offers-title-wrp">
+                                <header class="offers-title">
+                                  <h3 class="title">Sở thú Safari & Thủy cung Marine World +Buffet trưa +Đưa đón</h3>
+                                </header>
+                                <div class="offers-feature-info">
+                                  <span class="offer-duration">
+                                    <i class="icon icon-clock-5"></i>Thời lượng: 2h (Ước lượng)   
+                                  </span>
+                                </div>
+                                <span class="offers-desc">
+                                  This is offer desc
+                                </span>
+                              </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 offers-title-price">
+                              <div class="offers-price-details">
+                                <!--
+                                <div class="price-from">
+                                  <span>Giá chỉ từ</span>
+                                  <span class="old-price">200.000đ</span>
+                                </div>-->
+                                <div class="actual-price">
+                                  <strong class="actual-price-display">693.000đ</strong>
+                                  <span class="price-explanation">Giá cho 1 người lớn</span>
+                                </div>
+                                <!--
+                                <span class="price-saving">
+                                  <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
+                                </span>-->
+                              </div>
+                            </div>    
+                          </div>
+                          <div class="offers-type-row row">
+                            <div class="error-msgs-offers alert alert-danger alert-dismissible" role="alert" style="display:none">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Chu y! Vui long chon ngay khoi hanh....</strong>
+                            </div>
+                            <div class="col-md-8 col-sm-8 offer-types-wrp">
+                              <div class="offer-types">
+                                
+                                <label class="select">
+                                  <span class="label">Chọn thời gian</span>
+                                  <span class="label-description">&nbsp</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>10h - 20h</option>
+                                    <option>12h - 14h</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+                                <!--
+                                <label class="select">
+                                  <span class="label">Người lớn</span>
+                                  <span class="label-description">Từ 12 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>-->
+                                <label class="select">
+                                  <span class="label">Trẻ em</span>
+                                  <span class="label-description">Từ 3-5 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>Chọn số lượng</option>
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+                                <label class="select">
+                                  <span class="label">Trẻ em</span>
+                                  <span class="label-description">Từ 3-5 tuổi</span>
+                                  <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                    <option>Chọn số lượng</option>
+                                    <option>1 (x) 200.000d</option>
+                                    <option>2 (x) 200.000d</option>
+                                    <option>3 (x) 200.000d</option>
+                                  </select>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 book-offer-wrp">
+                              <div class="price-total">
+                                <span>Tổng cộng:</span>
+                                <span class="total-value">300.000đ</span>
+                              </div>
+                              <button class="btn btn-warning"><strong>CHỌN LOẠI VÉ NÀY</strong></button>
+                              <p class="price-promise"><i class=" icon-ok-circled"></i>Cam kết giá rẻ nhất!</p>
+                            </div>    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- End Box Offer -->
+                  <!-- Begin Box Offer -->
+                  <div class="box offers">
+                    <div class="offers-container">
+                      <div class="offers-table">
+                        <buttom class="btn btn-block btn-default"><strong>XEM TẤT CẢ CÁC LOẠI VÉ</strong></buttom>
+                      </div>
+                    </div>
+                  </div> <!-- End Box Offer -->
+                </div>  
+              </section>
+              <section class="overview">
+                <h2>Tổng quan</h2>
+                <div class="content">
+                  <p>Cách Bangkok 12 km, Safari World là điểm tham quan hấp dẫn mà du khách không thể bỏ qua trong các chuyến du lịch đến Thái Lan. Đây là vườn thú mở tự nhiên lớn nhất Châu Á với hơn 75 loài động vật có vú, 300 loài chim đến từ châu Phi và Châu Á cùng các loài động vật đặc trưng khắp nơi trên thế giới. Nếu bạn đi cùng gia đình và có em nhỏ thì chắc chắn bạn sẽ phải ghé qua đây để các bé có thể tham gia các trò chơi hấp dẫn, tìm hiểu các loài động vật trên khắp thế giớ</p>
+                </div>
+              </section>
+              <section class="product-highlights">
+                <h2>Điểm nổi bật</h2>
+                <div class="content list">
+                  <ul>
+                    <li>Vé Safari World Bangkok – Tham quan vườn thú “lộ thiên” cực kỳ độc đáo</li>
+                    <li>Thưởng thức Buffet trưa tại nhà hàng Jungle Cruise (sức chứa hơn 1.700 chỗ ngồi)</li>
+                    <li>Xem Orang Utan Boxing Show do các chú khỉ vui nhộn trình diễn, Bird Show với những chú chim được huấn luyện một cách chuyên nghiệp và Dolphin Show với các chú cá heo thông minh, hài hước.</li>
+                    <li>Thưởng thức 2 show diễn Spy War Show & Hollywood Cowboy Stunt Show với các tiết mục được dàn dựng công phu, chuyên nghiệp.</li>
+                  </ul>
+                </div>
+              </section>
+              <div class="product-photo">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators 
+                  <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                  </ol>-->
+
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-328398-90.jpg" alt="...">
+                    </div>
+                    <div class="item">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-328399-90.jpg" alt="...">
+                    </div>
+                    <div class="item">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-328400-90.jpg" alt="...">
+                    </div>
+                    <div class="item">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-328401-90.jpg" alt="...">
+                    </div>
+                  </div>
+
+                  <!-- Controls -->
+                  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+              <div class="product-details-content">
+                <section class="long-desc">
+                  <h2>Bạn sẽ được trải nghiệm những gì</h2> 
+                  <p>Bỏ qua những suy nghĩ phức tạp và nỗi lo lắng mưu sinh, mối quan tâm duy nhất bạn cần lưu ý khi ngồi trên xe du lịch chính là việc lên kế hoạch cho một ngày vui chơi thật thỏa thích tại Safari World Bangkok – Vườn thú “mở” nổi tiếng nhất Thái Lan. Hướng dẫn viên sẽ cung cấp cho bạn Sơ đồ công viên và Lịch diễn các show (Show Schedule), hãy giữ lại những tài liệu cực kỳ hữu ích đó để cùng lên kế hoạch “phá đảo” thế giới giải trí vui nhộn đa sắc màu này nhé!</p>
+                  <p>Safari World bao gồm 2 khu vực chính là khu vườn thú “lộ thiên” – nơi các loài vật được tư do dạo chơi trên khắp các con đường và khu vực trình diễn – nơi tập trung 7 show diễn đặc sắc của các diễn viên từ 0 chân đến 4 chân hiện đang cư ngụ tại công viên kỳ lạ này. Để có thể theo dõi hết tất cả các suất diễn, bạn hãy chọn tham quan khu vực “showbiz” trước tiên và bắt đầu cùng Orang Utan Boxing Show – Võ đài đười ươi với các tay đấm hạng nặng đến từ rừng xanh. Những nhà vô địch hầu quyền này không chỉ xuất sắc trong việc khoe mẽ những thế võ lạ mắt mà còn nổi danh với biệt tài “kéo môi” khi bạn sẽ phải toét miệng cười liên tục trong suốt vở diễn.</p> 
+                  <p>
+                    <strong>Lịch biểu diễn các show tại Safari World</strong>
+                    <ul>
+                    <li>07:00 - 08:00 - Xe của nhà tổ chức đón bạn tại khách sạn</li>
+                    <li>09:50 - Thưởng thức Utang Boxing Show - Khỉ đánh boxing</li>
+                    <li>10: 20 - Xem Show The new Papua New Guine</li>
+                    <li>10:50 - Xem show Sư tử biển - Sea Lion Show</li>
+                    <li>11:20 - Thưởng thức các màn đấu súng viễn tây với show Hollywood Cowboy Stunt Show</li>
+                    <li>12:00 - Dùng bữa trưa tại Nhà hàng Jungle Cruise</li>
+                    <li>13:10 - Xem show xiếc cá heo đặc sắc - Dolphin Show</li>
+                    <li>14:10 - Mãn nhãn với các kỹ xảo hành động hiệu ứng khói lửa với show Spy War</li>
+                    <li>15:00 - Xem Bird Show</li>
+                    <li>16:00 - Xe đưa đón bạn tham quan vườn thú mở tự nhiên lớn nhất Châu Á</li>
+                    <li>17:00 - Chia tay Safari, trở về Bangkok</li>
+                    </ul>
+                  </p>
+                </section>
+                <section class="condition">
+                  <h2>Điều kiện vé</h2>
+                  <h5>Bao gồm</h5>   
+                  <ul>
+                    <li>Vé tham quan Vườn thú mở Safari + Công viên Marine World + Xem show.</li>
+                    <li>Buffet trưa tại Nhà hàng Jungle Cruise.</li>
+                  </ul>
+                  <h5>Không Bao gồm</h5> 
+                  <ul>
+                    <li>Tất cả các chi phí khác không được liệt kê trong loại vé .</li>
+                    <li>Đưa đón tại khách sạn.</li>
+                  </ul>
+                   <h5>Chính sách hủy</h5> 
+                  <ul>
+                    <li>Không xuất hiện vào ngày sử dụng: Mất 100% giá vé;</li>
+                    <li>Trả vé trong vòng 5 ngày trước ngày sử dụng: Mất 100% giá vé;</li>
+                    <li>Trả vé trước ngày sử dụng 5 ngày: Mất 7% giá vé.</li>
+                  </ul>
+                </section>
+                <section class="included">
+                  <h2>Sử dụng Voucher</h2>
+                  <ul>
+                    <li>IN VOUCHER được gửi đến email của bạn sau khi đặt tour. Đây là căn cứ cho việc bạn đã thanh toán</li>
+                    <li>Xuất trình Voucher cho hướng dẫn viên (Tour Safari World Bangkok) hoặc Đổi Voucher tại quầy vé Safari World Bangkok (Vé Package A, Package C).</li>
+                    <li>Đưa hộ chiếu có ảnh để đối chiếu. Tên hành khách trong voucher phải trùng với tên trong hộ chiếu. Nếu voucher gồm nhiều hành khách, chỉ cần hộ chiếu của người mua tour (thể hiện trên voucher).</li>
+                    <li><strong>Địa chỉ Safari World Park:</strong>99 Panyaintra Road, Samwatawantok, Klongsamwa, Bangkok 10510. <strong>Giờ hoạt động:</strong>10:00 - 17:00 Tất cả các ngày trong tuần</li>
+                    <li><strong>Hướng dẫn đi lại:</strong>Cách đơn giản nhất để đến Safari World Bangkok là sử dụng dịch vụ Taxi với chi phí không quá đắt.</li>
+                  </ul>
+                  <strong>Đối với loại vé có đưa đón</strong>
+                  <ul>
+                    <li>Tùy thuộc vào vị trí khách sạn sẽ có giờ đón khác nhau, giờ đón chính xác sẽ được ghi rõ trong Voucher gửi về sau khi đặt vé hoàn tất</li>
+                    <li>Vui lòng chờ tại sảnh khách sạn tại giờ đón, đến đúng giờ sẽ có Hướng dẫn viên đến cầm theo danh sách....</li>
+                  </ul> 
+                <section class="included">
+                  <h2>Thông tin hữu ích</h2>
+                  <ul>
+                    <li>Vé tham quan Vườn thú mở Safari + Công viên Marine World + Xem show.</li>
+                    <li>Đưa đón 2 chiều tại các khách sạn trong phạm vi Bangkok.</li>
+                    <li>Buffet trưa tại Nhà hàng Jungle Cruise.</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="sub-col-box why-book">
+               <h3 class="title">Tự tin đặt vé với ĐI VUI</h3>
+               <ul>
+                <li class="icon save">
+                  <div class="why-book-cont-wrp">
+                    <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
+                    <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
+                  </div>
+                </li>
+                <li class="icon voucher24">
+                  <div class="why-book-cont-wrp">
+                    <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
+                    <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
+                  </div>                
+                </li>
+                 <li class="icon support">
+                  <div class="why-book-cont-wrp">
+                    <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
+                    <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
+                  </div>                 
+                 </li>
+               </ul>
+              </div>
+              <div class="sub-col-box engage-box">
+                <ul>
+                  <li><a href=""><i class="icon icon-heart-filled"></i>Thêm sản phẩm này vào danh sách yêu thích</a></li>
+                  <li><a href=""><i class="icon icon-mail-2"></i>Gửi câu hỏi cho sản phẩm này</a></li>
+                </ul>
+              </div>
+              <div class="location-banner-container">
+                <section class="location-banner" style="background-image: url('https://cdn2.getyourguide.com/img/location_img-169-2388153728-48.jpg')">
+                  <a class="location-banner-headline" href="#">
+                    Bangkok
+                  </a>
+                  <a class="location-banner-button btn btn-default btn-sm" href="#">Xem tat ca 132 hoat dong</a>
+                </section>
+              </div>
+               <div class="location-banner-container">
+                <section class="location-banner" style="background-image: url('https://cdn2.getyourguide.com/img/location_img-3802-1577549692-48.jpg')">
+                  <a class="location-banner-headline" href="#">
+                    Chùa Phật Ngọc
+                  </a>
+                  <a class="location-banner-button btn btn-default btn-sm" href="#">Xem tat ca 132 hoat dong</a>
+                </section>
+              </div>
+            </div>     
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <section class="customer-review">
+                <h2>
+                  Đánh giá từ khách hàng đã sử dụng dịch vụ
+                </h2>
+                <div class="customer-review-feed">
+                  <article class="review">
+                    <div class="review-cont">
+                      <h3 class="title">
+                        Pretty good tour to see the most important temples + a nice boat tour
+                      </h3>
+                      <div class="review-rating">
+                        <span class="rating">
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 devote"></i>
+                        </span>
+                        <span class="review-date">dd/mm/yyyy</span>
+                      </div>
+                      <div class="desc">
+                        The guide was very friendly and helpful. The places we visited were all very interesting and the guide had an abundant information about them. Highly recommended to anyone who is visiting Bangkok.
+                      </div>
+                      <div class="review-info">
+                        <span class="review-by">Nhận xét bởi</span>
+                        <strong class="author">Nguyen Minh Phuc</strong>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="review">
+                    <div class="review-cont">
+                      <h3 class="title">
+                        Pretty good tour to see the most important temples + a nice boat tour
+                      </h3>
+                      <div class="review-rating">
+                        <span class="rating">
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 devote"></i>
+                        </span>
+                        <span class="review-date">dd/mm/yyyy</span>
+                      </div>
+                      <div class="desc">
+                        The guide was very friendly and helpful. The places we visited were all very interesting and the guide had an abundant information about them. Highly recommended to anyone who is visiting Bangkok.
+                      </div>
+                      <div class="review-info">
+                        <span class="review-by">Nhận xét bởi</span>
+                        <strong class="author">Nguyen Minh Phuc</strong>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="review">
+                    <div class="review-cont">
+                      <h3 class="title">
+                        Pretty good tour to see the most important temples + a nice boat tour
+                      </h3>
+                      <div class="review-rating">
+                        <span class="rating">
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 voted"></i>
+                          <i class="icon-star-8 devote"></i>
+                        </span>
+                        <span class="review-date">dd/mm/yyyy</span>
+                      </div>
+                      <div class="desc">
+                        The guide was very friendly and helpful. The places we visited were all very interesting and the guide had an abundant information about them. Highly recommended to anyone who is visiting Bangkok.
+                      </div>
+                      <div class="review-info">
+                        <span class="review-by">Nhận xét bởi</span>
+                        <strong class="author">Nguyen Minh Phuc</strong>
+                      </div>
+                    </div>
+                  </article>
+                  <div class="viewmore">
+                    <button class="btn btn-block btn-default">Xem thêm các nhận xét khác</button>
+                  </div>
+                </div>
+              </section>
+              <section class="vendor-info">
+                <div class="vendor-info-wrp">
+                  <h2 class="title">Đơn vị cung cấp sản phẩm</h2>
+                  <div class="vendor-name-review">
+                    <span class="rating">
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 voted"></i>
+                      <i class="icon-star-8 devote"></i>
+                    </span>
+                    <span class="name">Blue House Travel</span>
+                  </div>
+                  <div class="product-id">
+                    <span>Ma san pham: 392875</span>
+                  </div>  
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row"> <!-- may also like -->
+          <div class="col-sm-12">
+            <div class="related-product">
+              <h2>Có thể bạn cũng sẽ thích các hoạt động này...</h2>
+              <div class="product-cards-container">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                    <div class="product-card-cont-container">
+                      <a href="#" class="product-card-link">
+                        <div class="product-card-img-wrp">
+                          <img src="http://cdn2.getyourguide.com/img/tour_img-43605-92.jpg">
+                        </div>
+                        <div class="product-badge is-special-offer">
+                          <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                        </div>
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h4 class="product-card-title">Tour học nấu món Thái tại trường Silom Thai</h4>
+                          </header>
+                          <div class="product-card-info">
+                            <span class="duration-label">
+                              <i class="icon icon-clock-5"></i>Thời lượng
+                              <span class="duration-value">8 giờ</span>
+                            </span>
+                          </div>
+                          <div class="product-card-price-rating">
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="produc-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div>
+                            <div class="product-card-price-wrp">
+                              <span class="price-from">Giá chỉ từ</span>
+                              <span class="price-display">
+                                300.000đ
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                    <div class="product-card-cont-container">
+                      <a href="#" class="product-card-link">
+                        <div class="product-card-img-wrp">
+                          <img src="http://cdn2.getyourguide.com/img/tour_img-43605-92.jpg">
+                        </div>
+                        <div class="product-badge is-new">
+                          <div>HOẠT ĐỘNG MỚI!</div>
+                        </div>
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h4 class="product-card-title">Tour tham quan thành cổ Ayutthaya và thưởng thức bữa trưa trên du thuyền River Sun</h4>
+                          </header>
+                          <div class="product-card-info">
+                            <span class="duration-label">
+                              <i class="icon icon-clock-5"></i>Thời lượng
+                              <span class="duration-value">8 gi</span>
+                            </span>
+                          </div>
+                          <div class="product-card-price-rating">
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="produc-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div>
+                            <div class="product-card-price-wrp">
+                              <span class="price-from">Giá chỉ từ</span>
+                              <span class="price-display">
+                                300.000đ
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                    <div class="product-card-cont-container">
+                      <a href="#" class="product-card-link">
+                        <div class="product-card-img-wrp">
+                          <img src="http://cdn2.getyourguide.com/img/tour_img-43605-92.jpg">
+                        </div>
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h4 class="product-card-title">Vé Thai Boxing tại sân vận độn Rajadamnern - Sôi động trên khán đài Muay Thái</h4>
+                          </header>
+                          <div class="product-card-info">
+                            <span class="duration-label">
+                              <i class="icon icon-clock-5"></i>Thời lượng
+                              <span class="duration-value">8 gi</span>
+                            </span>
+                          </div>
+                          <div class="product-card-price-rating">
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="produc-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div>
+                            <div class="product-card-price-wrp">
+                              <span class="price-from">Giá chỉ từ</span>
+                              <span class="price-display">
+                                300.000đ
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                    <div class="product-card-cont-container">
+                      <a href="#" class="product-card-link">
+                        <div class="product-card-img-wrp">
+                          <img src="http://cdn2.getyourguide.com/img/tour_img-43605-92.jpg">
+                        </div>
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h4 class="product-card-title">Lướt sóng nhân tạo tại Flow House Bangkok - Trải nghiệm trò chơi cảm giác mạnh có 1-0-2</h4>
+                          </header>
+                          <div class="product-card-info">
+                            <span class="duration-label">
+                              <i class="icon icon-clock-5"></i>Thời lượng
+                              <span class="duration-value">8 gi</span>
+                            </span>
+                          </div>
+                          <div class="product-card-price-rating">
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div>
+                            <div class="product-card-price-wrp">
+                              <span class="price-from">Giá chỉ từ</span>
+                              <span class="price-display">
+                                300.000đ
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>      
+                </div>
+              </div>
+
+            </div>
+          </div> 
+        </div>
+        <div class="row"> <!-- SEO Area -->
+          <div class="col-sm-12">
+            <hr>
+          </div>
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh City: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div> 
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh City: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div> 
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh City: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div>  
+        </div>  
+      </div>
+    </Main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row footer-content-pri">
+          <div class="col-md-4">
+            <h2>DI VUI </h2>
+            <p>Viator is the world's leading resource for researching, finding and booking the best travel experiences worldwide.
+Viator joined the TripAdvisor family in 2014</p>  
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  VỀ ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Về ĐI VUI</a></li>
+                  <li><a href="#">Tuyển dụng</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="#">Chính sách bảo mật</a></li>
+                  <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  HỢP TÁC VỚI ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Trở thành đối tác của ĐI VUI</a></li>
+                  <li><a href="#">Chương trình đối tác phân phối (Affiliate)</a></li>
+                  <li><a href="#">Đối tác đăng nhập</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="box-link-title">
+              LIÊN HỆ
+            </h4>
+            <ul class="box-link-list">
+              <li>HOTLINE: 0908 1080 98 (Viber/Zalo)</li>
+              <li>hotro@divui.com</li>
+              <li>Văn phòng đại diện: 132/97 Nguyễn Hữu Cảnh, P.22, Q. Bình Thạnh, Tp.HCM</li>
+              <li>Thứ 2 - 6: 9:00 - 18:00</li>
+            </ul>  
+          </div>    
+        </div>
+        <div class="row footer-content-sec"></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Date and time pickers -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    </script>
+  </body>
+</html>

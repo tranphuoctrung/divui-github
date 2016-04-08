@@ -1,0 +1,155 @@
+﻿@model CategoryModel
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var collectionUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(collectionUrl);
+    }
+
+    var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@*collection breadcrumb*@
+@*@section Breadcrumb
+{
+    @if (Model.DisplayCollectionBreadcrumb)
+    {
+        <div class="search-header">
+            <div class="search-header-title">
+                <h1>
+                    Các hoạt động vui chơi tại Bangkok
+                    <span class="product-count">Tổng cộng 124 hoạt động</span>
+                </h1>
+            </div>
+            <div class="search-header-filter is-true">
+                <div class="search-header-filter-title-wrp">
+                    <h3 class="search-header-filter-title">
+                        Hiển thị:
+                    </h3>
+                </div>
+                <div class="search-header-filter-display-wrp">
+                    <button class="btn btn-sm search-header-filter-pills">@T("Collection"): @Model.Name <i class="icon-cancel-circled"></i></button>
+                </div>
+            </div>
+        </div>
+        @Html.Widget("collectiondetails_after_breadcrumb", Model.Id)
+    }
+}*@
+
+@section MainHeader
+{
+    <header class="intro intro-fixed" style="background-image:url(@Model.PictureModel.FullSizeImageUrl)">
+        <div class="container">
+            <div class="intro-header">
+                <h1 class="intro-header-title">
+                    @string.Format(T("Category.Collections.Title").Text, Model.NumberOfProducts, Model.Name)
+                </h1>
+            </div>
+        </div>
+    </header>
+}
+
+
+
+<div class="container collection-landing-page">
+    <div class="collection-info">
+        <h1>@string.Format(T("Category.Collections.Info").Text, Model.Name)</h1>
+        @Html.Widget("collectiondetails_top", Model.Id)
+        @*description*@
+        @if (!String.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="collection-desc">
+                @Html.Raw(Model.Description)
+            </div>
+        }
+
+
+    </div>
+    @if (Model.Products.Count > 0)
+    {
+        <section class="top-activities">
+            <div class="product-cards-container">
+                <div class="row">
+
+                    @foreach (var product in Model.Products)
+                    {
+                        @Html.Partial("_ProductBox", product)
+                    }
+                </div>
+            </div>
+            <footer>
+                <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Collections.ViewAll").Text, Model.Name)</button>
+                <input type="hidden" value="1" id="pageNumber" />
+                <input type="hidden" value="@Model.Id" id="collectionId" />
+                <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
+                <script>
+                    $(document).ready(function () {
+                        //$('#btnLoadMore').click(function () {
+                        //    $.ajax({
+                        //        url: "/Catalog/LoadMoreProductCollection",
+                        //        type: "post",
+                        //        data: { collectionId: $('#collectionId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                        //        beforeSend: function(){
+
+                        //        },
+                        //        success: function (response) {
+                        //            if (response.success) {
+                        //                $('#divProductList').append(response.html);
+                        //                var number = $('#pageNumber').val();
+                        //                $('#pageNumber').val(number + 1);
+                        //                if ((number + 1) >= response.totalPages) {
+                        //                    $('#btnLoadMore').hide();
+                        //                }
+                        //            }
+                        //        },
+                        //        error: function (jqXHR, textStatus, errorThrown) {
+                        //            console.log(textStatus, errorThrown);
+                        //        }
+
+
+                        //    });
+                        //});
+                    });
+
+
+                </script>
+            </footer>
+        </section>
+    }
+    
+</div>
+
+@*@if (Model.Products.Count > 0)
+{
+    <div class="product-listing">
+        <div class="product-list product-list-horizontal">
+            @foreach (var product in Model.Products)
+            {
+                @Html.Partial("_ProductBox", product)
+            }
+        </div>
+        @{
+            var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+        }
+        @if (!pager.IsEmpty())
+                {
+            <div class="product-list-pagination">
+                <nav>
+                    @pager
+                </nav>
+            </div>
+        }
+    </div>
+}*@
+
+
+@Html.Widget("collectiondetails_bottom", Model.Id)

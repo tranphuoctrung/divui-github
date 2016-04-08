@@ -1,0 +1,56 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Description.txt
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Index.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Layout.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\CategoryNavigation.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Category.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\ProductBox.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\HomePageProducts.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Footer.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Header.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\SearchBox.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Search.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Configure.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\web.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\logo.gif
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-background.png
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-divider.png
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-list-image-hover.png
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-list-image.png
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-triangle.png
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\styles.css
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\logo.jpg
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Scripts\jquery-1.10.2.min.js
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.csprojResolveAssemblyReference.cache
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.dll
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Description.txt
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Index.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Layout.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\CategoryNavigation.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Category.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\ProductBox.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\HomePageProducts.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Footer.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Header.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\SearchBox.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Search.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Views\MiscFacebookShop\Configure.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\web.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\logo.gif
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-background.png
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-divider.png
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-list-image-hover.png
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-list-image.png
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\images\top-menu-triangle.png
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Content\styles.css
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\logo.jpg
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Scripts\jquery-1.10.2.min.js
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Misc.FacebookShop\Nop.Plugin.Misc.FacebookShop.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Misc.FacebookShop\obj\Debug\Nop.Plugin.Misc.FacebookShop.pdb

@@ -1,0 +1,95 @@
+﻿@model RegisterModel
+@using Nop.Web.Models.Customer;
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Register").Text);
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "login-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container signup-page">
+        <div class="row">
+            <div class="login-cont">
+                <h1 class="login-title">@T("Account.Register")</h1>
+                <p class="login-intro">@T("Account.Register.Info")</p>
+                <div class="login-form">
+
+
+                    <form class="facebook-form">
+                        @Html.Partial("_ExternalAuthentication.AssociateMessage")
+
+                        <button class="btn btn-block btn-facebook" onclick="location.href='@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })'">@T("Account.Register.Facebook")</button>
+                    </form>
+                    <div class="or">@T("Account.Register.WithEmail")</div>
+                    <form class="login-data">
+                        @{
+                            var validationSummary = Html.ValidationSummary(true);
+                        }
+                        @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                        {
+                            <div class="message-error">@validationSummary</div>
+                        }
+                        @*@if (Model.GenderEnabled)
+                        {
+                            <div class="form-group">
+                                <label>@T("Account.Fields.Gender"):</label>
+                                <div class="gender">
+                                    <span class="male">
+                                        @Html.RadioButton("Gender", "M", (Model.Gender == "M"), new { id = "gender-male" })
+                                        <label class="forcheckbox" for="gender-male">@T("Account.Fields.Gender.Male")</label>
+                                    </span>
+                                    <span class="female">
+                                        @Html.RadioButton("Gender", "F", (Model.Gender == "F"), new { id = "gender-female" })
+                                        <label class="forcheckbox" for="gender-female">@T("Account.Fields.Gender.Female")</label>
+                                    </span>
+                                </div>
+                            </div>
+                        }*@
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.FirstName, new {@class= "form-control", placeholder = T("Account.Fields.FirstName").Text })
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = T("Account.Fields.LastName").Text })
+                            @Html.ValidationMessageFor(model => model.LastName)
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Email, new { type = "email", @class = "form-control", placeholder = T("Account.Fields.Email").Text })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = T("Account.Fields.Password").Text })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = T("Account.Fields.ConfirmPassword").Text })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="checkbox pull-left">
+                                    <label>
+                                        @Html.EditorFor(model => model.Newsletter)@T("Account.Register.Newsletter")
+                                        @*<input name="NewsletterEnabled" type="checkbox">@T("Account.Register.Newsletter")*@
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block">@T("Account.Register.Button")</button>
+                        <div class="login-term">
+                            @Html.Raw(string.Format(T("Account.Fields.AcceptPrivacyPolicy").Text, Url.RouteUrl("TopicPopup", new { SystemName = "privacyinfo" }), T("Account.Register.ConditionOfUse").Text))
+
+                            
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+}

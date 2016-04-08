@@ -1,0 +1,22 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\PaymentPayPalStandard\Configure.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\PaymentPayPalStandard\PaymentInfo.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\web.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Description.txt
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\logo.jpg
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.dll
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\PaymentPayPalStandard\Configure.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\PaymentPayPalStandard\PaymentInfo.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\web.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Description.txt
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\logo.jpg
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.pdb

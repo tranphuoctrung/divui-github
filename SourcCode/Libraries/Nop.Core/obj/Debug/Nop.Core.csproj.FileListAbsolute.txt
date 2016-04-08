@@ -1,0 +1,55 @@
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.pdb
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.Integration.Mvc.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Newtonsoft.Json.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Helpers.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Mvc.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Razor.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.Integration.Mvc.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Newtonsoft.Json.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.pdb
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Helpers.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Mvc.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Razor.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\obj\Debug\Nop.Core.dll
+D:\Project\Freelancer\Divui\SourcCode\Libraries\Nop.Core\obj\Debug\Nop.Core.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Nop.Core.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.Integration.Mvc.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Helpers.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Mvc.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Razor.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Autofac.Integration.Mvc.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\StackExchange.Redis.StrongName.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Helpers.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Mvc.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.Razor.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\obj\Debug\Nop.Core.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\obj\Debug\Nop.Core.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Libraries\Nop.Core\obj\Debug\Nop.Core.csprojResolveAssemblyReference.cache

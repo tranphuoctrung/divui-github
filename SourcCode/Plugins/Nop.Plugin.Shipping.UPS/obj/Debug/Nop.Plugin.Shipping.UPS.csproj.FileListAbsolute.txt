@@ -1,0 +1,20 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Views\ShippingUPS\Configure.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\web.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Description.txt
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\logo.jpg
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.csprojResolveAssemblyReference.cache
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.dll
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Views\ShippingUPS\Configure.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\web.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Description.txt
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\logo.jpg
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.UPS\Nop.Plugin.Shipping.UPS.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.UPS\obj\Debug\Nop.Plugin.Shipping.UPS.pdb

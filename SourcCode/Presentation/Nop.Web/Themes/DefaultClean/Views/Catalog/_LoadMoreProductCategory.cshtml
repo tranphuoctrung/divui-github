@@ -1,0 +1,14 @@
+﻿@model CategoryModel
+@{ 
+    Layout = null;
+
+}
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+
+@foreach (var product in Model.Products)
+{
+    @Html.Partial("_ProductBox", product)
+}

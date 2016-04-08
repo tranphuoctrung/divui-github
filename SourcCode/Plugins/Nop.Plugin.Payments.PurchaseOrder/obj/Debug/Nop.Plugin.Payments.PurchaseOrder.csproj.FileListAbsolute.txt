@@ -1,0 +1,22 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\PaymentPurchaseOrder\Configure.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\PaymentPurchaseOrder\PaymentInfo.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\web.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Description.txt
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\logo.jpg
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.dll
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\PaymentPurchaseOrder\Configure.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\PaymentPurchaseOrder\PaymentInfo.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\web.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Description.txt
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\logo.jpg
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.pdb

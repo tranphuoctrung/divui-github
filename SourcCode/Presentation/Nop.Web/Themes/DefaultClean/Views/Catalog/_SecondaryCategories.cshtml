@@ -1,0 +1,23 @@
+﻿@model CategoryModel
+
+@using Nop.Web.Models.Catalog;
+@if (Model.Categories.Count > 0)
+{
+    <h2>@string.Format(T("Category.SecondaryCategories.Title").Text, Model.Name)</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="secondary-links-list">
+                @foreach (var item in Model.Categories)
+                {
+
+                    <li class="secondary-links-list-item">
+                        <a class="secondary-links-list-item-pills" href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">@item.Name</a>
+                    </li>
+
+                }
+            </ul>
+
+        </div>
+       
+    </div>
+}

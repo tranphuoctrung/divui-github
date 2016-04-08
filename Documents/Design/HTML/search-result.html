@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+    <title>Search Result</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="dist/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fontello/css/fontello.css">
+    <!--<link rel="stylesheet" href="fonts/fontello/css/icon_set_1.css">-->
+    <link href="dist/style/date_time_picker.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header class="dv-page-header">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-static-top dv-nav-bar">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="#"><img src="http://divui.com/Content/images/logo.png"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle navbar-pick-place" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chọn điểm đến <span class="caret"></span></a>
+                <ul class="dropdown-menu dv-dropdown-menu">
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Thái Lan</li>
+                    <li><a href="#">Bangkok</a></li>
+                    <li><a href="#">Pattaya</a></li>
+                    <li><a href="#">Chiengmai</a></li>
+                    <li><a href="#">Phuket</a></li>
+                    <li><a href="#">Krabi</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dv-dropdown-header">Singapore</li>
+                    <li><a href="#">Singapore</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Việt Nam</li>
+                    <li><a href="#">Tp. Hồ Chí Minh</a></li>
+                    <li><a href="#">Đà Nẵng</a></li>
+                    <li><a href="#">Huế</a></li>
+                    <li><a href="#">Hội An</a></li>
+                    <li><a href="#">Nha Trang</a></li>
+                    <li><a href="#">Phú Quốc</a></li>
+                    <li><a href="#">Đà Lạt</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Hongkong</li>
+                    <li><a href="#">Hongkong <span class="label-bs label-warning">MỚI!</span></a></li>
+                    <li role="separator" class="divider"></li></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="country.html">Country</a></li>
+                    <li><a href="city.html">City </a></li>
+                    <li><a href="attraction.html">Attraction</a></li>
+                    <li><a href="collection.html">Collection </a></li>
+                    <li><a href="search-result.html">Search-Result </a></li>
+                    <li><a href="detail.html">Details</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="cart-info.html">Payment</a></li>
+                  </div> 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#">
+                  <i class="icon icon-cart"></i>Giỏ hàng
+                  <span class="navbar-cart-ammount">6</span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon icon-question"></i>Hỗ trợ <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon icon-phone"></i>Hotline: <strong>0908 1080 98</strong></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon  icon-info-circled-2"></i>Câu hỏi thường gặp</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon icon-email"></i>Liên hệ</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon icon-user-6"></i>Đăng nhập/Đăng ký</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </header>
+
+    <Main>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="search-header">
+              <div class="search-header-title">
+                <h1>
+                  Các hoạt động vui chơi tại Bangkok
+                  <span class="product-count">Tổng cộng 124 hoạt động</span> 
+                  </h1>
+              </div>
+              <div class="search-header-filter is-true">
+                <div class="search-header-filter-title-wrp">
+                  <h3 class="search-header-filter-title">
+                    Hiển thị:
+                  </h3>
+                </div>
+                <div class="search-header-filter-display-wrp">
+                  <button class="btn btn-sm search-header-filter-pills">Thể loại: Người bản địa <i class="icon-cancel-circled"></i></button>
+                  <button class="btn btn-sm search-header-filter-pills">Địa điểm: Sông Chao Phraya<i class="icon-cancel-circled"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="filter-column filter-column-collapse">
+              <div class="filter-column-title-wrp">
+                <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt" class="filter-columns-title-cont">Lọc kết quả <i class="icon icon-plus-1 pull-right"></i></a>
+              </div>
+              <div class="filter-container" id="collapseFilters">
+                <!-- Destination Select -->
+                <div class="filter filter-box">
+                  <div class="filter-box-title">
+                    <h4>Điểm đến</h4>
+                  </div>
+                  <div class="filter-box-cont-wrp">
+                    <div class="filter-country-select">
+                      <label>Quốc gia</label>
+                      <select class="form-control">
+                        <option>Thái Lan</option>
+                        <option>Singapore</option>
+                        <option>Hồng Kông</option>
+                        <option>Việt Nam</option>
+                      </select>
+                    </div>
+                    <div class="filter-city-select">
+                      <label>Thành phố/Khu vực</label>
+                      <select class="form-control">
+                        <option>Bangkok</option>
+                        <option>Pattaya</option>
+                        <option>Chiengmai</option>
+                        <option>Phuket</option>
+                        <option>Krabi</option>
+                      </select>
+                    </div>
+                  </div>  
+                </div><!-- /Destination Select -->
+                <!-- Category Filter -->
+                <div class="filter filter-box">
+                  <div class="filter-box-title">
+                    <h4>Hoạt động du lịch</h4>
+                  </div>
+                  <div class="filter-box-cont-wrp">
+                    <ul class="filters-list filters-list-l1">
+                      <li class="filters-list-item single-item">
+                        <a class="filter-list-item-link-open" href="#">Tour du lịch <small>(70)</small> </a>
+                        <ul class="filters-list-l2">
+                          <li class="filters-list-item"><a class="filter-list-item-link-empty" href="#">Tham quan ngắm cảnh <small>(70)</small></a></li>
+                          <li class="filters-list-item"><a class="filter-list-item-link-empty" href="#">Bảo tàng - Thư viện <small>(70)</small> </a></li>
+                          <li class="filters-list-item"><a class="is-active filter-list-item-link-empty" href="#">Người bản địa <small>(70)</small></a></li>
+                        </ul>
+                      </li>
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-closed" href="#">Tour du lịch <small>(45)</small></a>
+                      </li>
+                      <li class="filters-list-item"><a class="filter-list-item-link filter-list-item-link-closed" href="#">Tour du lịch <small>(45)</small></a></li>
+                      <li class="filters-list-item"><a class="filter-list-item-link filter-list-item-link-closed" href="#">Tour du lịch <small>(45)</small></a></li>
+                      <li class="filters-list-item"><a class="filter-list-item-link filter-list-item-link-closed" href="#">Tour du lịch <small>(45)</small></a></li>
+                      <li class="filters-list-item"><a class="filter-list-item-link filter-list-item-link-empty" href="#">Tour du lịch <small>(45)</small></a></li>
+                    </ul>
+                  </div>
+                </div><!-- /Category Filter -->
+                <!-- Collection Filter -->
+                <div class="filter filter-box">
+                  <div class="filter-box-title">
+                    <h4>Bộ sưu tập</h4>
+                  </div>
+                  <div class="filter-box-cont-wrp">
+                    <ul class="filters-list filters-list-l1">
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-empty " href="#">Top 10 hoạt động không thể bỏ lỡ</a>
+                      </li>
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-empty" href="#">Dành cho gia đình</a>
+                      </li>
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-empty" href="#">Thân thiện với trẻ em</a>
+                      </li>
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-empty" href="#">...</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /Collection Filter -->
+                <!-- Attraction Filter -->
+                <div class="filter filter-box">
+                  <div class="filter-box-title">
+                    <h4>Địa điểm tham quan</h4>
+                  </div>
+                  <div class="filter-box-cont-wrp">
+                    <ul class="filters-list filters-list-l1">
+                      <li class="filters-list-item">
+                        <a class="filter-list-item-link filter-list-item-link-open" href="#">Bangkok <small>(34)</small></a>
+                        <ul class="filters-list filters-list-l2">
+                          <li class="filters-list-item"><a href="#" class="filter-list-item-link filter-list-item-link-empty">Hoàng Cung <small>(45)</small></a></li>
+                          <li class="filters-list-item"><a class="is-active filter-list-item-link-empty" href="#">Sông Chao Phraya <small>(70)</small></a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /Attraction Filter -->
+                <!-- Duration Filter -->
+                <div class="filter filter-box">
+                  <div class="filter-box-title">
+                    <h4>Thời lượng</h4>
+                  </div>
+                  <div class="filter-box-cont-wrp">
+                    <ul class="filters-list filters-list-l1">
+                      <li class="filters-list-item">
+                        <label>
+                          <input type="checkbox" class="filter">
+                          <span class="input-content">0h - 3h</span>
+                        </label>
+                      </li>
+                      <li class="filters-list-item">
+                        <label>
+                          <input type="checkbox" class="filter">
+                          <span class="input-content">3h - 5h</span>
+                        </label>
+                      </li>
+                      <li class="filters-list-item">
+                        <label>
+                          <input type="checkbox" class="filter">
+                          <span class="input-content">5h - 7h</span>
+                        </label>
+                      </li>
+                      <li class="filters-list-item">
+                        <label>
+                          <input type="checkbox" class="filter">
+                          <span class="input-content">Ca ngay (Tren 7h)</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /Duration Filter -->
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="product-listing">
+              <div class="product-list product-list-horizontal">
+                <!-- Begining product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000260_ve-sriracha-tiger-zoo-chonburi-tham-quan-cong-vien-ho-lon-nhat-the-gioi_310.jpeg">
+                      </div>
+                      <div class="product-badge is-special-offer">
+                          <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Sriracha Tiger Zoo Chonburi – Tham quan công viên hổ lớn nhất thế giới
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Công viên có số lượng hổ Bengal lớn nhất thế giới, trải rộng trên diện tích 40ha là khu vực sinh sống của những vị “Chúa sơn lâm” cùng hàng chục ngàn “thần dân” hoang dã khác.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">
+                              Giá chỉ từ
+                              <span class="old-price">200.000đ</span>
+                            </span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <span class="price-saving-value">Tiết kiệm 100.000đ!</span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000193_ve-xem-show-alcazar-cabaret-pattaya_310.jpeg">
+                      </div>
+                      <div class="product-badge is-new">
+                          <div>SẢN PHẨM MỚI</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé xem show Alcazar Cabaret Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Người ta nói, nếu muốn xem những nghệ sĩ chuyển giới “ladyboy” đẹp, bạn nên đi show Tiffany, nhưng nếu bạn muốn xem một chương trình nghệ thuật tuyệt vời, bạn nên đến Alcazar.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://cdn2.getyourguide.com/img/tour_img-171494-70.jpg">
+                      </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Nong Nooch Tropical Garden - Chiêm ngưỡng tuyệt tác nghệ thuật vườn tại Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Điểm du lịch đẹp nhất huyện Sattahip, nơi trưng bày, bảo tồn và phát triển rất nhiều loài thực vật nhiệt đới quý hiểm</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                          <div class="price-saving">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <!-- Begining product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000260_ve-sriracha-tiger-zoo-chonburi-tham-quan-cong-vien-ho-lon-nhat-the-gioi_310.jpeg">
+                      </div>
+                      <div class="product-badge is-special-offer">
+                          <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Sriracha Tiger Zoo Chonburi – Tham quan công viên hổ lớn nhất thế giới
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Công viên có số lượng hổ Bengal lớn nhất thế giới, trải rộng trên diện tích 40ha là khu vực sinh sống của những vị “Chúa sơn lâm” cùng hàng chục ngàn “thần dân” hoang dã khác.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">
+                              Giá chỉ từ
+                              <span class="old-price">200.000đ</span>
+                            </span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <span class="price-saving-value">Tiết kiệm 100.000đ!</span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000193_ve-xem-show-alcazar-cabaret-pattaya_310.jpeg">
+                      </div>
+                      <div class="product-badge is-new">
+                          <div>SẢN PHẨM MỚI</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé xem show Alcazar Cabaret Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Người ta nói, nếu muốn xem những nghệ sĩ chuyển giới “ladyboy” đẹp, bạn nên đi show Tiffany, nhưng nếu bạn muốn xem một chương trình nghệ thuật tuyệt vời, bạn nên đến Alcazar.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://cdn2.getyourguide.com/img/tour_img-171494-70.jpg">
+                      </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Nong Nooch Tropical Garden - Chiêm ngưỡng tuyệt tác nghệ thuật vườn tại Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Điểm du lịch đẹp nhất huyện Sattahip, nơi trưng bày, bảo tồn và phát triển rất nhiều loài thực vật nhiệt đới quý hiểm</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                          <div class="price-saving">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <!-- Begining product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000260_ve-sriracha-tiger-zoo-chonburi-tham-quan-cong-vien-ho-lon-nhat-the-gioi_310.jpeg">
+                      </div>
+                      <div class="product-badge is-special-offer">
+                          <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Sriracha Tiger Zoo Chonburi – Tham quan công viên hổ lớn nhất thế giới
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Công viên có số lượng hổ Bengal lớn nhất thế giới, trải rộng trên diện tích 40ha là khu vực sinh sống của những vị “Chúa sơn lâm” cùng hàng chục ngàn “thần dân” hoang dã khác.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">
+                              Giá chỉ từ
+                              <span class="old-price">200.000đ</span>
+                            </span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <span class="price-saving-value">Tiết kiệm 100.000đ!</span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://divui.com/content/images/thumbs/0000193_ve-xem-show-alcazar-cabaret-pattaya_310.jpeg">
+                      </div>
+                      <div class="product-badge is-new">
+                          <div>SẢN PHẨM MỚI</div>
+                        </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé xem show Alcazar Cabaret Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Người ta nói, nếu muốn xem những nghệ sĩ chuyển giới “ladyboy” đẹp, bạn nên đi show Tiffany, nhưng nếu bạn muốn xem một chương trình nghệ thuật tuyệt vời, bạn nên đến Alcazar.</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+                <article class="product-card-cont-container product-card-cont-horizontal">
+                  <a class="product-card-link" href="#">
+                    <div class="product-card-content">
+                      <div class="product-card-img-wrp">
+                        <img src="http://cdn2.getyourguide.com/img/tour_img-171494-70.jpg">
+                      </div>
+                      <div class="product-badge"></div>
+                      <div class="product-card-details-container">
+                        <div class="product-card-details">
+                          <header class="product-card-header">
+                            <h3 class="product-card-title">
+                              Vé Nong Nooch Tropical Garden - Chiêm ngưỡng tuyệt tác nghệ thuật vườn tại Pattaya
+                            </h3>
+                            <div class="product-card-rating">
+                              <span class="rating">
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 voted"></i>
+                                <i class="icon-star-8 devote"></i>
+                              </span>
+                              <span class="product-card-rating-counts">
+                                5 Nhan xet
+                              </span>
+                            </div> 
+                          </header>
+                          <div class="product-card-short-desc">
+                            <p>Điểm du lịch đẹp nhất huyện Sattahip, nơi trưng bày, bảo tồn và phát triển rất nhiều loài thực vật nhiệt đới quý hiểm</p>
+                          </div>
+                          <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>Thời lượng:
+                            <span class="duration-value">8 giờ</span>
+                          </span>
+                        </div>
+                        <div class="product-card-right-columns">
+                          <div class="product-card-price-wrp">
+                            <span class="price-from">Giá chỉ từ</span>
+                            <span class="price-display">
+                              300.000đ
+                            </span>
+                            <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                          </div>
+                          <div class="price-saving">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </article><!-- /End product card -->
+              </div>
+              <div class="product-list-pagination">
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </Main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row footer-content-pri">
+          <div class="col-md-4">
+            <h2>DI VUI </h2>
+            <p>Viator is the world's leading resource for researching, finding and booking the best travel experiences worldwide.
+Viator joined the TripAdvisor family in 2014</p>  
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  VỀ ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Về ĐI VUI</a></li>
+                  <li><a href="#">Tuyển dụng</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="#">Chính sách bảo mật</a></li>
+                  <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  HỢP TÁC VỚI ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Trở thành đối tác của ĐI VUI</a></li>
+                  <li><a href="#">Chương trình đối tác phân phối (Affiliate)</a></li>
+                  <li><a href="#">Đối tác đăng nhập</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="box-link-title">
+              LIÊN HỆ
+            </h4>
+            <ul class="box-link-list">
+              <li>HOTLINE: 0908 1080 98 (Viber/Zalo)</li>
+              <li>hotro@divui.com</li>
+              <li>Văn phòng đại diện: 132/97 Nguyễn Hữu Cảnh, P.22, Q. Bình Thạnh, Tp.HCM</li>
+              <li>Thứ 2 - 6: 9:00 - 18:00</li>
+            </ul>  
+          </div>    
+        </div>
+        <div class="row footer-content-sec"></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Date and time pickers -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    </script>
+  </body>
+</html>

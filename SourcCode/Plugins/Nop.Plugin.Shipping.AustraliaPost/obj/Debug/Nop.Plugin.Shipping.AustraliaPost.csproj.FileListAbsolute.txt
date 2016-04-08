@@ -1,0 +1,20 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Views\ShippingAustraliaPost\Configure.cshtml
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Description.txt
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\web.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\logo.jpg
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.pdb
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.csprojResolveAssemblyReference.cache
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.dll
+D:\Project\Freelancer\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Views\ShippingAustraliaPost\Configure.cshtml
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Description.txt
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\web.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\logo.jpg
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.dll.config
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Presentation\Nop.Web\Plugins\Shipping.AustraliaPost\Nop.Plugin.Shipping.AustraliaPost.pdb
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.csprojResolveAssemblyReference.cache
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.dll
+E:\Projects\Freelancer\SVN Repos\Divui\SourcCode\Plugins\Nop.Plugin.Shipping.AustraliaPost\obj\Debug\Nop.Plugin.Shipping.AustraliaPost.pdb

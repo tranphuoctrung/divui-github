@@ -1,0 +1,152 @@
+﻿@model OnePageCheckoutModel
+@using Nop.Web.Models.Checkout;
+@using Nop.Core.Infrastructure;
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+
+    Html.AddScriptParts("~/Scripts/public.accordion.js");
+    Html.AddScriptParts("~/Scripts/public.onepagecheckout.js");
+
+    var storeLocation = EngineContext.Current.Resolve<Nop.Core.IWebHelper>().GetStoreLocation();
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+@{
+    //step numbers
+    int billingAddressStepNumber = 1;
+    int shippingAddressStepNumber = 2;
+    int shippingMethodStepNumber = 3;
+    int paymentMethodStepNumber = 4;
+    int paymentInfoStepNumber = 5;
+    int confirmOrderStepNumber = 6;
+    if (!Model.ShippingRequired)
+    {
+        paymentMethodStepNumber = paymentMethodStepNumber - 2;
+        paymentInfoStepNumber = paymentInfoStepNumber - 2;
+        confirmOrderStepNumber = confirmOrderStepNumber - 2;
+    }
+    if (Model.DisableBillingAddressCheckoutStep)
+    {
+        shippingAddressStepNumber--;
+        shippingMethodStepNumber--;
+        paymentMethodStepNumber--;
+        paymentInfoStepNumber--;
+        confirmOrderStepNumber--;
+    }
+}
+<div class="container">
+    @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Confirm })
+
+    <!--Page Title -->
+    <div class="row">
+        <div class="col-md-8 customer-info-step">
+            <div id="checkout-step-billing" class="customer-info-wrp">
+                <h2 class="title"><span class="step-count">1</span>@T("Checkout.CustomerInfo")</h2>
+                <div class="row">
+                    <div class="col-md-9">
+                        <form id="co-billing-form" action="">
+                            <div id="checkout-billing-load">
+                                @Html.Action("OpcBillingForm", "Checkout")
+                                @*billing address content will be loaded here*@
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
+                            if ($("#billing-address-select").length > 0) {
+                                Billing.newAddress(!$('#billing-address-select').val());
+                            }
+                        </script>
+                        <div class="buttons" id="billing-buttons-container" style="display:none;">
+                            <input type="button" title="@T("Common.Continue")" class="button-1 new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
+                            <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 input-notice">
+                        <strong>@T("Checkout.Note")</strong>
+                        <ul>
+                            <li><span class="require">(*)</span>@T("Checkout.Address.Fields.Required")</li>
+                            <li>@T("Checkout.Address.Fields.Desc")</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            @Html.Action("OrderSummary", "ShoppingCart", new { prepareAndDisplayOrderReviewData = true })
+            <div class="payment-method-wrp">
+                <h2 class="title"><span class="step-count">3</span>@T("Checkout.PaymentMethod")</h2>
+                @Html.Action("OpcPaymentMethods", "Checkout")
+                <div class="payment-method-total-price">
+                    <h4>@T("Checkout.Total")</h4>
+                    <span class="total-price-display">
+                        @Model.OrderTotals.OrderTotal
+                    </span>
+                </div>
+                <div class="redeem-code-wrp">
+                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Bạn có mã giảm giá (Coupon/Promotion Code)? <i class="icon icon-plus-circle"></i></a>
+                    <div class="collapse" id="collapseExample">
+                        <div class="well">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Vui lòng nhập tại đây">
+                                <button class="btn btn-warning">Áp dụng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="newsletter-agree">
+                <label>
+                    <input type="checkbox" name="newsletter_subcribed" checked="checked">
+                    <div class="newsletter-agree-cont">
+                        Tôi đồng ý nhận các bản tin (newsletter) qua email để cập nhật các kinh nghiệm du lịch, deal khuyến mại.(Đừng lo, bạn có thể ngưng nhận tin bất kỳ lúc nào)
+                    </div>
+                </label>
+            </div>
+            <div class="alert alert-danger tou" role="alert">
+                <label>
+                    <input type="checkbox" name="term_of_use"> &nbsp
+                    <span>Tôi đồng ý với các <a href="#">điều khoản & điều kiện sử dụng</a> của ĐI VUI</span>
+                </label>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button class="btn btn-warning"><strong>HOÀN TẤT ĐẶT VÉ</strong><i class="icon  icon-right-big"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="sub-col-box why-book">
+                <h4 class="title">Tự tin đặt vé với ĐI VUI</h4>
+                <ul>
+                    <li class="icon save">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
+                            <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
+                        </div>
+                    </li>
+                    <li class="icon voucher24">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
+                            <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
+                        </div>
+                    </li>
+                    <li class="icon support">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
+                            <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>  
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("JavaScriptDisabledWarning", "Common")
+@Html.Partial("OldInternetExplorerWarning")
+
+
+@Html.Action("AdminHeaderLinks", "Common")
+
+@Html.Partial("Header")
+<script type="text/javascript">
+        AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+</script>
+@Html.Widget("content_after")
+<main class="@(IsSectionDefined("ClassMain") ? RenderSection("ClassMain").ToString() : "")">
+    @RenderBody()
+</main>
+
+@Html.Widget("content_before")
+@Html.Action("Footer", "Common")
+@Html.Action("EuCookieLaw", "Common")
+@Html.Widget("body_end_html_tag_before")

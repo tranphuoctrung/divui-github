@@ -1,0 +1,6 @@
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\bin\Nop.Admin.dll.config
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\bin\Nop.Admin.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\bin\Nop.Admin.pdb
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Administration\obj\Release\Nop.Admin.csprojResolveAssemblyReference.cache
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Administration\obj\Release\Nop.Admin.dll
+D:\Project\Freelancer\Divui\SourcCode\Presentation\Nop.Web\Administration\obj\Release\Nop.Admin.pdb

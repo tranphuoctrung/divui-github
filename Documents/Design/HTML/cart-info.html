@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+    <title>Shopping Cart</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="dist/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fontello/css/fontello.css">
+    <!--<link rel="stylesheet" href="fonts/fontello/css/icon_set_1.css">-->
+    <link href="dist/style/date_time_picker.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header class="dv-page-header">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-static-top dv-nav-bar">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="#"><img src="http://divui.com/Content/images/logo.png"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle navbar-pick-place" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chọn điểm đến <span class="caret"></span></a>
+                <ul class="dropdown-menu dv-dropdown-menu">
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Thái Lan</li>
+                    <li><a href="#">Bangkok</a></li>
+                    <li><a href="#">Pattaya</a></li>
+                    <li><a href="#">Chiengmai</a></li>
+                    <li><a href="#">Phuket</a></li>
+                    <li><a href="#">Krabi</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dv-dropdown-header">Singapore</li>
+                    <li><a href="#">Singapore</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Việt Nam</li>
+                    <li><a href="#">Tp. Hồ Chí Minh</a></li>
+                    <li><a href="#">Đà Nẵng</a></li>
+                    <li><a href="#">Huế</a></li>
+                    <li><a href="#">Hội An</a></li>
+                    <li><a href="#">Nha Trang</a></li>
+                    <li><a href="#">Phú Quốc</a></li>
+                    <li><a href="#">Đà Lạt</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Hongkong</li>
+                    <li><a href="#">Hongkong <span class="label-bs label-warning">MỚI!</span></a></li>
+                    <li role="separator" class="divider"></li></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="country.html">Country</a></li>
+                    <li><a href="city.html">City </a></li>
+                    <li><a href="attraction.html">Attraction</a></li>
+                    <li><a href="collection.html">Collection </a></li>
+                    <li><a href="search-result.html">Search-Result </a></li>
+                    <li><a href="detail.html">Details</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="cart-info.html">Payment</a></li>
+                  </div> 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#">
+                  <i class="icon icon-cart"></i>Giỏ hàng
+                  <span class="navbar-cart-ammount">6</span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon icon-question"></i>Hỗ trợ <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon icon-phone"></i>Hotline: <strong>0908 1080 98</strong></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon  icon-info-circled-2"></i>Câu hỏi thường gặp</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon icon-email"></i>Liên hệ</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon icon-user-6"></i>Đăng nhập/Đăng ký</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </header>
+
+    <Main>
+      <div class="container">
+        <ul class="checkout-process-wrp customer-info">
+          <li class="checkout-process checkout-process--cart is-current">
+            <div class="dot">1</div>
+            <div class="label">Giỏ hàng</div>
+          </li>
+          <li class="checkout-process checkout-process--info is-current">
+            <div class="dot">2</div>
+            <div class="label">Thông tin hành khách</div>
+          </li>
+          <li class="checkout-process checkout-process--confirm">
+            <div class="dot">3</div>
+            <div class="label">Hoàn tất</div>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-md-8 customer-info-step">
+            <div class="customer-info-wrp">
+              <h2 class="title"><span class="step-count">1</span> Thông tin khách hàng</h2>
+              <div class="row">
+                <div class="col-md-9">
+                  <form class="customer-info-input-group">
+                    <div class="row form-group">
+                      <div class="col-sm-3 ">
+                        <label><span class="require">*</span> Quý danh</label>
+                        <select class="form-control">
+                          <option >Ông</option>
+                          <option >Bà</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-9">
+                        <label><span class="require">*</span> Họ & Tên đầy đủ</label>
+                        <input type="text" class="form-control" placeholder="Ví dụ: NGUYEN VAN A">
+                      </div> 
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-sm-6">
+                        <label><span class="require">*</span> Số điện thoại</label>
+                        <input type="text" class="form-control">
+                      </div>
+                      <div class="col-sm-6">
+                        <label><span class="require">*</span> Email</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-sm-6">
+                        <label><span class="require">*</span> Địa chỉ liên hệ</label>
+                        <input type="text" class="form-control">
+                      </div>
+                      <div class="col-sm-6">
+                        <label><span class="require">*</span> Thành phố</label>
+                        <input type="text" class="form-control">
+                      </div> 
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-3 input-notice">
+                  <strong>Lưu ý</strong>
+                  <ul>
+                    <li><span class="require">(*)</span> Các trường thông tin bắt buộc</li>
+                    <li>Vui lòng nhập họ & tên của người đại diện/người có mặt sử dụng dịch vụ</li>
+                  </ul>
+                </div>
+              </div>      
+            </div><!-- End Customer Info -->
+            <div class="review-cart-wrp">
+              <h2 class="title"><span class="step-count">2</span>Kiểm tra giỏ hàng</h2>
+              <div class="cart-item">
+                <header class="header">
+                  <div class="title">
+                    <h3 class="title-content"><a href="#">New York: One World Observatory Entrance Ticket</a></h3>
+                  </div>
+                  <div class="price">
+                    <span class="price-display">320.000VND</span>
+                  </div>
+                </header>
+                <div class="cart-item-content">
+                  <div class="img-wrp">
+                    <a href="#">
+                      <img src="//cdn2.getyourguide.com/img/tour_img-330494-89.jpg">
+                    </a>
+                  </div>
+                  <div class="details">
+                    <ul class="details-list">
+                      <li class="details-list-row"><strong>Loai ve:</strong> ABC</li>
+                      <li class="details-list-row"><strong>Ngay su dung:</strong> 01/02/2015</li>
+                      <li class="details-list-row"><strong>So luong khach:</strong> 3 Nguoi lon, 2 Tre em (6-12 tuoi)</li>
+                    </ul>
+                    <div class="pickup-info">
+                      <div class="well">
+                        <h5>Thông tin đưa đón</h5>
+                        <p>Đây là sản phẩm bao gồm đưa đón, vui lòng cung cấp thông tin khách sạn</p>
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Nhập Tên và Địa chỉ khách sạn">
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cart-item">
+                <header class="header">
+                  <div class="title">
+                    <h3 class="title-content"><a href="#">New York: One World Observatory Entrance Ticket</a></h3>
+                  </div>
+                  <div class="price">
+                    <span class="price-display">320.000VND</span>
+                  </div>
+                </header>
+                <div class="cart-item-content">
+                  <div class="img-wrp">
+                    <a href="#">
+                      <img src="//cdn2.getyourguide.com/img/tour_img-330494-89.jpg">
+                    </a>
+                  </div>
+                  <div class="details">
+                    <ul class="details-list">
+                      <li class="details-list-row"><strong>Loai ve:</strong> ABC</li>
+                      <li class="details-list-row"><strong>Ngay su dung:</strong> 01/02/2015</li>
+                      <li class="details-list-row"><strong>So luong khach:</strong> 3 Nguoi lon, 2 Tre em (6-12 tuoi)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Review Card -->
+            <div class="payment-method-wrp">
+              <h2 class="title"><span class="step-count">3</span>Chọn phương thức thanh toán</h2>
+              <div class="payment-select-wrp">
+                <div class="form-group">
+                  <label>
+                    <input type="radio" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+                    <div class="payment-method-cont-wrp">
+                      <h4><i class="icon icon-town-hall"></i>Chuyển khoản ngân hàng</h4>
+                      <p>Danh sách các tài khoản ngân hàng của ĐI VUI sẽ được cung cấp tại trang kế tiếp và trong email xác nhận gửi về email mà bạn cung cấp sau khi đặt vé hoàn tất.</p>  
+                    </div>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="radio" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+                    <div class="payment-method-cont-wrp">
+                      <h4><i class="icon icon-money"></i>Thanh toán bằng tiền mặt tại văn phòng ĐI VUI</h4>
+                      <p>Bạn có thể đến thanh toán đơn hàng của mình tại địa chỉ 132/97 Nguyễn Hữu Cảnh, P.22, Q. Bình Thạnh TP.HCM. Khi đến vui lòng cung cấp mã đơn hàng để việc thanh toán được chính xác.</p>  
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="payment-method-total-price">
+                <h4>Tổng cộng</h4>
+                <span class="total-price-display">
+                  300.000VND
+                </span>
+              </div>
+              <div class="redeem-code-wrp">
+                <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Bạn có mã giảm giá (Coupon/Promotion Code)? <i class="icon icon-plus-circle"></i></a>
+                <div class="collapse" id="collapseExample">
+                  <div class="well">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Vui lòng nhập tại đây">
+                      <button class="btn btn-warning">Áp dụng</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="newsletter-agree">
+              <label>
+                <input type="checkbox" name="newsletter_subcribed" checked="checked">
+                <div class="newsletter-agree-cont">
+                  Tôi đồng ý nhận các bản tin (newsletter) qua email để cập nhật các kinh nghiệm du lịch, deal khuyến mại.(Đừng lo, bạn có thể ngưng nhận tin bất kỳ lúc nào)
+                </div>
+              </label>
+            </div>
+            <div class="alert alert-danger tou" role="alert">
+              <label>
+                <input type="checkbox" name="term_of_use" > &nbsp
+                <span>Tôi đồng ý với các <a href="#">điều khoản & điều kiện sử dụng</a> của ĐI VUI</span>
+              </label>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="pull-right">
+                  <button class="btn btn-warning"><strong>HOÀN TẤT ĐẶT VÉ</strong><i class="icon  icon-right-big"></i></button>
+                </div>  
+              </div>
+            </div>
+          </div>
+         
+          <div class="col-md-4">
+            <div class="sub-col-box why-book">
+             <h4 class="title">Tự tin đặt vé với ĐI VUI</h4>
+             <ul>
+              <li class="icon save">
+                <div class="why-book-cont-wrp">
+                  <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
+                  <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
+                </div>
+              </li>
+              <li class="icon voucher24">
+                <div class="why-book-cont-wrp">
+                  <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
+                  <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
+                </div>                
+              </li>
+               <li class="icon support">
+                <div class="why-book-cont-wrp">
+                  <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
+                  <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
+                </div>                 
+               </li>
+             </ul>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </Main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row footer-content-pri">
+          <div class="col-md-4">
+            <h2>DI VUI </h2>
+            <p>Viator is the world's leading resource for researching, finding and booking the best travel experiences worldwide.
+Viator joined the TripAdvisor family in 2014</p>  
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  VỀ ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Về ĐI VUI</a></li>
+                  <li><a href="#">Tuyển dụng</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="#">Chính sách bảo mật</a></li>
+                  <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  HỢP TÁC VỚI ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Trở thành đối tác của ĐI VUI</a></li>
+                  <li><a href="#">Chương trình đối tác phân phối (Affiliate)</a></li>
+                  <li><a href="#">Đối tác đăng nhập</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="box-link-title">
+              LIÊN HỆ
+            </h4>
+            <ul class="box-link-list">
+              <li>HOTLINE: 0908 1080 98 (Viber/Zalo)</li>
+              <li>hotro@divui.com</li>
+              <li>Văn phòng đại diện: 132/97 Nguyễn Hữu Cảnh, P.22, Q. Bình Thạnh, Tp.HCM</li>
+              <li>Thứ 2 - 6: 9:00 - 18:00</li>
+            </ul>  
+          </div>    
+        </div>
+        <div class="row footer-content-sec"></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Date and time pickers -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    </script>
+  </body>
+</html>

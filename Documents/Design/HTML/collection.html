@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+    <title>Collection</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="dist/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fontello/css/fontello.css">
+    <!--<link rel="stylesheet" href="fonts/fontello/css/icon_set_1.css">-->
+    <link href="dist/style/date_time_picker.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header class="dv-page-header">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-static-top dv-nav-bar">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="#"><img src="http://divui.com/Content/images/logo.png"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle navbar-pick-place" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chọn điểm đến <span class="caret"></span></a>
+                <ul class="dropdown-menu dv-dropdown-menu">
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Thái Lan</li>
+                    <li><a href="#">Bangkok</a></li>
+                    <li><a href="#">Pattaya</a></li>
+                    <li><a href="#">Chiengmai</a></li>
+                    <li><a href="#">Phuket</a></li>
+                    <li><a href="#">Krabi</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dv-dropdown-header">Singapore</li>
+                    <li><a href="#">Singapore</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Việt Nam</li>
+                    <li><a href="#">Tp. Hồ Chí Minh</a></li>
+                    <li><a href="#">Đà Nẵng</a></li>
+                    <li><a href="#">Huế</a></li>
+                    <li><a href="#">Hội An</a></li>
+                    <li><a href="#">Nha Trang</a></li>
+                    <li><a href="#">Phú Quốc</a></li>
+                    <li><a href="#">Đà Lạt</a></li>
+                  </div>
+                  <div class="col-md-4">
+                    <li class="dv-dropdown-header">Hongkong</li>
+                    <li><a href="#">Hongkong <span class="label-bs label-warning">MỚI!</span></a></li>
+                    <li role="separator" class="divider"></li></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="country.html">Country</a></li>
+                    <li><a href="city.html">City </a></li>
+                    <li><a href="attraction.html">Attraction</a></li>
+                    <li><a href="collection.html">Collection </a></li>
+                    <li><a href="search-result.html">Search-Result </a></li>
+                    <li><a href="detail.html">Details</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="cart-info.html">Payment</a></li>
+                  </div> 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#">
+                  <i class="icon icon-cart"></i>Giỏ hàng
+                  <span class="navbar-cart-ammount">6</span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon icon-question"></i>Hỗ trợ <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon icon-phone"></i>Hotline: <strong>0908 1080 98</strong></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon  icon-info-circled-2"></i>Câu hỏi thường gặp</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#"><i class="icon icon-email"></i>Liên hệ</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon icon-user-6"></i>Đăng nhập/Đăng ký</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </header>
+
+    <Main>
+      <header class="intro intro-fixed" style="background-image:url(http://www.luxury-thailand-travel.com/images/BangkokGrandPalace.jpg)">
+        <div class="container">
+          <div class="intro-header">
+            <h1 class="intro-header-title">
+              Top 10 hoạt động du lịch đặc sắc nhất Bangkok
+            </h1>
+          </div>
+        </div>
+      </header>
+      <section class="brand-promised">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3 brand-promised-columns-label">
+              <p class="brand-promised-columns-label-content">Cam kết của ĐI VUI:</p>
+            </div>
+            <div class="col-sm-3 brand-promised-columns">
+              <p class="brand-promised-item-label icon brand-promised-item--best">Cac hoat dong dac sac nhat</p>
+              <p class="brand-promised-item-cont">Hon 200 san pham tu nhung nha cung cap chon loc</p>
+            </div>  
+            <div class="col-sm-3 brand-promised-columns">
+              <p class="brand-promised-item-label icon brand-promised-item--price">Gia tot nhat</p>
+              <p class="brand-promised-item-cont">Cam ket hoan tien neu phat hien gia re hon</p>
+            </div>  
+            <div class="col-sm-3 brand-promised-columns">
+              <p class="brand-promised-item-label icon brand-promised-item--support">Ho tro toi da</p>
+              <p class="brand-promised-item-cont">Cac chuyen gia du lich cua chung toi luon dong hanh cung ban 24/7</p>
+            </div>  
+          </div>
+        </div>
+      </section>
+      <div class="container collection-landing-page">
+        <div class="collection-info">
+          <h1>Top hoạt động du lịch tại Bangkok</h1>
+          <p class="lead">
+            HURRY! Book by Friday, March 4, 2016, to save 10% on spring break adventures in Miami, Cancun, Punta Cana and Puerto Rico. Use promo code BEACH at checkout and the discount will be applied.
+
+Spring break is the perfect time to say goodbye to winter and get a healthy dose of sun. Warm destinations like Miami, Cancun, Punta Cana and Puerto Rico offer a ton of options when it comes to seaside activities, so take advantage of our special offer to add a little more adventure to your trip!
+          </p>
+          <p>HURRY! Book by Friday, March 4, 2016, to save 10% on spring break adventures in Miami, Cancun, Punta Cana and Puerto Rico. Use promo code BEACH at checkout and the discount will be applied.</p>
+        </div>
+        <section class="top-activities">
+          <div class="product-cards-container">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-341909-92.jpg">
+                    </div>
+                    <div class="product-badge is-special-offer">
+                      <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Tour học nấu món Thái tại trường Silom Thai</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 giờ</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-151511-92.jpg">
+                    </div>
+                    <div class="product-badge is-new">
+                      <div>HOẠT ĐỘNG MỚI!</div>
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Tour tham quan thành cổ Ayutthaya và thưởng thức bữa trưa trên du thuyền River Sun</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-319108-92.jpg">
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Vé Thai Boxing tại sân vận độn Rajadamnern - Sôi động trên khán đài Muay Thái</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>  
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-245971-92.jpg">
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Lướt sóng nhân tạo tại Flow House Bangkok - Trải nghiệm trò chơi cảm giác mạnh có 1-0-2</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="product-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-341909-92.jpg">
+                    </div>
+                    <div class="product-badge is-special-offer">
+                      <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Tour học nấu món Thái tại trường Silom Thai</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 giờ</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-151511-92.jpg">
+                    </div>
+                    <div class="product-badge is-new">
+                      <div>HOẠT ĐỘNG MỚI!</div>
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Tour tham quan thành cổ Ayutthaya và thưởng thức bữa trưa trên du thuyền River Sun</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-319108-92.jpg">
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Vé Thai Boxing tại sân vận độn Rajadamnern - Sôi động trên khán đài Muay Thái</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="produc-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>  
+              <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
+                <div class="product-card-cont-container">
+                  <a href="#" class="product-card-link">
+                    <div class="product-card-img-wrp">
+                      <img src="http://cdn2.getyourguide.com/img/tour_img-245971-92.jpg">
+                    </div>
+                    <div class="product-card-details">
+                      <header class="product-card-header">
+                        <h4 class="product-card-title">Lướt sóng nhân tạo tại Flow House Bangkok - Trải nghiệm trò chơi cảm giác mạnh có 1-0-2</h4>
+                      </header>
+                      <div class="product-card-info">
+                        <span class="duration-label">
+                          <i class="icon icon-clock-5"></i>Thời lượng
+                          <span class="duration-value">8 gi</span>
+                        </span>
+                      </div>
+                      <div class="product-card-price-rating">
+                        <div class="product-card-rating">
+                          <span class="rating">
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 voted"></i>
+                            <i class="icon-star-8 devote"></i>
+                          </span>
+                          <span class="product-card-rating-counts">
+                            5 Nhan xet
+                          </span>
+                        </div>
+                        <div class="product-card-price-wrp">
+                          <span class="price-from">Giá chỉ từ</span>
+                          <span class="price-display">
+                            300.000đ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>        
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-warning">Xem tất cả các hoạt động tại Bangkok</button>
+          </footer>
+        </section>
+        <div class="row"> <!-- SEO Area -->
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh secondary: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div> 
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh City: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div> 
+          <div class="col-sm-4">
+            <div class="box-link-title">
+              <h4>This is sample seo link</h4>
+            </div>
+            <ul class="box-link-list">
+                <li><a href="#"> London: Tours & Tickets online</a></li>
+                <li><a href="#">Amsterdam: Tours & Tickets online</a></li>
+                <li><a href="#">Toronto: Tours & Tickets online</a></li>
+                <li><a href="#">Ho Chi Minh City: Tours & Tickets online</a></li>
+                <li><a href="#">Sorrento: Tours & Tickets online</a></li>
+                <li><a href="#">Cairns: Tours & Tickets online</a></li>
+                <li><a href="#">Paris: Tours & Tickets online</a></li>
+                <li><a href="#">Istanbul: Tours & Tickets online</a></li>
+              </ul>
+          </div>  
+        </div>  
+      </div>
+    </Main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row footer-content-pri">
+          <div class="col-md-4">
+            <h2>DI VUI </h2>
+            <p>Viator is the world's leading resource for researching, finding and booking the best travel experiences worldwide.
+Viator joined the TripAdvisor family in 2014</p>  
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  VỀ ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Về ĐI VUI</a></li>
+                  <li><a href="#">Tuyển dụng</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="#">Chính sách bảo mật</a></li>
+                  <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-6">
+                <h4 class="box-link-title">
+                  HỢP TÁC VỚI ĐI VUI
+                </h4>
+                <ul class="box-link-list">
+                  <li><a href="#">Trở thành đối tác của ĐI VUI</a></li>
+                  <li><a href="#">Chương trình đối tác phân phối (Affiliate)</a></li>
+                  <li><a href="#">Đối tác đăng nhập</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="box-link-title">
+              LIÊN HỆ
+            </h4>
+            <ul class="box-link-list">
+              <li>HOTLINE: 0908 1080 98 (Viber/Zalo)</li>
+              <li>hotro@divui.com</li>
+              <li>Văn phòng đại diện: 132/97 Nguyễn Hữu Cảnh, P.22, Q. Bình Thạnh, Tp.HCM</li>
+              <li>Thứ 2 - 6: 9:00 - 18:00</li>
+            </ul>  
+          </div>    
+        </div>
+        <div class="row footer-content-sec"></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Date and time pickers -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    </script>
+  </body>
+</html>

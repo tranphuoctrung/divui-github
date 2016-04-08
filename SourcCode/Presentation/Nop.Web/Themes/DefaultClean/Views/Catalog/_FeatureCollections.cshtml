@@ -1,0 +1,26 @@
+﻿@model IList<CategoryModel>
+
+@using Nop.Web.Models.Catalog;
+@if (Model.Count > 0)
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-3 product-card product-card-collection product-card-vertical">
+                <div class="product-card-cont-container">
+                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title" class="product-card-link">
+                        <div class="product-card-img-wrp">
+                            <img src="@item.PictureModel.FullSizeImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
+                        </div>
+                        <div class="product-card-details">
+                            <h4 class="product-card-title">@item.Name</h4>
+                            <div class="product-card-content">
+                                @Html.Raw(item.ShortDescription)
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}

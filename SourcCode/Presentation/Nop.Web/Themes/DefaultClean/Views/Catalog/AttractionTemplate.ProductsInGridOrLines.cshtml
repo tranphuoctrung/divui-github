@@ -1,0 +1,129 @@
+﻿@model CategoryModel
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var attractionUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(attractionUrl);
+    }
+
+    var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@*attraction breadcrumb*@
+
+@Html.Widget("attractiondetails_top", Model.Id)
+
+
+@section MainHeader
+{
+    <header class="intro intro-fixed" style="background-image:url(@Model.PictureModel.FullSizeImageUrl)">
+        <div class="container">
+            <div class="intro-header">
+                <h1 class="intro-header-title">
+                    @Model.Name
+                </h1>
+            </div>
+        </div>
+    </header>
+}
+
+<div class="container promote-content-page promote-content-page-attraction">
+    <section class="top-activities">
+        <h2>@Model.Name: @T("Category.Attractions.Title")</h2>
+        @if (Model.Products.Count > 0)
+        {
+            <div class="product-listing">
+                <div class="product-list product-list-horizontal">
+                    @foreach (var product in Model.Products)
+                {
+                        @Html.Partial("_ProductBoxList", product)
+                    }
+                </div>
+                @*@{
+                    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+                }
+                @if (!pager.IsEmpty())
+                {
+                    <div class="product-list-pagination">
+                        <nav>
+                            @pager
+                        </nav>
+                    </div>
+                }*@
+            </div>
+                    }
+        <footer>
+            <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Attractions.ViewAll").Text, Model.Name)</button>
+            <input type="hidden" value="1" id="pageNumber" />
+            <input type="hidden" value="@Model.Id" id="attractionId" />
+            <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
+            <script>
+
+
+                    $(document).ready(function () {
+                        //$('#btnLoadMore').click(function () {
+                        //    $.ajax({
+                        //        url: "/Catalog/LoadMoreProductAttraction",
+                        //        type: "post",
+                        //        data: { attractionId: $('#attractionId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                        //        beforeSend: function(){
+
+                        //        },
+                        //        success: function (response) {
+                        //            if (response.success) {
+                        //                $('#divProductList').append(response.html);
+                        //                var number = $('#pageNumber').val();
+                        //                $('#pageNumber').val(number + 1);
+                        //                if ((number + 1) >= response.totalPages) {
+                        //                    $('#btnLoadMore').hide();
+                        //                }
+                        //            }
+                        //        },
+                        //        error: function (jqXHR, textStatus, errorThrown) {
+                        //            console.log(textStatus, errorThrown);
+                        //        }
+
+
+                        //    });
+                        //});
+                    });
+
+
+            </script>
+        </footer>
+    </section>
+    @if (Model.Attractions.Count > 0)
+    {
+        <section class="highlights">
+            <header class="highlights-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>@T("Category.TopAttractions")</h2>
+                        <div class="highlights-desc">
+                            <p>@T("Category.TopAttractions.ShortDescription")</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @Html.Partial("_FeatureCategories", Model.Categories)
+        </section>
+    }
+    <section class="planning">
+        @Html.Raw(Model.Description)
+    </section>
+    <section class="secondary-links">
+        @Html.Partial("_SecondaryAttractions", Model)
+    </section>
+    
+</div>
+    
+@Html.Widget("attractiondetails_bottom", Model.Id)

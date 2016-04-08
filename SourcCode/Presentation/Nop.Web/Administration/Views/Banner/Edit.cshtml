@@ -1,0 +1,23 @@
+﻿@model BannerModel
+@using Nop.Admin.Models.Divui.Catalog;
+@{
+    //page title
+    ViewBag.Title = T("Admin.Catalog.Banners.EditBannerDetails").Text;
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "banner-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="" />
+            @T("Admin.Catalog.Banners.EditBannerDetails") - @Model.Name @Html.ActionLink("(" + T("Admin.Catalog.Banners.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
+            <span id="category-delete" class="k-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation("banner-delete")

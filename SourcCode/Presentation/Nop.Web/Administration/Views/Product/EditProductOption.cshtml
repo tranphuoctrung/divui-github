@@ -1,0 +1,53 @@
+﻿@model ProductModel.ProductOptionModel
+@{
+    //page title
+    ViewBag.Title = T("Admin.Catalog.Products.ProductOptions.EditProductOptionDetails").Text;
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "producttion-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="" />
+            @T("Admin.Catalog.Products.ProductOptions.EditProductOptionDetails") - @Model.Name @Html.ActionLink("(" + T("Admin.Catalog.Products.ProductOptions.BackToList") + ")", "Edit", new { id = Model.ProductId})
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
+            <span id="productoption-delete" class="k-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate.ProductOption", Model)
+}
+<div id='productoption-delete-confirmation' style='display:none;'>
+    @using (Html.BeginForm("ProductOptionDelete", "Product", new { id = Model.Id }))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <p>
+                @T("Admin.Common.DeleteConfirmation")
+            </p>
+            <div class="form-actions">
+                <span id="" class="k-button" onclick="$('#productoption-delete-confirmation').data('kendoWindow').close();">@T("Admin.Common.NoCancel")</span>
+                <input type="submit" class="k-button" value="@T("Admin.Common.Delete")" />
+            </div>
+        </div>
+    }
+    <script>
+        $(document).ready(function () {
+            $('#productoption-delete').click(function (e) {
+                e.preventDefault();
+                var window = $('#productoption-delete-confirmation');
+                if (!window.data('kendoWindow')) {
+                    window.kendoWindow({
+                        modal: true,
+                        title: '@T("Admin.Common.AreYouSure")',
+                        actions: ['Close']
+                    });
+                    window.data('kendoWindow').center().open();
+                }
+            });
+        });
+    </script>
+</div>
+   

@@ -1,0 +1,35 @@
+﻿@model CategoryModel
+@using Nop.Web.Models.Catalog;
+@foreach (var attribute in Model.SpecificationAttributes)
+{
+    <div class="filter filter-box">
+        <div class="filter-box-title">
+            <h5>@attribute.Name</h5>
+        </div>
+        <div class="filter-box-cont-wrp">
+            <ul class="filters-list filters-list-l1">
+                @{
+                    var alreadySpecOptionNames = Model.PagingFilteringContext.SpecificationFilter.AlreadyFilteredItems.Select(s => s.SpecificationAttributeOptionName);
+
+                }
+                @foreach (var option in attribute.SpecificationAttributeOptions)
+                {
+                    <li class="filters-list-item">
+                        <label>
+                            @if (Model.AlreadyFilteredSpecOptionIds.Contains(option.Id))
+                            {
+                                <input type="checkbox" class="filter specs" value="@option.Id" name="Specs" id="spec_@option.Id" checked>
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="filter specs" value="@option.Id" name="Specs" id="spec_@option.Id">
+                            }
+                            <span class="input-content">@option.Name</span>
+                        </label>
+                    </li>
+                }
+               
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+    <title>Wallet</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="dist/style/style.css" rel="stylesheet">
+    <link href="dist/style/agent.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fontello/css/fontello.css">
+    <!--<link rel="stylesheet" href="fonts/fontello/css/icon_set_1.css">-->
+    <link href="dist/style/date_time_picker.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header class="dv-page-header">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default navbar-static-top dv-nav-bar">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="#">
+              <img src="http://divui.com/Content/images/logo.png">
+            </a>
+            <a href="#" class="agent-logo">Đối tác phân phối</a>
+
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><i class="icon icon-user-6icon-wallet"></i>Xin chào, Cong ty TNHH DIVUI!</a></li>
+              <li>
+                <a href="ag-wallet.html">
+                 <i class="icon icon-wallet"></i> Số dư hiện tại: 0đ
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon icon-th"></i>Tài khoản<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="ag-acc-info.html"><i class="icon icon-user"></i>Thông tin tài khoản</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="ag-wallet.html"><i class="icon  icon-money-2"></i>Lịch sử thanh toán</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="ag-booking-history.html#"><i class="icon  icon-doc-text"></i>Danh sách đơn hàng</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="ag-login.html"><i class="icon  icon-cancel"></i>Thoát</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </header>
+
+    <Main>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li class="active">Data</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="product-content-container container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="product-title">
+                Tài khoản của bạn
+              </h1>
+              <h2>Số dư hiện tại: 0đ</h2>  
+              <p>Để nạp tiền vào tài khoản, vui lòng liên hệ bộ phận đối tác qua địa chỉ agent@divui.com hoặc số điện thoại 0939 227 923 - Mr. Phúc Nguyễn</p>
+              <h2>
+                Lịch sử giao dịch
+              </h2>
+              <div class="table-responsive ag-booking-history">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td style="width:15%">Ngày giao dịch</td>
+                  <td style="width:15%">Mã giao dịch</td>
+                  <td style="width:20%">Số tiền</td>
+                  <td>Mô tả</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>32435</td>
+                  <td>34545</td>
+                  <td>20/01/2016</td>
+                  <td>Vé vào cổng + Ăn trưa + cáp treo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <nav class="ag-pagination">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+            </div>
+          </div>
+        </div>    
+    </Main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row footer-content-pri">
+          <div class="col-md-12">
+            <h2>DI VUI </h2>
+            <p>Viator is the world's leading resource for researching, finding and booking the best travel experiences worldwide.
+Get in touch with our account managers at distribution@bemyguest.com.sg or please call us at +65 6743 9810 | Read Our FAQ</p>  
+          </div>    
+        </div>
+        <div class="row footer-content-sec"></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Date and time pickers -->
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    </script>
+  </body>
+</html>

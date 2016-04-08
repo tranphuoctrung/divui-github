@@ -1,0 +1,31 @@
+﻿@model ShoppingCartModel
+@using Nop.Web.Models.Checkout
+@using Nop.Web.Models.ShoppingCart;
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+}
+@if (!Model.OnePageCheckoutEnabled)
+{
+    @Html.Action("CheckoutProgress", "Checkout", new {step = CheckoutProgressStep.Cart})
+}
+<div class="container">
+    @if (!Model.OnePageCheckoutEnabled)
+    {
+        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Confirm })
+    }
+    <!--Page Title -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="cart-status">
+                <h1>@T("ShoppingCart.Title")</h1>
+                <p>@T("ShoppingCart.Info")</p>
+            </div>
+        </div>
+    </div><!--/Page Title -->
+    <div class="row">
+        @Html.Partial("OrderSummary", Model)
+    </div>
+</div>

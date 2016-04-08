@@ -1,0 +1,13 @@
+﻿@model TopicModel
+@using Nop.Core.Domain.Seo
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Topics;
+@{
+    var isPopup = ViewBag.IsPopup;
+    Layout = null;
+
+}
+<div class="@ViewBag.classItem">
+    <p class="@ViewBag.classTitle">@Model.Title</p>
+    <p class="@ViewBag.classDesc">@Model.Body.Replace("<p>", "").Replace("</p>", "")</p>
+</div>  

@@ -1,0 +1,36 @@
+﻿@model CheckoutPaymentMethodModel
+@using Nop.Web.Models.Checkout;
+<div class="payment-select-wrp">
+
+    @if (Model.PaymentMethods.Count > 0)
+    {
+        
+            for (int i = 0; i < Model.PaymentMethods.Count; i++)
+            {
+                var paymentMethod = Model.PaymentMethods[i];
+                var paymentMethodName = paymentMethod.Name;
+                if (!String.IsNullOrEmpty(paymentMethod.Fee))
+                {
+                    paymentMethodName = T("Checkout.SelectPaymentMethod.MethodAndFee", paymentMethodName, paymentMethod.Fee).Text;
+                }
+                <div class="form-group">
+                  <label>
+                        <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" />
+                        <div class="payment-method-cont-wrp">
+                          <h4><i class="icon icon-town-hall"></i>@paymentMethodName</h4>
+                          <p>@paymentMethod.Info</p>  
+                        </div>
+                  </label>
+                </div>
+                
+            }
+        
+    }
+    else
+    {
+        <div class="message-error">
+            @T("Checkout.NoPaymentMethods")
+        </div>
+    }
+
+</div>

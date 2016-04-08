@@ -1,0 +1,263 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@using Nop.Core.Domain.Divui.Catalog;
+@using Nop.Core.Domain.Orders;
+
+@foreach (var option in Model.ProductOptions)
+{
+        <!-- Begin Box Offer -->
+        <div class="box offers" id="box-option-@option.ProductOptionId">
+            <div class="offers-container">
+                <div class="offers-table">
+                    <div class="offers-table-row">
+                        <div class="offers-table-row-title row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="offers-title-wrp">
+                                    <header class="offers-title">
+                                        <h3 class="title">@option.Name</h3>
+                                    </header>
+                                    @*<div class="offers-feature-info">
+                                            <span class="offer-duration">
+                                                <i class="icon icon-clock-5"></i>
+                                                @{
+                                                    var tourDuration = Model.ProductSpecifications.Where(p => p.SystemName == "TourDuration").FirstOrDefault();
+                                                    if (tourDuration != null)
+                                                    {
+                                                        @Html.Raw(string.Format("{0}: {1}", tourDuration.SpecificationAttributeName, tourDuration.ValueRaw))
+                                                    }
+                                                }
+                                            </span>
+                                        </div>*@
+                                    <span class="offers-desc">
+                                        @Html.Raw(option.Description)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 offers-title-price">
+                                <div class="offers-price-details">
+                                    @{ var psa = option.ProductSimples.FirstOrDefault(p => p.AgeRange == (int)DvAgeRangeType.Adult);}
+                                    @if (psa != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(psa.ProductPrice.OldPrice))
+                                        {
+                                            <div class="price-from">
+                                                <span>@T("Products.PriceFrom")</span>
+                                                <span class="old-price">@psa.ProductPrice.OldPrice</span>
+                                            </div>
+                                        }
+                                        <div class="actual-price">
+                                            <strong class="actual-price-display">@psa.ProductPrice.Price</strong>
+                                            <span class="price-explanation">@T("Products.PriceForAdult")</span>
+                                        </div>
+                                        if (psa.ProductPrice.SavePercent > 0)
+                                        {
+                                            <span class="price-saving">
+                                                <i class="icon-thumbs-up"></i>@string.Format(T("Products.Saving").Text, psa.ProductPrice.SavePercent)
+                                            </span>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offers-type-row row">
+                            <div class="error-msgs-offers alert alert-danger alert-dismissible" role="alert" style="display:none">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Chu y! Vui long chon ngay khoi hanh....</strong>
+                            </div>
+                            <div class="col-md-8 col-sm-8 offer-types-wrp">
+                                <div class="offer-types">
+                                    
+                                    @*@if (psa != null)
+                                    {
+                                        <label class="select">
+                                            <span class="label">Chọn thời gian</span>
+                                            <span class="label-description">&nbsp</span>
+                                            <select name="select" class="offer-type-list form-control" data-type="Adult">
+                                                <option>10h - 20h</option>
+                                                <option>12h - 14h</option>
+                                            </select>
+                                        </label>
+                                    }*@
+
+                                    @if (psa != null)
+                                    {
+                                        <form action="/@psa.SeName" id="product-details-form-@psa.ProductId" method="post" style="float:left;">
+                                            <label class="select">
+                                                <span class="label">@T("Products.AgeRangeAdult")</span>
+                                                <span class="label-description">@psa.AgeRangeCondition &nbsp</span>
+                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psa.ProductId), psa.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psa.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Adult", data_option_id = option.ProductOptionId, data_product_simple_id = psa.ProductId })
+                                                
+                                            </label>
+                                            @{
+                                                var dataDictAttributes = new ViewDataDictionary();
+                                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", psa.ProductId);
+                                                @Html.Partial("_ProductDetailsAttributes", psa.ProductAttributes, dataDictAttributes)
+                                            }
+                                        </form>
+                                    }
+                                    @{ var psc = option.ProductSimples.FirstOrDefault(p => p.AgeRange == (int)DvAgeRangeType.Child);}
+                                    @if (psc != null)
+                                    {
+                                        <form action="/@psc.SeName" id="product-details-form-@psc.ProductId" method="post" style="float:left;">
+                                            <label class="select">
+                                                <span class="label">@T("Products.AgeRangeChild")</span>
+                                                <span class="label-description">@psc.AgeRangeCondition &nbsp</span>
+                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psc.ProductId), psc.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psc.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Child", data_option_id = option.ProductOptionId, data_product_simple_id = psc.ProductId })
+                                            </label>
+                                            @{
+                                                var dataDictAttributes = new ViewDataDictionary();
+                                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", psc.ProductId);
+                                                @Html.Partial("_ProductDetailsAttributes", psc.ProductAttributes, dataDictAttributes)
+                                            }
+                                        </form>
+                                        
+                                    }
+
+                                    @{ var psk = option.ProductSimples.FirstOrDefault(p => p.AgeRange == (int)DvAgeRangeType.Kid);}
+                                    @if (psk != null)
+                                    {
+                                        <form action="/@psk.SeName" id="product-details-form-@psk.ProductId" method="post" style="float:left;">
+                                            <label class="select">
+                                                <span class="label">@T("Products.AgeRangeKid")</span>
+                                                <span class="label-description">@psk.AgeRangeCondition</span>
+                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psk.ProductId), psk.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psk.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Kid", data_option_id = option.ProductOptionId, data_product_simple_id = psk.ProductId })
+                                            
+                                            </label>
+                                            @{
+                                                var dataDictAttributes = new ViewDataDictionary();
+                                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", psk.ProductId);
+                                                @Html.Partial("_ProductDetailsAttributes", psk.ProductAttributes, dataDictAttributes)
+                                            }
+                                        </form>
+                                        
+                                    }
+
+                                    @{ var pss = option.ProductSimples.FirstOrDefault(p => p.AgeRange == (int)DvAgeRangeType.Senior);}
+                                    @if (pss != null)
+                                    {
+                                        <form action="/@pss.SeName" id="product-details-form-@pss.ProductId" method="post" style="float:left;">
+                                            <label class="select">
+                                                <span class="label">@T("Products.AgeRangeSenior")</span>
+                                                <span class="label-description">@pss.AgeRangeCondition</span>
+                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", pss.ProductId), pss.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", pss.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Senior", data_option_id = option.ProductOptionId, data_product_simple_id = pss.ProductId })
+                                            </label>
+                                            @{
+                                                var dataDictAttributes = new ViewDataDictionary();
+                                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", pss.ProductId);
+                                                @Html.Partial("_ProductDetailsAttributes", pss.ProductAttributes, dataDictAttributes)
+                                            }
+                                        </form>
+                                    }
+
+
+                                </div>
+                            </div>
+                            @if (psa != null)
+                            {
+                                <div class="col-md-4 col-sm-4 book-offer-wrp">
+                                    <div class="price-total">
+                                        <span>@T("Products.TotalPrice")</span>
+                                        <span class="total-value" id="totalprice-option-@option.ProductOptionId">@psa.ProductPrice.Price</span>
+                                    </div>
+                                    <input type="hidden" id="totalprice-@option.ProductOptionId" name="Total" value="@psa.ProductPrice.PriceValue" />
+
+                                    <button class="btn btn-warning" id="addtocartproduct-option-@option.ProductOptionId"><strong>@T("Products.ProductBooking.Booking")</strong></button>
+                                    @*<p class="price-promise"><i class=" icon-ok-circled"></i>Cam kết giá rẻ nhất!</p>*@
+                                </div>
+
+                                <script>
+                                    $("#addtocartproduct-option-@option.ProductOptionId").click(function (e) {
+                                        e.preventDefault();
+                                        console.log("#addtocartproduct-option-@(option.ProductOptionId) => cliked");
+                                        @if(psc != null)
+                                        {
+                                            <text>
+                                                if ($('#addtocart_@(psc.ProductId)_EnteredQuantity').val() > 0) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        data: $('#product-details-form-@(psc.ProductId)').serialize(),
+                                                        url: '@Url.RouteUrl("AddProductToCart-Details", new { productId = psc.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })',
+                                                    });
+                                                }
+                                            </text>
+
+                                        }
+
+                                        @if(psk != null)
+                                        {
+                                            <text>
+                                                if ($('#addtocart_@(psk.ProductId)_EnteredQuantity').val() > 0) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        data: $('#product-details-form-@(psk.ProductId)').serialize(),
+                                                        url: '@Url.RouteUrl("AddProductToCart-Details", new { productId = psk.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })',
+                                                    });
+                                                }
+                                            </text>
+
+                                        }
+
+                                        @if(pss != null)
+                                        {
+                                            <text>
+                                                if ($('#addtocart_@(psk.ProductId)_EnteredQuantity').val() > 0) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        data: $('#product-details-form-@(pss.ProductId)').serialize(),
+                                                        url: '@Url.RouteUrl("AddProductToCart-Details", new { productId = pss.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })',
+                                                    });
+                                                }
+                                            </text>
+
+                                        }
+
+                                        AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = psa.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form-@psa.ProductId');
+                                    });
+                                </script>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Box Offer -->
+                                        
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.quantity').change(function () {
+
+            var optionid = $(this).attr('data-option-id');
+            var total = 0;
+            var selects = $('.quantity_' + optionid);
+            for (var index = 0; index < selects.length; index++) {
+                //var productsimpleid = $(selects[index]).attr('data-product-simple-id');
+                var texts = $(selects[index]).find('option:selected').text().split("(x)");
+                var qty = 0;
+
+                if (parseInt($(selects[index]).val()) > 0);
+                {
+                    qty = parseInt($(selects[index]).val())
+                }
+
+                var price = 0;
+                if (texts.length > 1) {
+                    var priceString = texts[1];
+
+                    if (priceString.indexOf(".") > 0) {
+                        price = parseFloat(priceString.replace(/\./g, ""));
+                    }
+                    else {
+                        price = parseFloat(priceString);
+                    }
+                }
+
+                total = total + qty * price;
+            }
+            $("#totalprice-" + optionid).val(total);
+            $("#totalprice-option-" + optionid).html(addCommas(total));
+        });
+    });
+</script>

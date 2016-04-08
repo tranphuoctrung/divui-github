@@ -1,0 +1,17 @@
+﻿@using Nop.Web.Framework.UI
+@{
+    Layout = "";
+
+    //Html.AddCssFileParts("~/Plugins/ExternalAuth.Facebook/Content/facebookstyles.css");    
+}
+@*<div class="facebook-login-block">
+    <div class="title">
+        @T("Plugins.ExternalAuth.Facebook.Login")
+    </div>
+    <div class="buttons">
+        
+        <a href="" class="facebook-btn"></a>
+    </div>
+</div>*@
+
+<button class="btn btn-block btn-facebook" onclick="location.href='@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })'">@T("Account.Login.Facebook")</button>

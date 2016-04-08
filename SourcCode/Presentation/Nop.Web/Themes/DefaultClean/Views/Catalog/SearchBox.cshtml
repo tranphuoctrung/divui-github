@@ -1,0 +1,34 @@
+﻿@model SearchBoxModel
+@using Nop.Web.Models.Catalog;
+@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { id = "small-search-box-form" }))
+{ 
+    @Html.Widget("searchbox_before_search_button")
+    <div class="input-group destination-search">
+        <input type="text" class="form-control" name="q" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
+        @Html.Action("SearchHompageCategories", "Catalog")
+    </div>
+    if (Model.SearchTermMinimumLength > 0)
+    {
+        <script type="text/javascript">
+            $("#small-search-box-form").submit(function(event) {
+                if ($("#small-searchterms").val() == "") {
+                    alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))');
+                    $("#small-searchterms").focus();
+                    event.preventDefault();
+                }
+            });
+            $(document).ready(function () {
+                $("#small-searchterms").keypress(function (event) {
+                    if (event.which == 13) {
+                        event.preventDefault();
+                        $("#small-search-box-form").submit();
+                    }
+                });
+            });
+
+            
+        </script>
+    }
+    
+    @Html.Widget("searchbox")
+}

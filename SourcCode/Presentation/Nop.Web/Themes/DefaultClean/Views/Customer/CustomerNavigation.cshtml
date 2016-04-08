@@ -1,0 +1,91 @@
+﻿@model CustomerNavigationModel           
+@using Nop.Web.Models.Customer;
+<div class="acc-nav">
+    
+    <ul class="list-group">
+        @Html.Widget("account_navigation_before")
+        @if (!Model.HideInfo)
+            {
+            <a href="@Url.RouteUrl("CustomerInfo")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Info)
+                                                                   {<text>active</text>}
+                                                                   ">@T("Account.CustomerInfo")</a>
+        }
+        @if (!Model.HideAddresses)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerAddresses")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Addresses)
+                                                                        {<text>active</text>}
+                                                                        ">@T("Account.CustomerAddresses")</a>
+                                                                    
+        }
+        @if (!Model.HideOrders)
+            {
+           
+                <a href="@Url.RouteUrl("CustomerOrders")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Orders)
+                                                                     {<text>active</text>}
+                                                                    ">@T("Account.CustomerOrders")</a>
+                                                                
+        }
+        @if (!Model.HideReturnRequests)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerReturnRequests")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.ReturnRequests)
+                                                                             {<text>active</text>}
+                                                                             ">@T("Account.CustomerReturnRequests")</a>
+                                                                        
+        }
+        @if (!Model.HideDownloadableProducts)
+            {
+           
+                <a href="@Url.RouteUrl("CustomerDownloadableProducts")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.DownloadableProducts)
+                                                                                   {<text>active</text>}
+                                                                                  ">@T("Account.DownloadableProducts")</a>
+                                                                           
+        }
+        @if (!Model.HideBackInStockSubscriptions)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.BackInStockSubscriptions)
+                                                                                   {<text>active</text>}
+                                                                                   ">@T("Account.BackInStockSubscriptions")</a>
+                                                                            
+        }
+        @if (!Model.HideRewardPoints)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerRewardPoints")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.RewardPoints)
+                                                                           {<text>active</text>}
+                                                                           ">@T("Account.RewardPoints")</a>
+                                                                    
+        }
+        @if (!Model.HideChangePassword)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerChangePassword")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.ChangePassword)
+                                                                             {<text>active</text>}
+                                                                             ">@T("Account.ChangePassword")</a>
+                                                                        
+        }
+        @if (!Model.HideAvatar)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerAvatar")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Avatar)
+                                                                     {<text>active</text>}
+                                                                     ">@T("Account.Avatar")</a>
+                                                               
+        }
+        @if (!Model.HideForumSubscriptions)
+            {
+            
+                <a href="@Url.RouteUrl("CustomerForumSubscriptions")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.ForumSubscriptions)
+                                                                                 {<text>active</text>}
+                                                                                 ">@T("Account.ForumSubscriptions")</a>
+                                                                            
+        }
+        @Html.Widget("account_navigation_after")
+    </ul>
+
+
+    
+</div>
+

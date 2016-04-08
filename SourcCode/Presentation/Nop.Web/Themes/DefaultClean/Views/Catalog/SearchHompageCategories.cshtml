@@ -1,0 +1,45 @@
+﻿@model TopMenuModel
+@using Nop.Web.Models.Catalog;
+
+@helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
+{
+    <li class="@(level == 0 ? "dv-dropdown-header" : "")">
+        <a class="@(level == 0 ? "a-dropdown-header" : "")" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+        @{
+            //subcategories
+            var subCategories = responsiveMobileMenu ?
+                //responsive (all categories)
+                category.SubCategories :
+                //standard design (only categories with "IncludeInTopMenu")
+                category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+            if (subCategories.Count > 0)
+            {
+                foreach (var subCategory in subCategories)
+                {
+                    @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                }
+            <li role="separator" class="divider"></li>
+            }
+        }
+        </li>
+}
+
+<ul class="destination-search-result dropdown-menu dv-dropdown-menu">
+    @{
+        var rootCategories = Model.Categories.Where(x => x.DisplayedOnHomePage).ToList();
+        var groups = rootCategories.Split(3);
+
+    }
+    @foreach (var group in groups)
+            {
+        <div class="col-md-4">
+            @foreach (var category in group)
+            {
+                @RenderCategoryLine(category, 0, false)
+
+            }
+        </div>
+
+    }
+</ul>

@@ -1,0 +1,16 @@
+﻿@model TopicModel
+@using Nop.Core.Domain.Seo
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Topics;
+@{
+    var isPopup = ViewBag.IsPopup;
+    Layout = "~/Views/Shared/_ColumnsOneStaticPage.cshtml";
+
+   
+}
+
+    
+<h1>@Model.Title</h1>
+@Html.Raw(Model.Body)
+    
+

@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+<div class="container promote-content-page promote-content-page-country">
+    @Html.Action("HomepageProducts", "Product")
+    @Html.Action("DvHomepageDestinations", "Catalog")
+    @Html.Action("DvHomepageCollections", "Catalog")
+    <section class="hp-promotion-section">
+        <div class="row">
+            @Html.Action("HomePageBanners", "Catalog")
+            <div class="col-md-6">
+                <div class="hp-why-choose-us">
+                    <h2>@T("HomePage.Topic.WhyChooseUs")</h2>
+                    <div class="hp-why-choose-us-list-wrp">
+                       @Html.Action("HomePageTopicBlock", "Topic", new {
+                           systemName = "HomePageTopic.RangeOfProduct",
+                           classItem = "hp-why-choose-us-list range-of-product",
+                           classTitle = "why-choose-us-list-label",
+                           classDesc = "why-choose-us-list-desc",
+                       })
+
+                        @Html.Action("HomePageTopicBlock", "Topic", new
+                       {
+                           systemName = "HomePageTopic.SelectedProvider",
+                           classItem = "hp-why-choose-us-list selected-provider",
+                           classTitle = "why-choose-us-list-label",
+                           classDesc = "why-choose-us-list-desc",
+                       })
+
+                        @Html.Action("HomePageTopicBlock", "Topic", new
+                       {
+                           systemName = "HomePageTopic.BestPriceGuarantee",
+                           classItem = "hp-why-choose-us-list best-price-guarantee",
+                           classTitle = "why-choose-us-list-label",
+                           classDesc = "why-choose-us-list-desc",
+                       })
+
+                        @Html.Action("HomePageTopicBlock", "Topic", new
+                       {
+                           systemName = "HomePageTopic.EasyBooking",
+                           classItem = "hp-why-choose-us-list easy-booking",
+                           classTitle = "why-choose-us-list-label",
+                           classDesc = "why-choose-us-list-desc",
+                       })
+
+                        @Html.Action("HomePageTopicBlock", "Topic", new
+                       {
+                           systemName = "HomePageTopic.ExcellenSupport",
+                           classItem = "hp-why-choose-us-list excellent-support",
+                           classTitle = "why-choose-us-list-label",
+                           classDesc = "why-choose-us-list-desc",
+                       })
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Action("NewsletterBox", "Newsletter")
+</div>
+    
+@Html.Widget("home_page_bottom")

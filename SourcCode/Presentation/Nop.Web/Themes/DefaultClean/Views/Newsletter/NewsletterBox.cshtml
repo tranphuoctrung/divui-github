@@ -1,0 +1,77 @@
+﻿@model NewsletterBoxModel
+@using Nop.Web.Models.Newsletter;
+<section class="newsletter-subcribe-wrp">
+    <div class="row">
+        <div class="col-md-8 newsletter-subcribe-content">
+            <h4>@T("Newsletter.Title")</h4>
+            <p>@T("Newsletter.Description")</p>
+        </div>
+        <div class="col-md-4 newsletter-subcribe-form-wrp">
+            <div class="input-group newsletter-subcribe-form-input">
+                @Html.TextBoxFor(x => x.NewsletterEmail, new { id = "newsletter-email", @class = "form-control", placeholder = T("Newsletter.Email.Placeholder") })
+                <span class="input-group-btn">
+                    <button class="btn btn-warning" id="newsletter-subscribe-button" type="button">@T(Model.AllowToUnsubscribe ? "Newsletter.Options.Send" : "Newsletter.Options.Subscribe")</button>
+                    
+                </span>
+            </div><!-- /input-group -->
+            <div class="newsletter-validation">
+                <span id="subscribe-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+                @Html.ValidationMessageFor(x => x.NewsletterEmail)
+            </div>
+            <div class="newsletter-result" id="newsletter-result-block"></div>
+            <script type="text/javascript">
+                function newsletter_subscribe(subscribe) {
+                    var subscribeProgress = $("#subscribe-loading-progress");
+                    subscribeProgress.show();
+                    var postData = {
+                        subscribe: subscribe,
+                        email: $("#newsletter-email").val()
+                    };
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "@(Url.RouteUrl("SubscribeNewsletter"))",
+                        data: postData,
+                        success: function(data) {
+                            subscribeProgress.hide();
+                            $("#newsletter-result-block").html(data.Result);
+                            if (data.Success) {
+                                $('#newsletter-subscribe-block').hide();
+                                $('#newsletter-result-block').show();
+                            } else {
+                                $('#newsletter-result-block').fadeIn("slow").delay(2000).fadeOut("slow");
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert('Failed to subscribe.');
+                            subscribeProgress.hide();
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    $('#newsletter-subscribe-button').click(function () {
+                        @if (Model.AllowToUnsubscribe)
+                        {
+                            <text>if ($('#newsletter_subscribe').is(':checked')) {
+                                newsletter_subscribe('true');
+                            } else {
+                                newsletter_subscribe('false');
+                            }</text>
+                        }
+                        else
+                        {
+                            <text>newsletter_subscribe('true');</text>
+                        }
+                    });
+                    $("#newsletter-email").keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            $("#newsletter-subscribe-button").click();
+                            return false;
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</section>

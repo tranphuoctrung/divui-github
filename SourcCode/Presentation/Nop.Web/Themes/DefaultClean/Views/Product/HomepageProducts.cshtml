@@ -1,0 +1,34 @@
+﻿@model IList<ProductOverviewModel>
+
+@using Nop.Web.Models.Catalog;
+
+@if (Model.Count > 0)
+{
+    <section class="hp-primary-content">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>@T("HomePage.Products")</h2>
+                <div class="feature-city-wrp row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-3 col-sm-3 image-box">
+                            <a href="@Url.RouteUrl("Product", new { SeName = item.SeName })" title="@item.DefaultPictureModel.Title" class="image-box-link">
+                                <div class="image-box-wrp">
+                                    <img class="image-box-photo" src="@item.DefaultPictureModel.FullSizeImageUrl" alt="@item.DefaultPictureModel.AlternateText" title="@item.DefaultPictureModel.Title">
+                                    <div class="image-box-caption">
+                                        <div class="image-box-label">
+                                            <div class="image-box-label-title">@item.Name</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+}

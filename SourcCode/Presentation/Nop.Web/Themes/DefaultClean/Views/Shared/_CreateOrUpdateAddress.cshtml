@@ -1,0 +1,83 @@
+﻿@model AddressModel
+@using Nop.Web.Models.Common;
+@if (Model.CountryEnabled && Model.StateProvinceEnabled)
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#@Html.FieldIdFor(model => model.StateProvinceId)");
+                var statesProgress = $("#states-loading-progress");
+                statesProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                    data: { "countryId": selectedItem, "addSelectStateItem": "true" },
+                    success: function (data) {
+                        ddlStates.html('');
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        });
+                        statesProgress.hide();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                        statesProgress.hide();
+                    }
+                });
+            });
+        });
+    </script>
+}
+@Html.HiddenFor(model => model.Id)
+
+<div class="row form-group">
+    @*<div class="col-sm-3 ">
+        <label><span class="require">*</span> @T("Account.Fields.Gender")</label>
+        <select class="form-control" style="width:100px" name="Gender" id="gender-male">
+            <option @(Model.Gender == "F" ? "selected" : "")>@T("Account.Fields.Gender.Female")</option>
+            <option @(Model.Gender == "M" ? "selected" : "")>@T("Account.Fields.Gender.Male")</option>
+        </select>
+    </div>*@
+    <div class="col-sm-9">
+        <label><span class="require">*</span>@T("Address.Fields.FullName")</label>
+        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", placeholder = T("Address.Fields.FullName.Hint").Text })
+        @Html.ValidationMessageFor(model => model.FullName)
+    </div>
+</div>
+<div class="row form-group">
+    @if (Model.PhoneEnabled)
+    {
+        <div class="col-sm-6">
+            <label><span class="require">*</span>@T("Address.Fields.PhoneNumber")</label>
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", placeholder = T("Address.Fields.PhoneNumber.Hint").Text })
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+    }
+    
+    <div class="col-sm-6">
+        <label><span class="require">*</span> @T("Address.Fields.Email")</label>
+        @Html.TextBoxFor(model => model.Email, new { type = "email", @class = "form-control", placeholder = T("Address.Fields.Email.Hint").Text })
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-sm-6">
+        <label><span class="require">*</span> @T("Address.Fields.Address1")</label>
+        @Html.TextBoxFor(model => model.Address1, new { @class = "form-control", placeholder = T("Address.Fields.Address1.Hint").Text })
+        @Html.ValidationMessageFor(model => model.Address1)
+    </div>
+
+    <div class="col-sm-6">
+        <label><span class="require">*</span> @T("Address.Fields.City")</label>
+        @Html.TextBoxFor(model => model.City, new { @class = "form-control", placeholder = T("Address.Fields.City.Hint").Text })
+        @Html.ValidationMessageFor(model => model.City)
+    </div>
+</div>
+
+@if (Model.CustomAddressAttributes.Count > 0)
+{
+    @Html.Partial("_AddressAttributes", Model.CustomAddressAttributes)
+}

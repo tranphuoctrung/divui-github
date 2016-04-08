@@ -1,0 +1,73 @@
+﻿@model CollectionNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@functions{
+    public bool BreadCrumbContainsCurrentCollectionId(CollectionSimpleModel collection)
+    {
+        if (Model.CurrentCollectionId == 0)
+            return false;
+
+        if (collection.Id == Model.CurrentCollectionId)
+            return true;
+
+        foreach (var subCollection in collection.SubCollections)
+        {
+            if (BreadCrumbContainsCurrentCollectionId(subCollection))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderCollectionLine(CollectionSimpleModel collection, bool isSub)
+{
+bool active = collection.Id == Model.CurrentCollectionId || collection.SubCollections.Count(BreadCrumbContainsCurrentCollectionId) > 0;
+bool last = collection.Id == Model.CurrentCollectionId;
+string liClass = active ? "-open" : "-closed";
+string liClass2 = active ? "is-active" : "";
+if (last)
+{
+    liClass += " last";
+}
+    <li class="filters-list-item">
+        <a class="@liClass2 filter-list-item-link@(isSub ? "-empty" : liClass)" href="@Url.RouteUrl("Collection", new { SeName = collection.SeName })">@collection.Name
+            @if (collection.NumberOfProducts.HasValue)
+            {
+                <text> </text>@T("Collections.TotalProducts", collection.NumberOfProducts.Value)
+            }
+        </a>
+        @{
+            if (collection.Id == Model.CurrentCollectionId ||
+                collection.SubCollections.Count(BreadCrumbContainsCurrentCollectionId) > 0)
+            {
+                if (collection.SubCollections.Count > 0)
+                {
+            <ul class="filters-list-l2">
+                @foreach (var subCollection in collection.SubCollections)
+                {
+                    @RenderCollectionLine(subCollection, true)
+                }
+            </ul>
+                }
+            }
+        }
+    </li>
+}
+@if (Model.Collections.Count > 0)
+{
+    <div class="filter filter-box">
+        <div class="filter-box-title">
+            <strong>@T("Collections")</strong>
+        </div>
+        <div class="filter-box-cont-wrp">
+            <ul class="filters-list filters-list-l1">
+                @foreach (var collection in Model.Collections)
+                {
+                    @RenderCollectionLine(collection, false)
+                }
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,62 @@
+﻿@model ShoppingCartModel
+@using Nop.Web.Models.Checkout
+@using Nop.Web.Models.ShoppingCart;
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+}
+
+<div class="container">
+    @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
+    <!--Page Title -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="cart-status">
+                <h1>@T("ShoppingCart.Title")</h1>
+                <p>@T("ShoppingCart.Info")</p>
+            </div>
+        </div>
+    </div><!--/Page Title -->
+    <div class="row">
+        @using (Html.BeginRouteForm("ShoppingCart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-8">
+                @Html.Partial("OrderSummary", Model)
+            </div>
+            <div class="col-md-4">
+                <div class="box review-checkout">
+                    <div class="checkout-box-wrp">
+                        <p class="text-center">
+                            @T("ShoppingCart.ItemTotal", Model.OptionItems.Count)<br />
+                            <strong>@Model.OrderTotals.OrderTotal</strong>
+                        </p>
+                        <div class="checkout-button">
+                            <input id="updatecart" type="submit" name="updatecart" value="@T("ShoppingCart.UpdateCart")" class="button-2 update-cart-button" style="display:none;" />
+                            <input type="submit" id="inputcontinueshopping" name="continueshopping" value="@T("ShoppingCart.ContinueShopping")" style="display:none;" class="button-2 continue-shopping-button" />
+                            <button type="submit" id="checkout" name="checkout" value="checkout" class="btn btn-block btn-warning"><strong>@T("Checkout.Button") <i class="icon icon-right-big"></i></strong></button>
+                        </div>
+                        <p class="text-center">
+                            <small>@T("ShoppingCart.AddOtherToCart")</small><br />
+                            <a href="#" class="continueshopping">@T("ShoppingCart.OtherProducts")</a>
+                    
+                        </p>
+                    </div>
+                </div>
+            </div>
+                            <script type="text/javascript">
+                        $(document).ready(function () {
+
+                            $(".continueshopping").click(function (e) {
+                                e.preventDefault();
+                                $("#inputcontinueshopping").click();
+                            });
+
+
+
+                        });
+                    </script>
+        }
+    </div>
+</div>

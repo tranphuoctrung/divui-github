@@ -1,0 +1,55 @@
+﻿@model TopMenuModel
+@using Nop.Web.Models.Catalog;
+
+@helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
+{
+    <li class="@(level == 0 ? "dv-dropdown-header" : "")">
+        <a class="@(level == 0 ? "a-dropdown-header" : "")" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+        @category.Name
+        @if (category.IsNewCategory)
+        {
+            <span class="label-bs label-warning">@T("Category.New")</span>
+        }
+            
+        </a>
+        @{
+            //subcategories
+            var subCategories = responsiveMobileMenu ?
+                //responsive (all categories)
+                category.SubCategories :
+                //standard design (only categories with "IncludeInTopMenu")
+                category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+            if (subCategories.Count > 0)
+            {
+                foreach (var subCategory in subCategories)
+                {
+                    @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                }
+            }
+        }
+    </li>
+}
+
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle navbar-pick-place" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@T("TopMenu.SelectDestination").Text<span class="caret"></span></a>
+        <ul class="dropdown-menu dv-dropdown-menu">
+            @{
+                var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+                var groups = rootCategories.Split(3);
+
+            }
+            @foreach (var group in groups)
+            {
+                <div class="col-md-4">
+                    @foreach (var category in group)
+                    {
+                        @RenderCategoryLine(category, 0, false)
+                    }
+                </div>
+
+            }
+        </ul>
+    </li>
+</ul>

@@ -1,0 +1,73 @@
+﻿@model AttractionNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@functions{
+    public bool BreadCrumbContainsCurrentAttractionId(AttractionSimpleModel attraction)
+    {
+        if (Model.CurrentAttractionId == 0)
+            return false;
+
+        if (attraction.Id == Model.CurrentAttractionId)
+            return true;
+
+        foreach (var subAttraction in attraction.SubAttractions)
+        {
+            if (BreadCrumbContainsCurrentAttractionId(subAttraction))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderAttractionLine(AttractionSimpleModel attraction, bool isSub)
+{
+bool active = attraction.Id == Model.CurrentAttractionId || attraction.SubAttractions.Count(BreadCrumbContainsCurrentAttractionId) > 0;
+bool last = attraction.Id == Model.CurrentAttractionId;
+string liClass = active ? "-open" : "-closed";
+string liClass2 = active ? "is-active" : "";
+if (last)
+{
+    liClass += " last";
+}
+    <li class="filters-list-item">
+        <a class="@liClass2 filter-list-item-link@(isSub ? "-empty" : liClass)" href="@Url.RouteUrl("Attraction", new { SeName = attraction.SeName })">@attraction.Name
+            @if (attraction.NumberOfProducts.HasValue)
+            {
+                <text> </text>@T("Attractions.TotalProducts", attraction.NumberOfProducts.Value)
+            }
+        </a>
+        @{
+            if (attraction.Id == Model.CurrentAttractionId ||
+                attraction.SubAttractions.Count(BreadCrumbContainsCurrentAttractionId) > 0)
+            {
+                if (attraction.SubAttractions.Count > 0)
+                {
+            <ul class="filters-list-l2">
+                @foreach (var subAttraction in attraction.SubAttractions)
+                {
+                    @RenderAttractionLine(subAttraction, true)
+                }
+            </ul>
+                }
+            }
+        }
+    </li>
+}
+@if (Model.Attractions.Count > 0)
+{
+    <div class="filter filter-box">
+        <div class="filter-box-title">
+            <strong>@T("Attractions")</strong>
+        </div>
+        <div class="filter-box-cont-wrp">
+            <ul class="filters-list filters-list-l1">
+                @foreach (var attraction in Model.Attractions)
+                {
+                    @RenderAttractionLine(attraction, false)
+                }
+            </ul>
+        </div>
+    </div>
+}

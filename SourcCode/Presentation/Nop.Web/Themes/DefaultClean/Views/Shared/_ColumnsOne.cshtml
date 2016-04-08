@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+@if (IsSectionDefined("Breadcrumb"))
+{
+    @RenderSection("Breadcrumb")
+}
+
+    @Html.Widget("main_column_before")
+    @if (IsSectionDefined("MainHeader"))
+    {
+        @RenderSection("MainHeader")
+    }
+    else
+    {
+        <header class="intro intro-fixed intro-home" style="background-image:url(http://cdn.klook.com/upload/7fa3476f-banner_img.jpg)">
+            <div class="container">
+                <div class="intro-header intro-header-home">
+                    <h1 class="intro-header-title">
+                        @T("HomePage.Title")
+                    </h1>
+                    <p class="text-center">@T("HomePage.ShortDescription")</p>
+                    <div class="intro-search-box">
+                        @Html.Action("SearchBox", "Catalog")
+                    </div>
+                </div>
+            </div>
+        </header>
+    }
+    @if (IsSectionDefined("BrandPromised"))
+    {
+        @RenderSection("BrandPromised")
+    }
+    else
+    {
+        <section class="brand-promised">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 brand-promised-columns-label">
+                        <p class="brand-promised-columns-label-content">@T("HomePageTopic.BestGuarantee")</p>
+                    </div>
+                    @Html.Action("HomePageTopicBlock", "Topic", new
+                   {
+                       systemName = "HomePageTopic.BrandPromisedItemBest",
+                       classItem = "col-sm-3 brand-promised-columns",
+                       classTitle = "brand-promised-item-label icon brand-promised-item--best",
+                       classDesc = "brand-promised-item-cont",
+                   })
+                    @Html.Action("HomePageTopicBlock", "Topic", new
+                    {
+                        systemName = "HomePageTopic.BrandPromisedItemPrice",
+                        classItem = "col-sm-3 brand-promised-columns",
+                        classTitle = "brand-promised-item-label icon brand-promised-item--price",
+                        classDesc = "brand-promised-item-cont",
+                    })
+                    @Html.Action("HomePageTopicBlock", "Topic", new
+                    {
+                        systemName = "HomePageTopic.BrandPromisedItemSupport",
+                        classItem = "col-sm-3 brand-promised-columns",
+                        classTitle = "brand-promised-item-label icon brand-promised-item--support",
+                        classDesc = "brand-promised-item-cont",
+                    })
+                
+                </div>
+            </div>
+        </section>
+    }
+    @RenderBody()
+    @Html.Widget("main_column_after")

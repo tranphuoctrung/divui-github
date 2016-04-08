@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_RootStaticPage.cshtml";
+}
+@if (IsSectionDefined("Breadcrumb"))
+{
+    @section Breadcrumb {
+        @RenderSection("Breadcrumb")
+    }
+}
+<div class="container">
+    @Html.Widget("main_column_before")
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="menu-sidebar-static">
+                <ul>
+                    <li><a class="@(Request.Url.ToString().Contains("about-us") ? "active" : "")" href="/about-us">@T("AboutUs")</a></li>
+                    <li><a class="@(Request.Url.ToString().Contains("contactus") ? "active" : "")" href="/contactus">@T("ContactUs")</a></li>
+                    <li><a class="@(Request.Url.ToString().Contains("conditions-of-use") ? "active" : "")" href="/conditions-of-use">@T("ConditionsOfUse")</a></li>
+                    <li><a class="@(Request.Url.ToString().Contains("privacy-notice") ? "active" : "")" href="/privacy-notice">@T("PrivateInfo")</a></li>
+                    <li><a href="#">@T("TermPartner")</a></li>
+                    
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-sm-9">
+            @RenderBody()
+        </div>
+    </div>
+    
+    @Html.Widget("main_column_after")
+</div>

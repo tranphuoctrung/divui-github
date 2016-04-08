@@ -1,0 +1,27 @@
+﻿@model IList<CategoryModel>
+
+@using Nop.Web.Models.Catalog;
+@if (Model.Count > 0)
+{
+    <section class="hp-feature-collection">
+        <h2>@T("HomePage.Collections")</h2>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="hp-feature-collection-panel">
+                        <div class="hp-feature-collection-panel-top">
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                <img src="@item.PictureModel.FullSizeImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
+                            </a>
+                        </div>
+                        <div class="hp-feature-collection-panel-body">
+                            <h3><a href="#">@item.Name</a></h3>
+                            @Html.Raw(item.ShortDescription)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}

@@ -1,0 +1,88 @@
+@media screen and (max-width: 859px) {
+	.product-feature-price-review {
+	    display: none;
+		}
+	.product-feature-price-review-sm {
+		display: block;
+		position: relative;
+
+		.top, .bottom {
+		    height: 20px;
+		    left: 0;
+		    position: absolute;
+		    width: 100%;
+		    }
+
+		    .top {
+		    	border-top: 5px dotted white;
+		    	top: -2px;
+		    }
+
+		    .bottom {
+		    	border-bottom: 5px dotted white;
+		    	bottom: -2px;
+		    }
+	}	
+}
+
+.offers {
+	@media screen and (max-width: 767px) {
+		.actual-price, .book-offer-wrp {
+			text-align: left;
+		}
+
+		.book-offer-wrp {
+			padding-top: 0;
+			margin-top: 5px;
+		}
+		.price-saving {
+			display: block;
+		}
+		.price-explanation {
+			display: block;
+			float: left;
+			padding: 11px 0 0 5px
+		}
+
+		.actual-price-display {float: left;}
+	}
+}
+
+
+.product-feature-price-review-sm {
+	@media screen and (max-width: 768px) {
+		.col-sm-6 {
+			float: left;
+			width: 46%
+		}
+		.product-feature-price-review-seperator {
+		    border-right: 1px dashed @gray-light;
+		    border-top: none;
+		    border-bottom: none;
+		    float: left;
+		    height: 140px;
+		    width: 1px;
+		    padding: 0 4% 0 2%;
+		    display: block;
+		    margin: 15px 0;
+		    clear: none;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.col-sm-6 {
+			float: none;
+			width: 100%
+		}
+		.product-feature-price-review-seperator {
+			border-right: none;
+			border-top: 1px dashed @gray-light;
+			width: 93%;
+			padding: 10px 0;
+			height: 1px;
+			margin: 0 15px;
+		}
+		.product-feature-price {
+			padding-left: 0;
+		}
+	}	
+}

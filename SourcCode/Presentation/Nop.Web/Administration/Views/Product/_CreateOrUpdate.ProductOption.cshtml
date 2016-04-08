@@ -1,0 +1,318 @@
+﻿@model  ProductModel.ProductOptionModel
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.ProductId)
+<script>
+    $(document).ready(function() {
+        $("#groupproduct-edit").kendoTabStrip({
+            animation:  {
+                open: {
+                    effects: "fadeIn"
+                }
+            },
+            select: tabstrip_on_tab_select
+        });
+    });
+</script>
+<div id="groupproduct-edit">
+    <ul>
+        <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
+            @T("Admin.Catalog.Products.DvGroupProducts.Info")
+        </li>
+        <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
+            @T("Admin.Common.SEO")
+        </li>
+        <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+            @T("Admin.Catalog.Products.DvGroupProducts.Products")
+        </li>
+        
+    </ul>
+    <div>
+        @TabInfo()
+    </div>
+    <div>
+        @TabSeo()
+    </div>
+    <div>
+        @TabProducts()
+    </div>
+</div>
+
+@{
+    //custom tabs
+    var eventMessage = new AdminTabStripCreated(this.Html, "category-edit");
+    EngineContext.Current.Resolve<IEventPublisher>().Publish(eventMessage);
+    foreach (var eventBlock in eventMessage.BlocksToRender)
+    {
+        @eventBlock
+    }
+}
+
+
+@*save selected tab index*@
+<input type="hidden" id="selected-tab-index" name="selected-tab-index" value="@(GetSelectedTabIndex())">
+
+@helper TabInfo()
+{
+    
+    @(Html.LocalizedEditor<ProductModel.ProductOptionModel, ProductModel.ProductOptionLocalizedModel>("productoption-info-localized",
+    @<table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Locales[item].Name):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Locales[item].Name)
+                @Html.ValidationMessageFor(model => model.Locales[item].Name)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Locales[item].Description):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Locales[item].Description, "RichEditor")
+                @Html.ValidationMessageFor(model => model.Locales[item].Description)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @Html.HiddenFor(model => model.Locales[item].LanguageId)
+            </td>
+        </tr>
+    </table>
+                ,
+    @<table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Name):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Description):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.Description, "RichEditor")
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+    </table>
+            ))
+    <table class="adminContent">
+       
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Published):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.Published)
+                @Html.ValidationMessageFor(model => model.Published)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSeo()
+{
+    @(Html.LocalizedEditor<ProductModel.ProductOptionModel, ProductModel.ProductOptionLocalizedModel>("productoption-seo-localized",
+    @<table class="adminContent">
+       
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Locales[item].SeName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Locales[item].SeName)
+                @Html.ValidationMessageFor(model => model.Locales[item].SeName)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @Html.HiddenFor(model => model.Locales[item].LanguageId)
+            </td>
+        </tr>
+    </table>
+               ,
+    @<table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(x => x.SeName)
+                @Html.ValidationMessageFor(model => model.SeName)
+            </td>
+        </tr>
+    </table>))
+}
+@helper TabProducts()
+{
+if (Model.Id > 0)
+{
+    var defaultGridPageSize = EngineContext.Current.Resolve<Nop.Core.Domain.Common.AdminAreaSettings>().DefaultGridPageSize;
+    var gridPageSizes = EngineContext.Current.Resolve<Nop.Core.Domain.Common.AdminAreaSettings>().GridPageSizes;
+
+        <table class="adminContent">
+            <tr>
+                <td>
+
+                    <div id="products-grid"></div>
+
+                    <script>
+                        
+                            $(document).ready(function () {
+                                $("#products-grid").kendoGrid({
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("ProductOptionProductList", "Product", new { ProductOptionId = Model.Id }))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: addAntiForgeryToken
+                                            },
+                                            create: {
+                                                url: "@Html.Raw(Url.Action("SimpleProductProductOptionInsert", "Product", new { ProductOptionId = Model.Id }))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: addAntiForgeryToken
+                                            },
+                                            update: {
+                                                url:"@Html.Raw(Url.Action("ProductOptionProductUpdate", "Product", new { ProductOptionId = Model.Id }))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: addAntiForgeryToken
+                                            },
+                                            destroy: {
+                                                url: "@Html.Raw(Url.Action("ProductOptionProductDelete", "Product", new { ProductOptionId = Model.Id }))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: addAntiForgeryToken
+                                            }
+                                        },
+                                        schema: {
+                                            data: "Data",
+                                            total: "Total",
+                                            errors: "Errors",
+                                            model: {
+                                                id: "Id",
+                                                fields: {
+                                                    ProductName: {editable: false, type: "string" },
+                                                    ProductId: {editable: true, type: "number" },
+                                                    Id: {editable: false, type: "number" }
+
+                                                }
+                                            }
+                                        },
+                                        requestEnd: function(e) {
+                                            if (e.type == "create" || e.type == "update") {
+                                                this.read();
+                                            }
+                                        },
+                                        error: function(e) {
+                                            display_kendoui_grid_error(e);
+                                            // Cancel the changes
+                                            this.cancelChanges();
+                                        },
+                                        pageSize: @(defaultGridPageSize),
+                                        serverPaging: true,
+                                        serverFiltering: true,
+                                        serverSorting: true
+                                    },
+                                    pageable: {
+                                        refresh: true,
+                                        pageSizes: [@(gridPageSizes)]
+                                    },
+                                    editable: {
+                                        confirmation: false,
+                                        mode: "inline"
+                                    },
+                                    edit: function(e) {
+                                        if (e.model.isNew()) {
+                                            //little hack here
+                                            //pre-select the first value of kendoui dropdownlist datasource
+                                            //for some reasons (maybe, bug) it always sends 0
+                                            //if no value has been selected (changed) in the dropdownlist
+                                            if (allProducts.length > 0) {
+                                                e.model.ProductId = allProducts[0].ProductId;
+                                            }
+                                        }
+                                    },
+                                    scrollable: false,
+                                    toolbar: [{ name: "create", text: "@T("Admin.Common.AddNewRecord")" }],
+                                    columns: [{
+                                        field: "ProductId",
+                                        title: "@T("Admin.Catalog.Categories.Products.Fields.Product")",
+                                        editor: productDropDownEditor,
+                                        template: "#:ProductName#"
+                                    }, {
+                                        field: "",
+                                        title: "@T("Admin.Common.View")",
+                                        width: 100,
+                                        template: '<a href="@Url.Content("~/Admin/Product/Edit/")#=ProductId#">@T("Admin.Common.View")</a>'
+                                    }, {
+                                        command: [{
+                                            name: "edit",
+                                            text: {
+                                                edit: "@T("Admin.Common.Edit")",
+                                                update: "@T("Admin.Common.Update")",
+                                                cancel: "@T("Admin.Common.Cancel")"
+                                            }
+                                        }, {
+                                            name: "destroy",
+                                            text: "@T("Admin.Common.Delete")"
+                                        }],
+                                        width: 200
+                                    }]
+                                });
+                            });
+
+                        var allProducts = [
+                        @for (int i = 0; i < Model.AvailableProducts.Count; i++)
+                        {
+                            var productItem = Model.AvailableProducts[i];
+                            <text>
+                                {
+                                    ProductId: @(productItem.Value),
+                                    ProductName: "@(Html.Raw(HttpUtility.JavaScriptStringEncode(productItem.Text)))"
+                                }
+                                </text>
+                            if (i != Model.AvailableProducts.Count - 1)
+                            {
+                                <text>,</text>
+                            }
+                        }
+                        ];
+
+                        function productDropDownEditor(container, options) {
+                            $('<input required data-text-field="ProductName" data-value-field="ProductId" data-bind="value:ProductId"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    dataSource: allProducts
+                                });
+                        }
+                    </script>
+                </td>
+            </tr>
+        </table>
+}
+else
+{
+        @T("Admin.Catalog.Products.ProductOptions.SaveBeforeEdit")
+}
+}

@@ -1,0 +1,273 @@
+﻿@model ProductModel
+
+@using Nop.Core.Domain.Catalog;
+
+@if (Model.Id > 0)
+{
+
+    if (Model.ProductTypeId == (int)ProductType.GroupedProduct)
+    {
+        <div class="section-header">
+            <div class="title">
+                <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="" />
+                @T("Admin.Catalog.Products.ProductOptions")
+            </div>
+            <div class="options">
+                <a href="@Url.Action("CreateProductOption", new { productId = Model.Id})" class="k-button">@T("Admin.Common.AddNew")</a>
+            </div>
+        </div>
+
+        <div id="productgroup-grid"></div>
+        <script>
+            $(document).ready(function () {
+                $("#productgroup-grid").kendoGrid({
+                    dataSource: {
+                        type: "json",
+                                transport: {
+                            read: {
+                                url: "@Html.Raw(Url.Action("GroupedProductProductOptionList", "Product", new { productId = Model.Id }))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    },
+                                    @*destroy: {
+                                        url: "@Html.Raw(Url.Action("DeleteDvGroupProduct", "Product", new { prodId = Model.Id }))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    }*@
+                        },
+                                schema: {
+                            data: "Data",
+                                    total: "Total",
+                                    errors: "Errors",
+                                    model: {
+                                id: "Id",
+                                        fields: {
+                                            Name: { editable: false, type: "string" },
+                                            DisplayOrder: { editable: false, type: "number" },
+                                            Id: { editable: false, type: "number" }
+                                }
+                            }
+                        },
+                                requestEnd: function (e) {
+                            if (e.type == "create" || e.type == "update") {
+                                this.read();
+                            }
+                        },
+                                error: function (e) {
+                            display_kendoui_grid_error(e);
+                            // Cancel the changes
+                            this.cancelChanges();
+                        },
+                                serverPaging: true,
+                                serverFiltering: true,
+                                serverSorting: true
+                            },
+                            pageable: {
+                        refresh: true,
+                                numeric: false,
+                                previousNext: false,
+                                info: false
+                            },
+                            //toolbar: [{ name: "create", text: "@T("Admin.Common.AddNewRecord")" }],
+                            edit: function(e) {
+                        if (e.model.isNew()) {
+                            //little hack here
+                            //pre-select the first value of kendoui dropdownlist datasource
+                            //for some reasons (maybe, bug) it always sends 0
+                            //if no value has been selected (changed) in the dropdownlist
+                            if (allCategories.length > 0) {
+                                e.model.CategoryId = allCategories[0].Id;
+                            }
+                        }
+                    },
+                            scrollable: false,
+                            columns: [{
+                        field: "Name",
+                                    title: "@T("Admin.Catalog.Products.ProductOptions.Fields.Name")",
+                                    width: 200
+                                },
+                                {
+                        field: "DisplayOrder",
+                                    title: "@T("Admin.Catalog.Products.ProductOptions.DisplayOrder")",
+                                    width: 200,
+                                    //integer format
+                                    format: "{0:0}"
+                                },  {
+                                    field: "Id",
+                                    title: "@T("Admin.Common.Edit")",
+                                    width: 100,
+                                    template: '<a href="/Admin/Product/EditProductOption/#=Id#">@T("Admin.Common.Edit")</a>'
+                                }
+                                @*,{
+                                    command: [{
+                                        name: "destroy",
+                                        text: "@T("Admin.Common.Delete")"
+                                     }],
+                                     width: 200
+                                }*@
+                            ]
+                        });
+            });
+
+        </script>
+    }
+    else
+    {
+        if (Model.ParentGroupedProductId > 0)
+        {
+            if (Model.AvailableCategories.Count > 0)
+            {
+                <div id="groupproducts-grid"></div>
+
+                <script>
+            $(document).ready(function () {
+                $("#groupproducts-grid").kendoGrid({
+                    dataSource: {
+                        type: "json",
+                        transport: {
+                            read: {
+                                url: "@Html.Raw(Url.Action("SimpleProductProductOptionList", "Product", new { productId = Model.Id }))",
+                                type: "POST",
+                                dataType: "json",
+                                data: addAntiForgeryToken
+                            },
+                            create: {
+                                url: "@Html.Raw(Url.Action("SimpleProductProductOptionInsert", "Product", new { ProductId = Model.Id }))",
+                                type: "POST",
+                                dataType: "json",
+                                data: addAntiForgeryToken
+                            },
+                            update: {
+                                url:"@Html.Raw(Url.Action("SimpleProductProductOptionUpdate", "Product", new { ProductId = Model.Id }))",
+                                type: "POST",
+                                dataType: "json",
+                                data: addAntiForgeryToken
+                            },
+                            destroy: {
+                                url: "@Html.Raw(Url.Action("SimpleProductProductOptionDelete", "Product", new { ProductId = Model.Id }))",
+                                type: "POST",
+                                dataType: "json",
+                                data: addAntiForgeryToken
+                            }
+                        },
+                        schema: {
+                            data: "Data",
+                            total: "Total",
+                            errors: "Errors",
+                            model: {
+                                id: "Id",
+                                fields: {
+                                    Name: { editable: true, type: "string" },
+                                    ProductOptionId: { editable: true, type: "number" },
+                                    Id: { editable: false, type: "number" }
+                                }
+                            }
+                        },
+                        requestEnd: function (e) {
+                            if (e.type == "create" || e.type == "update") {
+                                this.read();
+                            }
+                        },
+                        error: function (e) {
+                            display_kendoui_grid_error(e);
+                            // Cancel the changes
+                            this.cancelChanges();
+                        },
+                        serverPaging: true,
+                        serverFiltering: true,
+                        serverSorting: true
+                    },
+                    pageable: {
+                        refresh: true,
+                        numeric: false,
+                        previousNext: false,
+                        info: false
+                    },
+                    toolbar: [{ name: "create", text: "@T("Admin.Common.AddNewRecord")" }],
+                    edit: function(e) {
+                        if (e.model.isNew()) {
+                            //little hack here
+                            //pre-select the first value of kendoui dropdownlist datasource
+                            //for some reasons (maybe, bug) it always sends 0
+                            //if no value has been selected (changed) in the dropdownlist
+                            if (allProductOptions.length > 0) {
+                                e.model.ProductOptionId = allProductOptions[0].ProductOptionId;
+                            }
+                        }
+                    },
+                    editable: {
+                        confirmation: false,
+                        mode: "inline"
+                    },
+                    scrollable: false,
+                    columns: [{
+                        field: "ProductOptionId",
+                            title: "@T("Admin.Catalog.Products.ProductOptions.ProductOption")",
+                            width: 200,
+                            editor: groupProductDropDownEditor,
+                            template: "#:Name#"
+                        }, {
+                        command: [
+                            {
+                                name: "edit",
+                                text: {
+                                    edit: "@T("Admin.Common.Edit")",
+                                    update: "@T("Admin.Common.Update")",
+                                    cancel: "@T("Admin.Common.Cancel")"
+                                }
+                            }, 
+                        {
+                            name: "destroy",
+                            text: "@T("Admin.Common.Delete")"
+                        }],
+                        width: 200
+                    }]
+                });
+            });
+
+            //local datasource
+            var allProductOptions = [
+                @for (int i = 0; i < Model.AvailableProductOptions.Count; i++)
+                {
+                    var groupProductItem = Model.AvailableProductOptions[i];
+                    <text>
+                        {
+                            ProductOptionId: @(groupProductItem.Value),
+                            ProductOptionName: "@(Html.Raw(HttpUtility.JavaScriptStringEncode(groupProductItem.Text)))"
+                        }
+                        </text>
+                    if (i != Model.AvailableProductOptions.Count - 1)
+                    {
+                        <text>,</text>
+                    }
+                }
+            ];
+
+             function groupProductDropDownEditor(container, options) {
+                 $('<input required data-text-field="ProductOptionName" data-value-field="ProductOptionId" data-bind="value:GroupProductId"/>')
+                    .appendTo(container)
+                    .kendoDropDownList({
+                        autoBind: false,
+                        dataSource: allProductOptions
+                    });
+            }
+                </script>
+            }
+            else
+            {
+                @T("Admin.Catalog.Products.ProductOptions.NoProductOptionsAvailable")
+            }
+        }
+        else
+        {
+            @T("Admin.Catalog.Products.ProductOptions.NoProductOptionsAvailable")
+        }
+    }
+}
+else
+{
+    @T("Admin.Catalog.Products.Categories.SaveBeforeEdit")
+}
+

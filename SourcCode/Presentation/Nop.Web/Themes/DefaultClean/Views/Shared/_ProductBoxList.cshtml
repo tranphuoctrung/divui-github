@@ -1,0 +1,116 @@
+﻿@model ProductOverviewModel
+@using Nop.Core
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Catalog;
+@{
+    //prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+<article class="product-card-cont-container product-card-cont-horizontal" data-productid="@Model.Id">
+    <a class="product-card-link" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+        <div class="product-card-content">
+            <div class="product-card-img-wrp">
+                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+            </div>
+            @*<div class="product-badge is-special-offer">
+                <div>ƯU ĐÃI ĐẶC BIỆT!</div>
+            </div>*@
+            <div class="product-badge"></div>
+            <div class="product-card-details-container">
+                <div class="product-card-details">
+                    <header class="product-card-header">
+                        <h3 class="product-card-title">
+                            @Model.Name
+                        </h3>
+                        @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+                        {
+                            int ratingPercent = 0;
+                            if (Model.ReviewOverviewModel.TotalReviews != 0)
+                            {
+                                ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
+                            }
+                            @*<div class="product-card-rating">
+                                <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
+                                    <div class="rating">
+                                        <div style="width: @(ratingPercent)%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="product-card-rating-counts">
+                                    @string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)
+                                </span>
+                            </div>*@
+
+                            <div class="product-card-rating">
+
+                                <span class="rating">
+                                    @{ 
+                                        var length = (int)((ratingPercent * 5) / 100);
+                                    }
+                                    
+                                    @for (int i = 0; i < length; i++)
+                                    {
+                                        <i class="icon-star-8 voted"></i>
+                                    }
+                                    
+                                    @if ((double)((ratingPercent * 5) / 100) - length > 0)
+                                    {
+                                        <i class="icon-star-8 devote"></i>
+                                    }
+
+                                </span>
+                                <span class="product-card-rating-counts">
+                                   @string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)
+                                </span>
+                            </div>
+                        }
+                        
+                    </header>
+                    <div class="product-card-short-desc">
+                        @Html.Raw(Model.ShortDescription)
+                    </div>
+                    <span class="duration-label">
+                        <i class="icon icon-clock-5"></i>Thời lượng:
+                        <span class="duration-value">8 giờ</span>
+                    </span>
+                </div>
+                <div class="product-card-right-columns">
+                    @Html.Widget("productbox_addinfo_before", Model.Id)
+                    <div class="product-card-price-wrp">
+                        <span class="price-from">
+                            Giá chỉ từ
+                            @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                            {
+                                <span class="old-price">@Model.ProductPrice.OldPrice</span>
+                            }
+                        </span>
+                        <span class="price-display">
+                            @Model.ProductPrice.Price
+                        </span>
+                        @Html.Widget("productbox_addinfo_middle", Model.Id)
+                        <span class="price-saving-value">Tiết kiệm 100.000đ!</span>
+                        <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                        @Html.Widget("productbox_addinfo_after", Model.Id)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    
+</article>

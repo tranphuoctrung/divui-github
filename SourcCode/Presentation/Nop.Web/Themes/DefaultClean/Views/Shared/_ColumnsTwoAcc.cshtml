@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+@{
+    //current category ID
+    int currentCategoryId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+    }
+
+    //current collection ID
+    int currentCollectionId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("collection", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCollectionId = Convert.ToInt32(Url.RequestContext.RouteData.Values["collectionId"].ToString());
+    }
+
+    //current attraction ID
+    int currentAttractionId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("attraction", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentAttractionId = Convert.ToInt32(Url.RequestContext.RouteData.Values["attractionId"].ToString());
+    }
+
+    //current manufacturer ID
+    int currentManufacturerId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.RequestContext.RouteData.Values["manufacturerId"].ToString());
+    }
+
+
+    //current product ID
+    int currentProductId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
+    }
+}
+@section ClassMain
+{
+    <text>
+        static-page
+    </text>
+    }
+<div class="container acc-page">
+    <div class="row">
+        <div class="col-sm-3">
+            @if (IsSectionDefined("left"))
+            {
+                @RenderSection("left")
+            }
+            else
+            {
+                <div class="acc-nav">
+                    <ul class="list-group">
+                        <a href="acc-myaccount.html" class="list-group-item"><i class="icon icon-home"></i>Tài khoản</a>
+                        <a href="acc-booking.html" class="list-group-item active"><i class="icon icon-doc-text"></i>Quản lý đặt vé</a>
+                        <a href="acc-wishlist.html" class="list-group-item"><i class="icon icon-heart-empty-1"></i>Yêu thích</a>
+                        <a href="acc-reward.html" class="list-group-item"><i class="icon icon-gift-1"></i>Điểm thưởng</a>
+                        <a href="acc-shareafriend.html" class="list-group-item"><i class="icon icon-share-1"></i>Giới thiệu bạn bè</a>
+                        <a href="acc-review.html" class="list-group-item"><i class="icon icon-edit-3"></i>Đánh giá</a>
+                        <a href="acc-setting.html" class="list-group-item"><i class="icon icon-cog-5"></i>Cấu hình</a>
+                        <a href="acc-home.html" class="list-group-item"><i class="icon icon-cancel"></i>Thoát</a>
+                    </ul>
+                </div>
+            }
+            
+        </div>
+        <div class="col-sm-9">
+            @Html.Widget("main_column_before")
+            @RenderBody()
+            @Html.Widget("main_column_after")
+        </div>
+    </div>
+
+</div>
