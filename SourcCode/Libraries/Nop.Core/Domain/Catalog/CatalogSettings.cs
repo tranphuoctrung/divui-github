@@ -5,7 +5,7 @@ namespace Nop.Core.Domain.Catalog
     /// <summary>
     /// Catalog settings
     /// </summary>
-    public class CatalogSettings : ISettings
+    public partial class CatalogSettings : ISettings
     {
         /// <summary>
         /// Gets or sets a value indicating details pages of unpublished product details pages could be open (for SEO optimization)
@@ -307,5 +307,6 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets the default value to use for Manufacturer page size (for new manufacturers)
         /// </summary>
         public int DefaultManufacturerPageSize { get; set; }
+        
     }
 }

@@ -503,6 +503,51 @@
                 @Html.ValidationMessageFor(model => model.DisplayTaxShippingInfoOrderDetailsPage)
             </td>
         </tr>
+
+        <tr id="pnlProductsAlsoPurchasedNumber">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.DefaultAttractionProductNumber_OverrideForStore, model => model.DefaultAttractionProductNumber, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ProductsAlsoPurchasedNumber):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DefaultAttractionProductNumber)
+                @Html.ValidationMessageFor(model => model.DefaultAttractionProductNumber)
+            </td>
+        </tr>
+
+        <tr id="pnlProductsAlsoPurchasedNumber">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.DefaultCategoryProductNumber_OverrideForStore, model => model.DefaultCategoryProductNumber, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ProductsAlsoPurchasedNumber):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DefaultCategoryProductNumber)
+                @Html.ValidationMessageFor(model => model.DefaultCategoryProductNumber)
+            </td>
+        </tr>
+
+        <tr id="pnlProductsAlsoPurchasedNumber">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.DefaultCollectionProductNumber_OverrideForStore, model => model.DefaultCollectionProductNumber, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ProductsAlsoPurchasedNumber):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DefaultCollectionProductNumber)
+                @Html.ValidationMessageFor(model => model.DefaultCollectionProductNumber)
+            </td>
+        </tr>
+
+        <tr id="pnlProductsAlsoPurchasedNumber">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.DefaultDestinationProductNumber_OverrideForStore, model => model.DefaultDestinationProductNumber, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ProductsAlsoPurchasedNumber):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DefaultDestinationProductNumber)
+                @Html.ValidationMessageFor(model => model.DefaultDestinationProductNumber)
+            </td>
+        </tr>
+
     </table>
 }
 @helper TabPerformance()

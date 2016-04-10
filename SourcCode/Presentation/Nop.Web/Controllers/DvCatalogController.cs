@@ -203,6 +203,7 @@ namespace Nop.Web.Controllers
 
             model.ParentName = category.Name;
 
+            model.ParentCategoryId = category.ParentCategoryId;
 
             var parentCategoryId = categoryId;
             if(category.ParentCategoryId != 0)
@@ -245,6 +246,21 @@ namespace Nop.Web.Controllers
                             AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), subCatModel.Name)
                         };
                         return pictureModel;
+                    });
+
+                    string cachekey = string.Format(ModelCacheEventConsumer.CATEGORY_NUMBER_OF_PRODUCTS_MODEL_KEY,
+                            string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                            _storeContext.CurrentStore.Id,
+                            x.Id);
+                    
+                    subCatModel.NumberOfProducts = _cacheManager.Get(cachekey, () =>
+                    {
+                        var cateIds = new List<int>();
+                        cateIds.Add(category.Id);
+                        //include subcategories
+                        if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
+                            cateIds.AddRange(GetChildCategoryIds(x.Id));
+                        return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
                     });
 
                     return subCatModel;
@@ -330,7 +346,7 @@ namespace Nop.Web.Controllers
                 categoryIds: categoryIds,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
-                featuredProducts: true,//_catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+                featuredProducts: null,
                 priceMin: minPriceConverted,
                 priceMax: maxPriceConverted,
                 filteredSpecs: alreadyFilteredSpecOptionIds,
@@ -338,7 +354,10 @@ namespace Nop.Web.Controllers
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize
                 );
-            model.Products = PrepareProductOverviewModels(products).ToList();
+
+            var orderedproducts = products.OrderBy(p => p.ApprovedTotalReviews).ThenBy(p => p.DisplayOrder).ToList();
+            
+            
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -378,12 +397,18 @@ namespace Nop.Web.Controllers
                     productCategories.AddRange(pcs);
             }
 
+            int defaultProductNumber = 8;
+
             switch (category.CategoryType)
             {
                 case CategoryType.Destination:
-                    
-                    var categories = productCategories.Where(c => c.Category.CategoryTypeId == (int)CategoryType.Category).OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
-                        .Take(8);
+                    defaultProductNumber = _catalogSettings.DefaultDestinationProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
+
+                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+
+                    var categories = productCategories.Where(c => c.Category.CategoryTypeId == (int)CategoryType.Category)
+                        .OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct();
+
                     model.Categories = categories.Select(x =>
                     {
                         var catModel = x.ToModel();
@@ -399,8 +424,8 @@ namespace Nop.Web.Controllers
                             cateIds.Add(x.Id);
                             //include subcategories
                             if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                                categoryIds.AddRange(GetChildCategoryIds(x.Id));
-                            return _productService.GetCategoryProductNumber(categoryIds, _storeContext.CurrentStore.Id);
+                                cateIds.AddRange(GetChildCategoryIds(x.Id));
+                            return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
                         });
 
                         //prepare picture model
@@ -423,8 +448,15 @@ namespace Nop.Web.Controllers
                     }).ToList();
 
 
-                    var attractions = productCategories.Where(c => c.Category.CategoryTypeId == (int)CategoryType.Attraction).OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
-                        .Take(7);
+                    var attractions = productCategories.Where(c => c.Category.CategoryTypeId == (int)CategoryType.Attraction)
+                        .OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct().ToList();
+
+                    if(category.ParentCategoryId > 0)
+                        attractions = attractions.Take(7).ToList();
+                    
+                    else
+                        attractions = attractions.Take(10).ToList();
+
                     model.Attractions = attractions.Select(x =>
                     {
                         var catModel = x.ToModel();
@@ -440,8 +472,8 @@ namespace Nop.Web.Controllers
                             cateIds.Add(x.Id);
                             //include subcategories
                             if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                                categoryIds.AddRange(GetChildCategoryIds(x.Id));
-                            return _productService.GetCategoryProductNumber(categoryIds, _storeContext.CurrentStore.Id);
+                                cateIds.AddRange(GetChildCategoryIds(x.Id));
+                            return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
                         });
 
                         //prepare picture model
@@ -480,8 +512,8 @@ namespace Nop.Web.Controllers
                             cateIds.Add(x.Id);
                             //include subcategories
                             if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                                categoryIds.AddRange(GetChildCategoryIds(x.Id));
-                            return _productService.GetCategoryProductNumber(categoryIds, _storeContext.CurrentStore.Id);
+                                cateIds.AddRange(GetChildCategoryIds(x.Id));
+                            return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
                         });
 
                         //prepare picture model
@@ -502,10 +534,17 @@ namespace Nop.Web.Controllers
 
                         return catModel;
                     }).ToList();
-                    return View("DestinationTemplate.ProductsInGridOrLines", model);
+                    if(category.ParentCategoryId > 0)
+                        return View("CityTemplate.ProductsInGridOrLines", model);
+                    return View("CountryTemplate.ProductsInGridOrLines", model);
                 case CategoryType.Category:
                     return View("CategoryTemplate.ProductsInGridOrLines", model);
                 case CategoryType.Attraction:
+                    defaultProductNumber = _catalogSettings.DefaultAttractionProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
+
+                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+
+
                     var attractions2 = productCategories.OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
                        .Where(c => c.CategoryTypeId == (int)CategoryType.Attraction).Take(7);
                     model.Attractions = attractions2.Select(x =>
@@ -523,8 +562,8 @@ namespace Nop.Web.Controllers
                             cateIds.Add(x.Id);
                             //include subcategories
                             if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                                categoryIds.AddRange(GetChildCategoryIds(x.Id));
-                            return _productService.GetCategoryProductNumber(categoryIds, _storeContext.CurrentStore.Id);
+                                cateIds.AddRange(GetChildCategoryIds(x.Id));
+                            return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
                         });
 
                         //prepare picture model
@@ -547,6 +586,10 @@ namespace Nop.Web.Controllers
                     }).ToList();
                     return View("AttractionTemplate.ProductsInGridOrLines", model);
                 case CategoryType.Collection:
+                    defaultProductNumber = _catalogSettings.DefaultCollectionProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
+
+                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+
                     return View("CollectionTemplate.ProductsInGridOrLines", model);
                 default:
                     return View(templateViewPath, model);

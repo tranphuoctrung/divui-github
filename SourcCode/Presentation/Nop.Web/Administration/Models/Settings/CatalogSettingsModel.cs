@@ -221,5 +221,6 @@ namespace Nop.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.Catalog.DisplayTaxShippingInfoOrderDetailsPage")]
         public bool DisplayTaxShippingInfoOrderDetailsPage { get; set; }
         public bool DisplayTaxShippingInfoOrderDetailsPage_OverrideForStore { get; set; }
+
     }
 }

@@ -47,5 +47,16 @@ namespace Nop.Services.Catalog
         /// <param name="showHidden"> A value indicating whether to show hidden records</param>
         /// <returns> Product category mapping collection</returns>
         IList<ProductCategory> GetProductCategoriesByProductId(int productId, int storeId, bool showHidden = false, int categoryTypeId = 0);
+
+        /// <summary>
+        /// Gets product category mapping collection
+        /// </summary>
+        /// <param name="categoryIds">Categories identifier</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Product a category mapping collection</returns>
+        IPagedList<ProductCategory> GetProductCategoriesByCategoryIds(List<int> categoryIds,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false);
     }
 }

@@ -178,5 +178,72 @@ namespace Nop.Services.Catalog
                 return result;
             });
         }
+
+        /// <summary>
+        /// Gets product category mapping collection
+        /// </summary>
+        /// <param name="categoryIds">Categories identifier</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Product a category mapping collection</returns>
+        public virtual IPagedList<ProductCategory> GetProductCategoriesByCategoryIds(List<int> categoryIds,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+        {
+            if (categoryIds == null || categoryIds.Count == 0)
+                return new PagedList<ProductCategory>(new List<ProductCategory>(), pageIndex, pageSize);
+
+            string strCategoryIds = string.Join("-", categoryIds);
+            string key = string.Format(PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY, showHidden, strCategoryIds, pageIndex, pageSize, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
+            return _cacheManager.Get(key, () =>
+            {
+                var query = from pc in _productCategoryRepository.Table
+                            join p in _productRepository.Table on pc.ProductId equals p.Id
+                            where categoryIds.Contains(pc.CategoryId) &&
+                                  !p.Deleted &&
+                                  (showHidden || p.Published)
+                            orderby pc.DisplayOrder
+                            select pc;
+
+                if (!showHidden && (!_catalogSettings.IgnoreAcl || !_catalogSettings.IgnoreStoreLimitations))
+                {
+                    if (!_catalogSettings.IgnoreAcl)
+                    {
+                        //ACL (access control list)
+                        var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
+                        query = from pc in query
+                                join c in _categoryRepository.Table on pc.CategoryId equals c.Id
+                                join acl in _aclRepository.Table
+                                on new { c1 = c.Id, c2 = "Category" } equals new { c1 = acl.EntityId, c2 = acl.EntityName } into c_acl
+                                from acl in c_acl.DefaultIfEmpty()
+                                where !c.SubjectToAcl || allowedCustomerRolesIds.Contains(acl.CustomerRoleId)
+                                select pc;
+                    }
+                    if (!_catalogSettings.IgnoreStoreLimitations)
+                    {
+                        //Store mapping
+                        var currentStoreId = _storeContext.CurrentStore.Id;
+                        query = from pc in query
+                                join c in _categoryRepository.Table on pc.CategoryId equals c.Id
+                                join sm in _storeMappingRepository.Table
+                                on new { c1 = c.Id, c2 = "Category" } equals new { c1 = sm.EntityId, c2 = sm.EntityName } into c_sm
+                                from sm in c_sm.DefaultIfEmpty()
+                                where !c.LimitedToStores || currentStoreId == sm.StoreId
+                                select pc;
+                    }
+                    //only distinct categories (group by ID)
+                    query = from c in query
+                            group c by c.Id
+                            into cGroup
+                            orderby cGroup.Key
+                            select cGroup.FirstOrDefault();
+                    query = query.OrderBy(pc => pc.DisplayOrder);
+                }
+
+                var productCategories = new PagedList<ProductCategory>(query, pageIndex, pageSize);
+                return productCategories;
+            });
+        }
+
     }
 }

@@ -46,7 +46,18 @@ namespace Nop.Web.Models.Catalog
         public string ParentName { get; set; }
 
         public List<CategorySpecificationModel> CategorySpecifications { get; set; }
+
+        public int ParentCategoryId { get; set; }
+
+        #region Nested Classes
+
+        public partial class SubCategoryModel 
+        {
+            public int NumberOfProducts { get; set; }
+        }
+
+        #endregion
     }
 
-    
+
 }

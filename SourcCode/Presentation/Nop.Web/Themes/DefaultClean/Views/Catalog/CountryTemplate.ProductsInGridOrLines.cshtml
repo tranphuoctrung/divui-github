@@ -1,0 +1,252 @@
+﻿@model CategoryModel
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+
+    var cateUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+
+    var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@*category breadcrumb*@
+@*@section Breadcrumb
+{
+    @if (Model.DisplayCategoryBreadcrumb)
+    {
+        <div class="search-header">
+            <div class="search-header-title">
+                <h1>
+                    @T("Categories.Attractions").Text @Model.Name
+                    <span class="product-count">@string.Format(T("Categories.Attractions.Total").Text, Model.PagingFilteringContext.TotalItems)</span>
+                </h1>
+            </div>
+            <div class="search-header-filter is-true">
+                <div class="search-header-filter-title-wrp">
+                    <h3 class="search-header-filter-title">
+                        Hiển thị:
+                    </h3>
+                </div>
+                <div class="search-header-filter-display-wrp">
+                    <button class="btn btn-sm search-header-filter-pills">@T("Categories"): @Model.Name <i class="icon-cancel-circled"></i></button>
+                </div>
+            </div>
+        </div>
+        @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
+    }
+}*@
+
+
+@section MainHeader
+{
+   <header class="intro intro-fixed" style="background-image:url(@Model.PictureModel.FullSizeImageUrl)">
+    <div class="container">
+        <div class="intro-header">
+            <h1 class="intro-header-title">
+                @string.Format(T("Category.Destinations.Title").Text, Model.Name)
+            </h1>
+            <div class="header-caption">
+                @Html.Raw(Model.ShortDescription)
+            </div>
+        </div>
+    </div>
+</header>
+}
+
+@*@section FilterSpecsBox
+{
+    @Html.Partial("_FilterSpecsBox", Model, new ViewDataDictionary())
+    <script>
+        $(document).ready(function () {
+            $('.specs').click(function () {
+                var queries = {};
+                $.each(document.location.search.substr(1).split('&'), function (c, q) {
+                    var i = q.split('=');
+                    if(i != "" && i != undefined && i.length > 1)
+                        queries[i[0].toString()] = i[1].toString();
+                });
+
+                var checkedVals = $('.specs:checkbox:checked').map(function () {
+                    return this.value;
+                }).get();
+                queries['specs'] = checkedVals.join(",");
+
+                var params = jQuery.param(queries);
+                var url = '@cateUrl?' + params;
+
+                window.location.href = url;
+
+            });
+
+        });
+    </script>
+}*@
+
+
+
+<div class="container promote-content-page promote-content-page-country">
+    @if (Model.SubCategories.Count > 0)
+    {
+        <section class="feature-city">
+            <h2>@T("Category.CitiesOfCountry", Model.Name)</h2>
+            <div class="feature-city-wrp row">
+                @foreach (var item in Model.SubCategories)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 image-box">
+                        <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title" class="image-box-link">
+                            <div class="image-box-wrp">
+                                <img class="image-box-photo" src="@item.PictureModel.FullSizeImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
+                                <div class="image-box-caption">
+                                    <div class="image-box-label">
+                                        <div class="image-box-label-title">@item.Name</div>
+                                    </div>
+                                    <div class="image-box-counter">
+                                        <div class="image-box-counter-title"> @string.Format(T("HomePage.Categories.Count").Text, item.NumberOfProducts)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+
+    @if (Model.Attractions.Count > 0)
+    {
+        <section class="highlights">
+            <header class="highlights-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>@T("Category.TopAttractions")</h2>
+                        <div class="highlights-desc">
+                            <p>@T("Category.TopAttractions.ShortDescription")</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @Html.Partial("_FeatureAttractions", Model.Attractions)
+        </section>
+    }
+
+    @if (Model.Products.Count > 0)
+    {
+        <section class="top-activities">
+            <div class="product-cards-container">
+                <div class="row" id="divProductList">
+                    @foreach (var product in Model.Products)
+                    {
+                        @Html.Partial("_ProductBox", product)
+                    }
+                </div>
+            </div>
+            <footer>
+                <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Destinations.ViewAll").Text, Model.Name)</button>
+                <input type="hidden" value="1" id="pageNumber" />
+                <input type="hidden" value="@Model.Id" id="categoryId" />
+                <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
+                <script>
+                   
+
+                    $(document).ready(function () {
+                        //$('#btnLoadMore').click(function () {
+                        //    $.ajax({
+                        //        url: "/Catalog/LoadMoreProductCategory",
+                        //        type: "post",
+                        //        data: { categoryId: $('#categoryId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                        //        beforeSend: function(){
+                        //            $('#ajaxBusy').show();
+                        //        },
+                        //        success: function (response) {
+                        //            $('#ajaxBusy').hide();
+                        //            if (response.success) {
+                        //                $('#divProductList').append(response.html);
+                        //                var number = $('#pageNumber').val();
+                        //                $('#pageNumber').val(number + 1);
+                        //                if ((number + 1) >= response.totalPages) {
+                        //                    $('#btnLoadMore').hide();
+                        //                }
+                        //            }
+                        //        },
+                        //        error: function (jqXHR, textStatus, errorThrown) {
+                        //            $('#ajaxBusy').hide();
+                        //            console.log(textStatus, errorThrown);
+                        //        }
+
+
+                        //    });
+                        //});
+                    });
+
+
+                </script>
+            </footer>
+        </section>
+    }
+
+    <section class="planning">
+        <h2>@string.Format(T("Category.Destinations.Info").Text, Model.Name)</h2>
+        <div class="row">
+            <div class="planning-entry-wrp col-md-6">
+                @Html.Raw(Model.Description)
+            </div>
+            <div class="useful-info-wrp col-md-6">
+                <h4>@T("Category.CategorySpecifications.Title")</h4>
+                <div class="useful-info-list">
+                    <div class="row">
+                        @foreach (var csa in Model.CategorySpecifications)
+                        {
+                            <div class="useful-info-list-item col-sm-6">
+                                <div class="useful-info-list-item-cont">
+                                    <h6 class="useful-info-list-item-label icon @csa.CssClass">@csa.SpecificationAttributeName</h6>
+                                    <span class="useful-info-list-item-value">@HttpUtility.HtmlDecode(csa.ValueRaw)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <section class="secondary-links">
+        @Html.Partial("_SecondaryCategories", Model)
+    </section>
+</div>
+
+@*@if (Model.Products.Count > 0)
+{
+    <div class="product-listing">
+        <div class="product-list product-list-horizontal">
+            @foreach (var product in Model.Products)
+            {
+                @Html.Partial("_ProductBox", product)
+            }
+        </div>
+        @{
+            var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+        }
+        @if (!pager.IsEmpty())
+                {
+            <div class="product-list-pagination">
+                <nav>
+                    @pager
+                </nav>
+            </div>
+        }
+    </div>
+            }*@
+
+
+@Html.Widget("categorydetails_bottom", Model.Id)
