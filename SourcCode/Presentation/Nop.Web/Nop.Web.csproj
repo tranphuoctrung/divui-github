@@ -2342,6 +2342,7 @@
     <Content Include="Themes\DefaultClean\Views\Checkout\ShippingAddress.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Checkout\ShippingMethod.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Catalog\CountryTemplate.ProductsInGridOrLines.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Catalog\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\fontello\" />
