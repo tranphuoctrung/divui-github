@@ -65,7 +65,7 @@
     @if (Model.Products.Count > 0)
     {
         <section class="top-activities">
-            <h2>@Model.Name: @T("Category.Attractions.Title")</h2>
+            <h2>@T("Category.Category.Title", Model.Name)</h2>
             <div class="product-listing">
                 <div class="product-list product-list-horizontal">
                     @foreach (var product in Model.Products)
