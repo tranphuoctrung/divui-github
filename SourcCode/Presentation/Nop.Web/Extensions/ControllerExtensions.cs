@@ -147,6 +147,8 @@ namespace Nop.Web.Extensions
                     Name = product.GetLocalized(x => x.Name),
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
+                    IsNew = product.IsNew,
+                    IsSpecial = product.IsSpecial,
                     SeName = product.GetSeName(),
                     MarkAsNew = product.MarkAsNew &&
                         (!product.MarkAsNewStartDateTimeUtc.HasValue || product.MarkAsNewStartDateTimeUtc.Value < DateTime.UtcNow) &&

@@ -28,6 +28,14 @@ namespace Nop.Admin.Models.Catalog
         [AllowHtml]
         public string ShortDescription { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.AttractionDescription")]
+        [AllowHtml]
+        public string AttractionDescription { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.Guide")]
+        [AllowHtml]
+        public string Guide { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.IsNew")]
         public bool IsNew { get; set; }
 
@@ -82,6 +90,14 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Categories.Fields.ShortDescription")]
         [AllowHtml]
         public string ShortDescription { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.AttractionDescription")]
+        [AllowHtml]
+        public string AttractionDescription { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Categories.Fields.Guide")]
+        [AllowHtml]
+        public string Guide { get; set; }
 
     }
 }

@@ -99,6 +99,7 @@
     @if (Model.Products.Count > 0)
     {
         <section class="top-activities">
+            <h2>@T("City.TopProducts", Model.Name)</h2>
             <div class="product-cards-container">
                 <div class="row" id="divProductList">
                     @foreach (var product in Model.Products)

@@ -60,29 +60,17 @@
 
 
 
-<div class="container collection-landing-page">
-    <div class="collection-info">
-        <h1>@string.Format(T("Category.Categories.Info").Text, Model.Name)</h1>
-        
-        @*description*@
-        @if (!String.IsNullOrWhiteSpace(Model.Description))
-        {
-            <div class="collection-desc">
-                @Html.Raw(Model.Description)
-            </div>
-        }
-
-
-    </div>
+<div class="container promote-content-page promote-content-page-attraction">
+    
     @if (Model.Products.Count > 0)
     {
         <section class="top-activities">
-            <div class="product-cards-container">
-                <div class="row">
-
+            <h2>@Model.Name: @T("Category.Attractions.Title")</h2>
+            <div class="product-listing">
+                <div class="product-list product-list-horizontal">
                     @foreach (var product in Model.Products)
                     {
-                        @Html.Partial("_ProductBox", product)
+                        @Html.Partial("_ProductBoxList", product)
                     }
                 </div>
             </div>
@@ -127,6 +115,35 @@
             </footer>
         </section>
     }
+
+    <section class="highlights">
+        @Html.Raw(Model.Guide)
+    </section>
+    <section class="planning">
+        <h2>@string.Format(T("Category.Category.Info").Text, Model.Name)</h2>
+        <div class="row">
+            <div class="planning-entry-wrp col-md-6">
+                @Html.Raw(Model.Description)
+            </div>
+            <div class="useful-info-wrp col-md-6">
+                <h4>@T("Category.CategorySpecifications.Title")</h4>
+                <div class="useful-info-list">
+                    <div class="row">
+                        @foreach (var csa in Model.CategorySpecifications)
+                        {
+                            <div class="useful-info-list-item col-sm-6">
+                                <div class="useful-info-list-item-cont">
+                                    <h6 class="useful-info-list-item-label icon @csa.CssClass">@csa.SpecificationAttributeName</h6>
+                                    <span class="useful-info-list-item-value">@HttpUtility.HtmlDecode(csa.ValueRaw)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
 
 </div>
 

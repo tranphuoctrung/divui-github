@@ -76,6 +76,12 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Type")]
         public int Type { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.IsNew")]
+        public bool IsNew { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.IsSpecial")]
+        public bool IsSpecial { get; set; }
+
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.AgeRangeCondition")]
         public string AgeRangeCondition { get; set; }

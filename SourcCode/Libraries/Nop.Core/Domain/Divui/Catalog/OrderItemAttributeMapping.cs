@@ -9,7 +9,7 @@ namespace Nop.Core.Domain.Catalog
     /// </summary>
     public partial class OrderItemAttributeMapping : BaseEntity, ILocalizedEntity
     {
-        private ICollection<ProductAttributeValue> _productAttributeValues;
+        //private ICollection<ProductAttributeValue> _productAttributeValues;
 
         /// <summary>
         /// Gets or sets the OrderItem identifier
@@ -82,14 +82,14 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public virtual OrderItem OrderItem { get; set; }
 
-        /// <summary>
-        /// Gets the product attribute values
-        /// </summary>
-        public virtual ICollection<ProductAttributeValue> ProductAttributeValues
-        {
-            get { return _productAttributeValues ?? (_productAttributeValues = new List<ProductAttributeValue>()); }
-            protected set { _productAttributeValues = value; }
-        }
+        ///// <summary>
+        ///// Gets the product attribute values
+        ///// </summary>
+        //public virtual ICollection<ProductAttributeValue> ProductAttributeValues
+        //{
+        //    get { return _productAttributeValues ?? (_productAttributeValues = new List<ProductAttributeValue>()); }
+        //    protected set { _productAttributeValues = value; }
+        //}
 
     }
 

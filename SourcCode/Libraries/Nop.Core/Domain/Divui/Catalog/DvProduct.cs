@@ -34,6 +34,10 @@ namespace Nop.Core.Domain.Catalog
 
         public int AgeRange { get; set; }
 
+        public bool IsNew { get; set; }
+
+        public bool IsSpecial { get; set; }
+
         /// <summary>
         /// Gets or sets the product type
         /// </summary>

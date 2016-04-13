@@ -672,6 +672,27 @@
             @Html.ValidationMessageFor(model => model.AllowCustomerReviews)
         </td>
     </tr>
+
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.IsNew):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.IsNew)
+            @Html.ValidationMessageFor(model => model.IsNew)
+        </td>
+    </tr>
+
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.IsSpecial):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.IsSpecial)
+            @Html.ValidationMessageFor(model => model.IsSpecial)
+        </td>
+    </tr>
+
     <tr>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.ProductTags):

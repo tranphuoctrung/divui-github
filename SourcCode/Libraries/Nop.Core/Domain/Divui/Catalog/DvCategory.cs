@@ -16,6 +16,17 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public string ShortDescription { get; set; }
 
+        /// <summary>
+        /// Gets or sets the AttractionDescription
+        /// </summary>
+        public string AttractionDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Guide
+        /// </summary>
+        public string Guide { get; set; }
+
+
         public bool IsNew { get; set; }
 
         /// <summary>

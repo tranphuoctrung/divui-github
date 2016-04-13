@@ -145,6 +145,26 @@
                         </td>
                     </tr>
 
+                     <tr>
+                         <td class="adminTitle">
+                             @Html.NopLabelFor(model => model.Locales[item].AttractionDescription):
+                         </td>
+                         <td class="adminData">
+                             @Html.EditorFor(model => model.Locales[item].AttractionDescription)
+                             @Html.ValidationMessageFor(model => model.Locales[item].AttractionDescription)
+                         </td>
+                     </tr>
+
+                     <tr>
+                         <td class="adminTitle">
+                             @Html.NopLabelFor(model => model.Locales[item].Guide):
+                         </td>
+                         <td class="adminData">
+                             @Html.EditorFor(model => model.Locales[item].Guide, "RichEditor")
+                             @Html.ValidationMessageFor(model => model.Locales[item].Guide)
+                         </td>
+                     </tr>
+
                     <tr>
                         <td colspan="2">
                             @Html.HiddenFor(model => model.Locales[item].LanguageId)
@@ -180,6 +200,24 @@
                             @Html.ValidationMessageFor(model => model.Description)
                         </td>
                     </tr>
+                     <tr>
+                         <td class="adminTitle">
+                             @Html.NopLabelFor(model => model.AttractionDescription):
+                         </td>
+                         <td class="adminData">
+                             @Html.EditorFor(x => x.AttractionDescription)
+                             @Html.ValidationMessageFor(model => model.AttractionDescription)
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="adminTitle">
+                             @Html.NopLabelFor(model => model.Guide):
+                         </td>
+                         <td class="adminData">
+                             @Html.EditorFor(x => x.Guide, "RichEditor")
+                             @Html.ValidationMessageFor(model => model.Guide)
+                         </td>
+                     </tr>
                 </table>
             ))
     <table class="adminContent">

@@ -26,6 +26,10 @@ namespace Nop.Web.Models.Catalog
 
         public string Overview { get; set; }
 
+        public bool IsNew { get; set; }
+
+        public bool IsSpecial { get; set; }
+
         public List<SelectListItem> AvaliableQuantities { get; set; }
 
         public List<ProductDetailsModel.ProductAttributeModel> ProductAttributes { get; set; }

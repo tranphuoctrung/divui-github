@@ -20,6 +20,10 @@ namespace Nop.Web.Models.Catalog
         public string FullDescription { get; set; }
         public string SeName { get; set; }
 
+        public bool IsNew { get; set; }
+
+        public bool IsSpecial { get; set; }
+
         public bool MarkAsNew { get; set; }
 
         //price

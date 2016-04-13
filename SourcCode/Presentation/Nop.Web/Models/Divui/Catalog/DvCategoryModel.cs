@@ -31,6 +31,16 @@ namespace Nop.Web.Models.Catalog
         [AllowHtml]
         public string ShortDescription { get; set; }
 
+        /// <summary>
+        /// Gets or sets the AttractionDescription
+        /// </summary>
+        public string AttractionDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Guide
+        /// </summary>
+        public string Guide { get; set; }
+
         public List<SpecificationAttribute> SpecificationAttributes { get; set; }
 
         public List<int> AlreadyFilteredSpecOptionIds { get; set; }

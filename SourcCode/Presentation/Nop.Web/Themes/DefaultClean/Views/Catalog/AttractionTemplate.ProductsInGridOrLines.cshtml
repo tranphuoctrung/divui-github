@@ -37,88 +37,89 @@
 }
 
 <div class="container promote-content-page promote-content-page-attraction">
-    <section class="top-activities">
-        <h2>@Model.Name: @T("Category.Attractions.Title")</h2>
-        @if (Model.Products.Count > 0)
-        {
-            <div class="product-listing">
-                <div class="product-list product-list-horizontal">
-                    @foreach (var product in Model.Products)
-                {
-                        @Html.Partial("_ProductBoxList", product)
-                    }
-                </div>
-                @*@{
-                    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
-                }
-                @if (!pager.IsEmpty())
-                {
-                    <div class="product-list-pagination">
-                        <nav>
-                            @pager
-                        </nav>
-                    </div>
-                }*@
-            </div>
-                    }
-        <footer>
-            <button class="btn btn-warning" id="btnViewAll" onclick="setLocation('@Url.RouteUrl("ProductSearch", new { attractionId = Model.Id })');">@string.Format(T("Category.Attractions.ViewAll").Text, Model.Name)</button>
-            <input type="hidden" value="1" id="pageNumber" />
-            <input type="hidden" value="@Model.Id" id="attractionId" />
-            <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
-            <script>
-
-
-                    $(document).ready(function () {
-                        //$('#btnLoadMore').click(function () {
-                        //    $.ajax({
-                        //        url: "/Catalog/LoadMoreProductAttraction",
-                        //        type: "post",
-                        //        data: { attractionId: $('#attractionId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
-                        //        beforeSend: function(){
-
-                        //        },
-                        //        success: function (response) {
-                        //            if (response.success) {
-                        //                $('#divProductList').append(response.html);
-                        //                var number = $('#pageNumber').val();
-                        //                $('#pageNumber').val(number + 1);
-                        //                if ((number + 1) >= response.totalPages) {
-                        //                    $('#btnLoadMore').hide();
-                        //                }
-                        //            }
-                        //        },
-                        //        error: function (jqXHR, textStatus, errorThrown) {
-                        //            console.log(textStatus, errorThrown);
-                        //        }
-
-
-                        //    });
-                        //});
-                    });
-
-
-            </script>
-        </footer>
-    </section>
-    @if (Model.Attractions.Count > 0)
+    @if (Model.Products.Count > 0)
     {
-        <section class="highlights">
-            <header class="highlights-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>@T("Category.TopAttractions")</h2>
-                        <div class="highlights-desc">
-                            <p>@T("Category.TopAttractions.ShortDescription")</p>
-                        </div>
+        <section class="top-activities">
+            <h2>@Model.Name: @T("Category.Attractions.Title")</h2>
+        
+                <div class="product-listing">
+                    <div class="product-list product-list-horizontal">
+                        @foreach (var product in Model.Products)
+                    {
+                            @Html.Partial("_ProductBoxList", product)
+                        }
                     </div>
                 </div>
-            </header>
-            @Html.Partial("_FeatureCategories", Model.Categories)
+            <footer>
+                <button class="btn btn-warning" id="btnViewAll" onclick="setLocation('@Url.RouteUrl("ProductSearch", new { attractionId = Model.Id })');">@string.Format(T("Category.Attractions.ViewAll").Text, Model.Name)</button>
+                <input type="hidden" value="1" id="pageNumber" />
+                <input type="hidden" value="@Model.Id" id="attractionId" />
+                <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
+                <script>
+
+
+                        $(document).ready(function () {
+                            //$('#btnLoadMore').click(function () {
+                            //    $.ajax({
+                            //        url: "/Catalog/LoadMoreProductAttraction",
+                            //        type: "post",
+                            //        data: { attractionId: $('#attractionId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                            //        beforeSend: function(){
+
+                            //        },
+                            //        success: function (response) {
+                            //            if (response.success) {
+                            //                $('#divProductList').append(response.html);
+                            //                var number = $('#pageNumber').val();
+                            //                $('#pageNumber').val(number + 1);
+                            //                if ((number + 1) >= response.totalPages) {
+                            //                    $('#btnLoadMore').hide();
+                            //                }
+                            //            }
+                            //        },
+                            //        error: function (jqXHR, textStatus, errorThrown) {
+                            //            console.log(textStatus, errorThrown);
+                            //        }
+
+
+                            //    });
+                            //});
+                        });
+
+
+                </script>
+            </footer>
         </section>
     }
+
+
+    <section class="highlights">
+        @Html.Raw(Model.Guide)
+    </section>
     <section class="planning">
-        @Html.Raw(Model.Description)
+        <h2>@string.Format(T("Category.Attraction.Info").Text, Model.Name)</h2>
+        <div class="row">
+            <div class="planning-entry-wrp col-md-6">
+                @Html.Raw(Model.Description)
+            </div>
+            <div class="useful-info-wrp col-md-6">
+                <h4>@T("Category.CategorySpecifications.Title")</h4>
+                <div class="useful-info-list">
+                    <div class="row">
+                        @foreach (var csa in Model.CategorySpecifications)
+                        {
+                            <div class="useful-info-list-item col-sm-6">
+                                <div class="useful-info-list-item-cont">
+                                    <h6 class="useful-info-list-item-label icon @csa.CssClass">@csa.SpecificationAttributeName</h6>
+                                    <span class="useful-info-list-item-value">@HttpUtility.HtmlDecode(csa.ValueRaw)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
     
 </div>

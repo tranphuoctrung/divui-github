@@ -6,7 +6,7 @@ namespace Nop.Data.Mapping.Catalog
     {
         public OrderItemAttributeMappingMap()
         {
-            this.ToTable("OrderItem_ProductAttribute_Mapping");
+            this.ToTable("OrderItem_OrderItemAttribute_Mapping");
             this.HasKey(pam => pam.Id);
             this.Ignore(pam => pam.AttributeControlType);
 

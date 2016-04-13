@@ -452,7 +452,12 @@ namespace Nop.Web.Controllers
                         .OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct().ToList();
 
                     if(category.ParentCategoryId > 0)
+                    {
                         attractions = attractions.Take(7).ToList();
+
+                        model.SubCategories = model.SubCategories.Where(c => c.Id != model.Id).ToList();
+                    }
+                        
                     
                     else
                         attractions = attractions.Take(10).ToList();
@@ -545,45 +550,45 @@ namespace Nop.Web.Controllers
                     model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
 
 
-                    var attractions2 = productCategories.OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
-                       .Where(c => c.CategoryTypeId == (int)CategoryType.Attraction).Take(7);
-                    model.Attractions = attractions2.Select(x =>
-                    {
-                        var catModel = x.ToModel();
+                    //var attractions2 = productCategories.OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
+                    //   .Where(c => c.CategoryTypeId == (int)CategoryType.Attraction).Take(7);
+                    //model.Attractions = attractions2.Select(x =>
+                    //{
+                    //    var catModel = x.ToModel();
 
-                        string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_NUMBER_OF_PRODUCTS_MODEL_KEY,
-                            string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
-                            _storeContext.CurrentStore.Id,
-                            x.Id);
+                    //    string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_NUMBER_OF_PRODUCTS_MODEL_KEY,
+                    //        string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                    //        _storeContext.CurrentStore.Id,
+                    //        x.Id);
 
-                        catModel.NumberOfProducts = _cacheManager.Get(cacheKey, () =>
-                        {
-                            var cateIds = new List<int>();
-                            cateIds.Add(x.Id);
-                            //include subcategories
-                            if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
-                                cateIds.AddRange(GetChildCategoryIds(x.Id));
-                            return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
-                        });
+                    //    catModel.NumberOfProducts = _cacheManager.Get(cacheKey, () =>
+                    //    {
+                    //        var cateIds = new List<int>();
+                    //        cateIds.Add(x.Id);
+                    //        //include subcategories
+                    //        if (_catalogSettings.ShowCategoryProductNumberIncludingSubcategories)
+                    //            cateIds.AddRange(GetChildCategoryIds(x.Id));
+                    //        return _productService.GetCategoryProductNumber(cateIds, _storeContext.CurrentStore.Id);
+                    //    });
 
-                        //prepare picture model
-                        int pictureSize = _mediaSettings.CategoryThumbPictureSize;
-                        var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
-                        catModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
-                        {
-                            var picture = _pictureService.GetPictureById(x.PictureId);
-                            var pictureModel = new PictureModel
-                            {
-                                FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
-                                ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
-                                Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), catModel.Name),
-                                AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), catModel.Name)
-                            };
-                            return pictureModel;
-                        });
+                    //    //prepare picture model
+                    //    int pictureSize = _mediaSettings.CategoryThumbPictureSize;
+                    //    var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+                    //    catModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
+                    //    {
+                    //        var picture = _pictureService.GetPictureById(x.PictureId);
+                    //        var pictureModel = new PictureModel
+                    //        {
+                    //            FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                    //            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                    //            Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), catModel.Name),
+                    //            AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), catModel.Name)
+                    //        };
+                    //        return pictureModel;
+                    //    });
 
-                        return catModel;
-                    }).ToList();
+                    //    return catModel;
+                    //}).ToList();
                     return View("AttractionTemplate.ProductsInGridOrLines", model);
                 case CategoryType.Collection:
                     defaultProductNumber = _catalogSettings.DefaultCollectionProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;

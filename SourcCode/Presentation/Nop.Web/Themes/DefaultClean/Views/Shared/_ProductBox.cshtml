@@ -27,9 +27,18 @@
             <div class="product-card-img-wrp">
                 <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title">
             </div>
-            @*<div class="product-badge is-special-offer">
-                <div>ƯU ĐÃI ĐẶC BIỆT!</div>
-            </div>*@
+            @if (Model.IsSpecial)
+            {
+                <div class="product-badge is-special-offer">
+                    <div>@T("Product.IsSpecial")</div>
+                </div>
+            }
+            @if (Model.IsNew)
+            {
+                <div class="product-badge is-new">
+                    <div>@T("Product.IsNew")</div>
+                </div>
+            }
             <div class="product-card-details">
                 <header class="product-card-header">
                     <h4 class="product-card-title">@Model.Name</h4>
