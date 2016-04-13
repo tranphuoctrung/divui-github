@@ -87,7 +87,7 @@
                 </div>
             </div>
             <footer>
-                <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Collections.ViewAll").Text, Model.Name)</button>
+                <button class="btn btn-warning" onclick="setLocation('@Url.RouteUrl("ProductSearch", new { collectionId = Model.Id })');" id="btnViewAll">@string.Format(T("Category.Collections.ViewAll").Text, Model.Name)</button>
                 <input type="hidden" value="1" id="pageNumber" />
                 <input type="hidden" value="@Model.Id" id="collectionId" />
                 <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />

@@ -390,7 +390,7 @@ namespace Nop.Web.Controllers
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewCategory", _localizationService.GetResource("ActivityLog.PublicStore.ViewCategory"), category.Name);
             var productCategories = new List<ProductCategory>();
-            foreach (var p in products)
+            foreach (var p in orderedproducts)
             {
                 var pcs = _categoryService.GetProductCategoriesByProductId(p.Id);
                 if (pcs != null && pcs.Count > 0)
@@ -1410,7 +1410,7 @@ namespace Nop.Web.Controllers
         /// <returns>Category models</returns>
         [NonAction]
         protected virtual IList<CategorySimpleModel> PrepareCategorySimpleModels(int rootCategoryId,
-            bool loadSubCategories = true, IList<Category> allCategories = null)
+            bool loadSubCategories = true, IList<Category> allCategories = null, int categoryType = 0)
         {
             var result = new List<CategorySimpleModel>();
 
@@ -1426,7 +1426,7 @@ namespace Nop.Web.Controllers
                 //load categories if null passed
                 //we implemeneted it this way for performance optimization - recursive iterations (below)
                 //this way all categories are loaded only once
-                allCategories = _categoryService.GetAllCategories();
+                allCategories = _categoryService.GetAllCategories(categoryTypeId: categoryType);
             }
             var categories = allCategories.Where(c => c.ParentCategoryId == rootCategoryId).ToList();
             foreach (var category in categories)
@@ -1438,7 +1438,8 @@ namespace Nop.Web.Controllers
                     SeName = category.GetSeName(),
                     IncludeInTopMenu = category.IncludeInTopMenu,
                     DisplayedOnHomePage = category.ShowOnHomePage,
-                    IsNewCategory = category.IsNew
+                    IsNewCategory = category.IsNew,
+                    ParentCategoryId = category.ParentCategoryId
                 };
 
                 //product number for each category
@@ -1475,12 +1476,11 @@ namespace Nop.Web.Controllers
         {
             //categories
             string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY,
-                _workContext.WorkingLanguage.Id,
-                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
-                _storeContext.CurrentStore.Id);
+                 _workContext.WorkingLanguage.Id,
+                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                 _storeContext.CurrentStore.Id);
             var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () => PrepareCategorySimpleModels(0));
 
-            //top menu topics
             string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY,
                 _workContext.WorkingLanguage.Id,
                 _storeContext.CurrentStore.Id,
@@ -1770,6 +1770,373 @@ namespace Nop.Web.Controllers
             return View(banners);
         }
 
+        #endregion
+
+        #region Searching
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        [ValidateInput(false)]
+        public ActionResult Search(SearchModel model, CatalogPagingFilteringModel command)
+        {
+            //'Continue shopping' URL
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                SystemCustomerAttributeNames.LastContinueShoppingPage,
+                _webHelper.GetThisPageUrl(false),
+                _storeContext.CurrentStore.Id);
+
+            if (model == null)
+                model = new SearchModel();
+
+            var searchTerms = model.q;
+            if (searchTerms == null)
+                searchTerms = "";
+            searchTerms = searchTerms.Trim();
+
+
+
+            //sorting
+            PrepareSortingOptions(model.PagingFilteringContext, command);
+            //view mode
+            PrepareViewModes(model.PagingFilteringContext, command);
+            //page size
+            PreparePageSizeOptions(model.PagingFilteringContext, command,
+                _catalogSettings.SearchPageAllowCustomersToSelectPageSize,
+                _catalogSettings.SearchPagePageSizeOptions,
+                _catalogSettings.SearchPageProductsPerPage);
+
+            string SEARCH_CATEGORIES_MODEL_KEY = "Nop.pres.search.categories-{0}-{1}-{2}-{3}";
+            string cacheKeyDestination = string.Format(SEARCH_CATEGORIES_MODEL_KEY,
+                _workContext.WorkingLanguage.Id,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                _storeContext.CurrentStore.Id, (int)CategoryType.Destination);
+            var destinations = _cacheManager.Get(cacheKeyDestination, () => {
+                var result = new List<CategorySimpleModel>();
+
+                var allCategories = _categoryService.GetAllCategories(categoryTypeId: (int)CategoryType.Destination);
+                
+                foreach (var category in allCategories)
+                {
+                    var categoryModel = new CategorySimpleModel
+                    {
+                        Id = category.Id,
+                        Name = category.GetLocalized(x => x.Name),
+                        SeName = category.GetSeName(),
+                        IncludeInTopMenu = category.IncludeInTopMenu,
+                        DisplayedOnHomePage = category.ShowOnHomePage,
+                        IsNewCategory = category.IsNew,
+                        ParentCategoryId = category.ParentCategoryId
+                    };
+                    
+                    result.Add(categoryModel);
+                }
+
+                return result;
+
+            });
+
+            if (destinations.Count > 0)
+            {
+                if (model.cityId == 0)
+                {
+                    if (model.countryId == 0)
+                    {
+                        var country = destinations.FirstOrDefault(d => d.ParentCategoryId == 0);
+                        if (country != null)
+                        {
+                            model.countryId = country.Id;
+
+
+                        }
+                    }
+
+                    var city = destinations.FirstOrDefault(d => d.ParentCategoryId == model.countryId);
+                    if (city != null)
+                        model.cityId = city.Id;
+                }
+                else
+                {
+                    var city = _categoryService.GetCategoryById(model.cityId);
+                    if(city != null)
+                        model.countryId = city.ParentCategoryId;
+                }
+
+                
+
+                
+
+
+                //Countries
+                var countries = destinations.Where(d => d.ParentCategoryId == 0).ToList();
+                //first empty entry
+                model.AvailableCountries.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = _localizationService.GetResource("Common.All")
+                });
+                //all other categories
+                foreach (var c in countries)
+                {
+                    model.AvailableCountries.Add(new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Name,
+                        Selected = model.countryId == c.Id
+                    });
+                }
+
+                var cities = destinations.Where(d => d.ParentCategoryId == model.countryId).ToList();
+                //first empty entry
+                model.AvailableCities.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = _localizationService.GetResource("Common.All")
+                });
+                //cities
+                foreach (var c in cities)
+                {
+                    model.AvailableCities.Add(new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Name,
+                        Selected = model.cityId == c.Id
+                    });
+                }
+            }
+
+            string cacheKeyCollections = string.Format(SEARCH_CATEGORIES_MODEL_KEY,
+                _workContext.WorkingLanguage.Id,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                _storeContext.CurrentStore.Id, (int)CategoryType.Collection);
+            var collections = _cacheManager.Get(cacheKeyCollections, () => GetSearchCategories(CategoryType.Collection));
+
+            model.AvailableCollections = collections.ToList();
+
+
+            string cacheKeyCategories = string.Format(SEARCH_CATEGORIES_MODEL_KEY,
+                _workContext.WorkingLanguage.Id,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                _storeContext.CurrentStore.Id, (int)CategoryType.Category);
+            var categories = _cacheManager.Get(cacheKeyCategories, () => GetSearchCategories(CategoryType.Category));
+
+            model.AvailableCategories = categories.ToList();
+
+            IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
+            // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
+            if (Request.Params["q"] != null)
+            {
+                if (searchTerms.Length < _catalogSettings.ProductSearchTermMinimumLength)
+                {
+                    model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
+                }
+                else
+                {
+                    
+                }
+            }
+            var categoryIds = new List<int>();
+            int manufacturerId = 0;
+            decimal? minPriceConverted = null;
+            decimal? maxPriceConverted = null;
+            bool searchInDescriptions = false;
+            
+            //advanced search
+            var categoryId = model.cityId != 0 ? model.cityId : model.countryId;
+            if (categoryId > 0)
+            {
+                categoryIds.Add(categoryId);
+                categoryIds.AddRange(GetChildCategoryIds(categoryId));
+
+                var category = _categoryService.GetCategoryById(categoryId);
+                if (category != null)
+                    model.CityOrCountryName = category.GetLocalized(c => c.Name);
+            }
+
+
+            searchInDescriptions = model.sid;
+
+            //var searchInProductTags = false;
+            var searchInProductTags = searchInDescriptions;
+
+            //products
+            IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredSpecOptionIds(_webHelper);
+            IList<int> filterableSpecificationAttributeOptionIds;
+            var searchproducts = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds,
+                true,
+                        categoryIds: categoryIds,
+                storeId: _storeContext.CurrentStore.Id,
+                visibleIndividuallyOnly: true,
+                priceMin: minPriceConverted,
+                priceMax: maxPriceConverted,
+                keywords: searchTerms,
+                searchDescriptions: searchInDescriptions,
+                searchSku: searchInDescriptions,
+                searchProductTags: searchInProductTags,
+                productType: ProductType.GroupedProduct,
+                filteredSpecs: alreadyFilteredSpecOptionIds,
+                languageId: _workContext.WorkingLanguage.Id,
+                orderBy: (ProductSortingEnum)command.OrderBy
+                ).AsEnumerable();
+
+            // search collections
+            searchproducts = searchproducts.Where(p => {
+                var b = true;
+
+                var collectionIds = p.ProductCategories.Where(pc => pc.Category.CategoryType == CategoryType.Collection).Select(pc => pc.CategoryId);
+
+                var cateIds = p.ProductCategories.Where(pc => pc.Category.CategoryType == CategoryType.Category).Select(pc => pc.CategoryId);
+                var attractionIds = p.ProductCategories.Where(pc => pc.Category.CategoryType == CategoryType.Attraction).Select(pc => pc.CategoryId);
+
+
+                if (model.collectionId > 0)
+                    if (!collectionIds.Contains(model.collectionId))
+                        return false;
+
+                if (model.categoryId > 0)
+                    if (!cateIds.Contains(model.categoryId))
+                        return false;
+
+                if (model.attractionId > 0)
+                    if (!attractionIds.Contains(model.attractionId))
+                        return false;
+                return b;
+            });
+
+            if (model.collectionId > 0)
+            {
+                var collection = _categoryService.GetCategoryById(model.collectionId);
+                if (collection != null)
+                    model.CollectionName = collection.GetLocalized(c => c.Name);
+            }
+
+            if (model.categoryId > 0)
+            {
+                var category = _categoryService.GetCategoryById(model.categoryId);
+                if (category != null)
+                    model.CategoryName = category.GetLocalized(c => c.Name);
+            }
+
+            if (model.attractionId > 0)
+            {
+                var attraction = _categoryService.GetCategoryById(model.attractionId);
+                if (attraction != null)
+                    model.AttractionName = attraction.GetLocalized(c => c.Name);
+            }
+
+            //specs
+            model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
+                filterableSpecificationAttributeOptionIds != null ? filterableSpecificationAttributeOptionIds.ToArray() : null,
+                _specificationAttributeService,
+                _webHelper,
+                _workContext,
+                _cacheManager);
+
+            model.SpecificationAttributes = _specificationAttributeService.GetProductSpecificationAttributes(allowFiltering: true)
+                .Select(ps => ps.SpecificationAttributeOption.SpecificationAttribute)
+                .Distinct().OrderBy(spec => spec.DisplayOrder).ToList();
+
+            model.AlreadyFilteredSpecOptionIds = alreadyFilteredSpecOptionIds.ToList();
+
+            products = new PagedList<Product>(searchproducts.ToList(), pageIndex: command.PageNumber - 1, pageSize: command.PageSize);
+
+
+            model.Products = PrepareProductOverviewModels(products).ToList();
+
+            var attractions = new List<Category>();
+            foreach (var p in products)
+            {
+                var listAttraction = _categoryService.GetProductCategoriesByProductIdAndCategoryTypeId(p.Id, (int)CategoryType.Attraction).Select(pc => pc.Category);
+                attractions.AddRange(listAttraction);
+            }
+
+            model.AvailableAttractions = PrepareCategorySimpleModels(rootCategoryId: 0, allCategories: attractions).ToList();
+
+
+            model.NoResults = !model.Products.Any();
+
+            //search term statistics
+            if (!String.IsNullOrEmpty(searchTerms))
+            {
+                var searchTerm = _searchTermService.GetSearchTermByKeyword(searchTerms, _storeContext.CurrentStore.Id);
+                if (searchTerm != null)
+                {
+                    searchTerm.Count++;
+                    _searchTermService.UpdateSearchTerm(searchTerm);
+                }
+                else
+                {
+                    searchTerm = new SearchTerm
+                    {
+                        Keyword = searchTerms,
+                        StoreId = _storeContext.CurrentStore.Id,
+                        Count = 1
+                    };
+                    _searchTermService.InsertSearchTerm(searchTerm);
+                }
+            }
+
+            //event
+            _eventPublisher.Publish(new ProductSearchEvent
+            {
+                SearchTerm = searchTerms,
+                SearchInDescriptions = searchInDescriptions,
+                CategoryIds = categoryIds,
+                ManufacturerId = manufacturerId,
+                WorkingLanguageId = _workContext.WorkingLanguage.Id
+            });
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult SearchBox()
+        {
+            var model = new SearchBoxModel
+            {
+                AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
+                ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
+                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
+            };
+            return PartialView(model);
+        }
+
+        public ActionResult SearchTermAutoComplete(string term)
+        {
+            if (String.IsNullOrWhiteSpace(term) || term.Length < _catalogSettings.ProductSearchTermMinimumLength)
+                return Content("");
+
+            //products
+            var productNumber = _catalogSettings.ProductSearchAutoCompleteNumberOfProducts > 0 ?
+                _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
+
+            var products = _productService.SearchProducts(
+                storeId: _storeContext.CurrentStore.Id,
+                keywords: term,
+                searchSku: false,
+                languageId: _workContext.WorkingLanguage.Id,
+                visibleIndividuallyOnly: true,
+                pageSize: productNumber);
+
+            var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+            var result = (from p in models
+                          select new
+                          {
+                              label = p.Name,
+                              producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
+                              productpictureurl = p.DefaultPictureModel.ImageUrl
+                          })
+                          .ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [NonAction]
+        protected List<CategorySimpleModel> GetSearchCategories(CategoryType type)
+        {
+            var categoriesModel = new List<CategorySimpleModel>();
+            //all categories
+            //var allCategories = _categoryService.GetAllCategories(categoryTypeId: (int)type);
+
+            return PrepareCategorySimpleModels(rootCategoryId: 0, categoryType: (int)type).ToList();
+        }
         #endregion
     }
 }

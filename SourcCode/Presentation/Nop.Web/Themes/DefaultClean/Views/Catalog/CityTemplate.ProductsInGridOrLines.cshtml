@@ -108,7 +108,7 @@
                 </div>
             </div>
             <footer>
-                <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Destinations.ViewAll").Text, Model.Name)</button>
+                <button class="btn btn-warning" onclick="setLocation('@Url.RouteUrl("ProductSearch", new { cityId = Model.Id })');" id="btnViewAll">@string.Format(T("Category.Destinations.ViewAll").Text, Model.Name)</button>
                 <input type="hidden" value="1" id="pageNumber" />
                 <input type="hidden" value="@Model.Id" id="categoryId" />
                 <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />
@@ -207,8 +207,8 @@
         
     </section>
     <section class="secondary-links">
-        @Html.Partial("_SecondaryCategories", Model)
-        @Html.Partial("_SecondaryAttractions", Model)
+        @*@Html.Partial("_SecondaryCategories", Model)
+        @Html.Partial("_SecondaryAttractions", Model)*@
         @Html.Partial("_SecondaryDestinations", Model)
     </section>
 </div>

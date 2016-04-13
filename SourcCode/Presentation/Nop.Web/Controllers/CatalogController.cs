@@ -648,7 +648,7 @@ namespace Nop.Web.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult TopMenu()
+        public ActionResult TopMenu(int position = 1)
         {
             //categories
             string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY,
@@ -681,6 +681,17 @@ namespace Nop.Web.Controllers
                 BlogEnabled = _blogSettings.Enabled,
                 ForumEnabled = _forumSettings.ForumsEnabled
             };
+
+            switch (position)
+            {
+                case 1:
+                    return PartialView(model);
+                case 2:
+                    return PartialView("SearchHompageCategories", model);
+                default:
+                    break;
+            }
+
             return PartialView(model);
         }
         
@@ -1185,256 +1196,256 @@ namespace Nop.Web.Controllers
 
         #endregion
 
-        #region Searching
+        //#region Searching
 
-        [NopHttpsRequirement(SslRequirement.No)]
-        [ValidateInput(false)]
-        public ActionResult Search(SearchModel model, CatalogPagingFilteringModel command)
-        {
-            //'Continue shopping' URL
-            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
-                SystemCustomerAttributeNames.LastContinueShoppingPage,
-                _webHelper.GetThisPageUrl(false),
-                _storeContext.CurrentStore.Id);
+        //[NopHttpsRequirement(SslRequirement.No)]
+        //[ValidateInput(false)]
+        //public ActionResult Search(SearchModel model, CatalogPagingFilteringModel command)
+        //{
+        //    //'Continue shopping' URL
+        //    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+        //        SystemCustomerAttributeNames.LastContinueShoppingPage,
+        //        _webHelper.GetThisPageUrl(false),
+        //        _storeContext.CurrentStore.Id);
 
-            if (model == null)
-                model = new SearchModel();
+        //    if (model == null)
+        //        model = new SearchModel();
 
-            var searchTerms = model.q;
-            if (searchTerms == null)
-                searchTerms = "";
-            searchTerms = searchTerms.Trim();
-
-
-
-            //sorting
-            PrepareSortingOptions(model.PagingFilteringContext, command);
-            //view mode
-            PrepareViewModes(model.PagingFilteringContext, command);
-            //page size
-            PreparePageSizeOptions(model.PagingFilteringContext, command,
-                _catalogSettings.SearchPageAllowCustomersToSelectPageSize,
-                _catalogSettings.SearchPagePageSizeOptions,
-                _catalogSettings.SearchPageProductsPerPage);
+        //    var searchTerms = model.q;
+        //    if (searchTerms == null)
+        //        searchTerms = "";
+        //    searchTerms = searchTerms.Trim();
 
 
-            string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, 
-                _workContext.WorkingLanguage.Id,
-                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
-                _storeContext.CurrentStore.Id); 
-            var categories = _cacheManager.Get(cacheKey, () =>
-            {
-                var categoriesModel = new List<SearchModel.CategoryModel>();
-                //all categories
-                var allCategories = _categoryService.GetAllCategories();
-                foreach (var c in allCategories)
-                {
-                    //generate full category name (breadcrumb)
-                    string categoryBreadcrumb= "";
-                    var breadcrumb = c.GetCategoryBreadCrumb(allCategories, _aclService, _storeMappingService);
-                    for (int i = 0; i <= breadcrumb.Count - 1; i++)
-                    {
-                        categoryBreadcrumb += breadcrumb[i].GetLocalized(x => x.Name);
-                        if (i != breadcrumb.Count - 1)
-                            categoryBreadcrumb += " >> ";
-                    }
-                    categoriesModel.Add(new SearchModel.CategoryModel
-                    {
-                        Id = c.Id,
-                        Breadcrumb = categoryBreadcrumb
-                    });
-                }
-                return categoriesModel;
-            });
-            if (categories.Count > 0)
-            {
-                //first empty entry
-                model.AvailableCategories.Add(new SelectListItem
-                    {
-                         Value = "0",
-                         Text = _localizationService.GetResource("Common.All")
-                    });
-                //all other categories
-                foreach (var c in categories)
-                {
-                    model.AvailableCategories.Add(new SelectListItem
-                    {
-                        Value = c.Id.ToString(),
-                        Text = c.Breadcrumb,
-                        Selected = model.cid == c.Id
-                    });
-                }
-            }
 
-            var manufacturers = _manufacturerService.GetAllManufacturers();
-            if (manufacturers.Count > 0)
-            {
-                model.AvailableManufacturers.Add(new SelectListItem
-                {
-                    Value = "0",
-                    Text = _localizationService.GetResource("Common.All")
-                });
-                foreach (var m in manufacturers)
-                    model.AvailableManufacturers.Add(new SelectListItem
-                    {
-                        Value = m.Id.ToString(),
-                        Text = m.GetLocalized(x => x.Name),
-                        Selected = model.mid == m.Id
-                    });
-            }
-
-            IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
-            // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
-            if (Request.Params["q"] != null)
-            {
-                if (searchTerms.Length < _catalogSettings.ProductSearchTermMinimumLength)
-                {
-                    model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
-                }
-                else
-                {
-                    var categoryIds = new List<int>();
-                    int manufacturerId = 0;
-                    decimal? minPriceConverted = null;
-                    decimal? maxPriceConverted = null;
-                    bool searchInDescriptions = false;
-                    if (model.adv)
-                    {
-                        //advanced search
-                        var categoryId = model.cid;
-                        if (categoryId > 0)
-                        {
-                            categoryIds.Add(categoryId);
-                            if (model.isc)
-                            {
-                                //include subcategories
-                                categoryIds.AddRange(GetChildCategoryIds(categoryId));
-                            }
-                        }
+        //    //sorting
+        //    PrepareSortingOptions(model.PagingFilteringContext, command);
+        //    //view mode
+        //    PrepareViewModes(model.PagingFilteringContext, command);
+        //    //page size
+        //    PreparePageSizeOptions(model.PagingFilteringContext, command,
+        //        _catalogSettings.SearchPageAllowCustomersToSelectPageSize,
+        //        _catalogSettings.SearchPagePageSizeOptions,
+        //        _catalogSettings.SearchPageProductsPerPage);
 
 
-                        manufacturerId = model.mid;
+        //    string cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, 
+        //        _workContext.WorkingLanguage.Id,
+        //        string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
+        //        _storeContext.CurrentStore.Id); 
+        //    var categories = _cacheManager.Get(cacheKey, () =>
+        //    {
+        //        var categoriesModel = new List<SearchModel.CategoryModel>();
+        //        //all categories
+        //        var allCategories = _categoryService.GetAllCategories();
+        //        foreach (var c in allCategories)
+        //        {
+        //            //generate full category name (breadcrumb)
+        //            string categoryBreadcrumb= "";
+        //            var breadcrumb = c.GetCategoryBreadCrumb(allCategories, _aclService, _storeMappingService);
+        //            for (int i = 0; i <= breadcrumb.Count - 1; i++)
+        //            {
+        //                categoryBreadcrumb += breadcrumb[i].GetLocalized(x => x.Name);
+        //                if (i != breadcrumb.Count - 1)
+        //                    categoryBreadcrumb += " >> ";
+        //            }
+        //            categoriesModel.Add(new SearchModel.CategoryModel
+        //            {
+        //                Id = c.Id,
+        //                Breadcrumb = categoryBreadcrumb
+        //            });
+        //        }
+        //        return categoriesModel;
+        //    });
+        //    if (categories.Count > 0)
+        //    {
+        //        //first empty entry
+        //        model.AvailableCategories.Add(new SelectListItem
+        //            {
+        //                 Value = "0",
+        //                 Text = _localizationService.GetResource("Common.All")
+        //            });
+        //        //all other categories
+        //        foreach (var c in categories)
+        //        {
+        //            model.AvailableCategories.Add(new SelectListItem
+        //            {
+        //                Value = c.Id.ToString(),
+        //                Text = c.Breadcrumb,
+        //                Selected = model.cid == c.Id
+        //            });
+        //        }
+        //    }
 
-                        //min price
-                        if (!string.IsNullOrEmpty(model.pf))
-                        {
-                            decimal minPrice;
-                            if (decimal.TryParse(model.pf, out minPrice))
-                                minPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(minPrice, _workContext.WorkingCurrency);
-                        }
-                        //max price
-                        if (!string.IsNullOrEmpty(model.pt))
-                        {
-                            decimal maxPrice;
-                            if (decimal.TryParse(model.pt, out maxPrice))
-                                maxPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(maxPrice, _workContext.WorkingCurrency);
-                        }
+        //    var manufacturers = _manufacturerService.GetAllManufacturers();
+        //    if (manufacturers.Count > 0)
+        //    {
+        //        model.AvailableManufacturers.Add(new SelectListItem
+        //        {
+        //            Value = "0",
+        //            Text = _localizationService.GetResource("Common.All")
+        //        });
+        //        foreach (var m in manufacturers)
+        //            model.AvailableManufacturers.Add(new SelectListItem
+        //            {
+        //                Value = m.Id.ToString(),
+        //                Text = m.GetLocalized(x => x.Name),
+        //                Selected = model.mid == m.Id
+        //            });
+        //    }
 
-                        searchInDescriptions = model.sid;
-                    }
+        //    IPagedList<Product> products = new PagedList<Product>(new List<Product>(), 0, 1);
+        //    // only search if query string search keyword is set (used to avoid searching or displaying search term min length error message on /search page load)
+        //    if (Request.Params["q"] != null)
+        //    {
+        //        if (searchTerms.Length < _catalogSettings.ProductSearchTermMinimumLength)
+        //        {
+        //            model.Warning = string.Format(_localizationService.GetResource("Search.SearchTermMinimumLengthIsNCharacters"), _catalogSettings.ProductSearchTermMinimumLength);
+        //        }
+        //        else
+        //        {
+        //            var categoryIds = new List<int>();
+        //            int manufacturerId = 0;
+        //            decimal? minPriceConverted = null;
+        //            decimal? maxPriceConverted = null;
+        //            bool searchInDescriptions = false;
+        //            if (model.adv)
+        //            {
+        //                //advanced search
+        //                var categoryId = model.cid;
+        //                if (categoryId > 0)
+        //                {
+        //                    categoryIds.Add(categoryId);
+        //                    if (model.isc)
+        //                    {
+        //                        //include subcategories
+        //                        categoryIds.AddRange(GetChildCategoryIds(categoryId));
+        //                    }
+        //                }
+
+
+        //                manufacturerId = model.mid;
+
+        //                //min price
+        //                if (!string.IsNullOrEmpty(model.pf))
+        //                {
+        //                    decimal minPrice;
+        //                    if (decimal.TryParse(model.pf, out minPrice))
+        //                        minPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(minPrice, _workContext.WorkingCurrency);
+        //                }
+        //                //max price
+        //                if (!string.IsNullOrEmpty(model.pt))
+        //                {
+        //                    decimal maxPrice;
+        //                    if (decimal.TryParse(model.pt, out maxPrice))
+        //                        maxPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(maxPrice, _workContext.WorkingCurrency);
+        //                }
+
+        //                searchInDescriptions = model.sid;
+        //            }
                     
-                    //var searchInProductTags = false;
-                    var searchInProductTags = searchInDescriptions;
+        //            //var searchInProductTags = false;
+        //            var searchInProductTags = searchInDescriptions;
 
-                    //products
-                    products = _productService.SearchProducts(
-                        categoryIds: categoryIds,
-                        manufacturerId: manufacturerId,
-                        storeId: _storeContext.CurrentStore.Id,
-                        visibleIndividuallyOnly: true,
-                        priceMin: minPriceConverted,
-                        priceMax: maxPriceConverted,
-                        keywords: searchTerms,
-                        searchDescriptions: searchInDescriptions,
-                        searchSku: searchInDescriptions,
-                        searchProductTags: searchInProductTags,
-                        languageId: _workContext.WorkingLanguage.Id,
-                        orderBy: (ProductSortingEnum)command.OrderBy,
-                        pageIndex: command.PageNumber - 1,
-                        pageSize: command.PageSize);
-                    model.Products = PrepareProductOverviewModels(products).ToList();
+        //            //products
+        //            products = _productService.SearchProducts(
+        //                categoryIds: categoryIds,
+        //                manufacturerId: manufacturerId,
+        //                storeId: _storeContext.CurrentStore.Id,
+        //                visibleIndividuallyOnly: true,
+        //                priceMin: minPriceConverted,
+        //                priceMax: maxPriceConverted,
+        //                keywords: searchTerms,
+        //                searchDescriptions: searchInDescriptions,
+        //                searchSku: searchInDescriptions,
+        //                searchProductTags: searchInProductTags,
+        //                languageId: _workContext.WorkingLanguage.Id,
+        //                orderBy: (ProductSortingEnum)command.OrderBy,
+        //                pageIndex: command.PageNumber - 1,
+        //                pageSize: command.PageSize);
+        //            model.Products = PrepareProductOverviewModels(products).ToList();
 
-                    model.NoResults = !model.Products.Any();
+        //            model.NoResults = !model.Products.Any();
 
-                    //search term statistics
-                    if (!String.IsNullOrEmpty(searchTerms))
-                    {
-                        var searchTerm = _searchTermService.GetSearchTermByKeyword(searchTerms, _storeContext.CurrentStore.Id);
-                        if (searchTerm != null)
-                        {
-                            searchTerm.Count++;
-                            _searchTermService.UpdateSearchTerm(searchTerm);
-                        }
-                        else
-                        {
-                            searchTerm = new SearchTerm
-                            {
-                                Keyword = searchTerms,
-                                StoreId = _storeContext.CurrentStore.Id,
-                                Count = 1
-                            };
-                            _searchTermService.InsertSearchTerm(searchTerm);
-                        }
-                    }
+        //            //search term statistics
+        //            if (!String.IsNullOrEmpty(searchTerms))
+        //            {
+        //                var searchTerm = _searchTermService.GetSearchTermByKeyword(searchTerms, _storeContext.CurrentStore.Id);
+        //                if (searchTerm != null)
+        //                {
+        //                    searchTerm.Count++;
+        //                    _searchTermService.UpdateSearchTerm(searchTerm);
+        //                }
+        //                else
+        //                {
+        //                    searchTerm = new SearchTerm
+        //                    {
+        //                        Keyword = searchTerms,
+        //                        StoreId = _storeContext.CurrentStore.Id,
+        //                        Count = 1
+        //                    };
+        //                    _searchTermService.InsertSearchTerm(searchTerm);
+        //                }
+        //            }
 
-                    //event
-                    _eventPublisher.Publish(new ProductSearchEvent
-                    {
-                        SearchTerm = searchTerms,
-                        SearchInDescriptions = searchInDescriptions,
-                        CategoryIds = categoryIds,
-                        ManufacturerId = manufacturerId,
-                        WorkingLanguageId = _workContext.WorkingLanguage.Id
-                    });
-                }
-            }
+        //            //event
+        //            _eventPublisher.Publish(new ProductSearchEvent
+        //            {
+        //                SearchTerm = searchTerms,
+        //                SearchInDescriptions = searchInDescriptions,
+        //                CategoryIds = categoryIds,
+        //                ManufacturerId = manufacturerId,
+        //                WorkingLanguageId = _workContext.WorkingLanguage.Id
+        //            });
+        //        }
+        //    }
 
-            model.PagingFilteringContext.LoadPagedList(products);
+        //    model.PagingFilteringContext.LoadPagedList(products);
             
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [ChildActionOnly]
-        public ActionResult SearchBox()
-        {
-            var model = new SearchBoxModel
-            {
-                AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
-                ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
-                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
-            };
-            return PartialView(model);
-        }
+        //[ChildActionOnly]
+        //public ActionResult SearchBox()
+        //{
+        //    var model = new SearchBoxModel
+        //    {
+        //        AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
+        //        ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
+        //        SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
+        //    };
+        //    return PartialView(model);
+        //}
 
-        public ActionResult SearchTermAutoComplete(string term)
-        {
-            if (String.IsNullOrWhiteSpace(term) || term.Length < _catalogSettings.ProductSearchTermMinimumLength)
-                return Content("");
+        //public ActionResult SearchTermAutoComplete(string term)
+        //{
+        //    if (String.IsNullOrWhiteSpace(term) || term.Length < _catalogSettings.ProductSearchTermMinimumLength)
+        //        return Content("");
 
-            //products
-            var productNumber = _catalogSettings.ProductSearchAutoCompleteNumberOfProducts > 0 ?
-                _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
+        //    //products
+        //    var productNumber = _catalogSettings.ProductSearchAutoCompleteNumberOfProducts > 0 ?
+        //        _catalogSettings.ProductSearchAutoCompleteNumberOfProducts : 10;
 
-            var products = _productService.SearchProducts(
-                storeId: _storeContext.CurrentStore.Id,
-                keywords: term,
-                searchSku: false,
-                languageId: _workContext.WorkingLanguage.Id,
-                visibleIndividuallyOnly: true,
-                pageSize: productNumber);
+        //    var products = _productService.SearchProducts(
+        //        storeId: _storeContext.CurrentStore.Id,
+        //        keywords: term,
+        //        searchSku: false,
+        //        languageId: _workContext.WorkingLanguage.Id,
+        //        visibleIndividuallyOnly: true,
+        //        pageSize: productNumber);
 
-            var models =  PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
-            var result = (from p in models
-                          select new
-                          {
-                              label = p.Name,
-                              producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
-                              productpictureurl = p.DefaultPictureModel.ImageUrl
-                          })
-                          .ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    var models =  PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+        //    var result = (from p in models
+        //                  select new
+        //                  {
+        //                      label = p.Name,
+        //                      producturl = Url.RouteUrl("Product", new { SeName = p.SeName }),
+        //                      productpictureurl = p.DefaultPictureModel.ImageUrl
+        //                  })
+        //                  .ToList();
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
     }
 }

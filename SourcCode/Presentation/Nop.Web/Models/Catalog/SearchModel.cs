@@ -7,14 +7,14 @@ namespace Nop.Web.Models.Catalog
 {
     public partial class SearchModel : BaseNopModel
     {
-        public SearchModel()
-        {
-            this.PagingFilteringContext = new CatalogPagingFilteringModel();
-            this.Products = new List<ProductOverviewModel>();
+        //public SearchModel()
+        //{
+        //    this.PagingFilteringContext = new CatalogPagingFilteringModel();
+        //    this.Products = new List<ProductOverviewModel>();
 
-            this.AvailableCategories = new List<SelectListItem>();
-            this.AvailableManufacturers = new List<SelectListItem>();
-        }
+        //    this.AvailableCategories = new List<SelectListItem>();
+        //    this.AvailableManufacturers = new List<SelectListItem>();
+        //}
 
         public string Warning { get; set; }
 
@@ -58,19 +58,21 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         [NopResourceDisplayName("Search.AdvancedSearch")]
         public bool adv { get; set; }
-        public IList<SelectListItem> AvailableCategories { get; set; }
+        //public IList<SelectListItem> AvailableCategories { get; set; }
         public IList<SelectListItem> AvailableManufacturers { get; set; }
 
 
         public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
         public IList<ProductOverviewModel> Products { get; set; }
 
+        
+
         #region Nested classes
 
-        public class CategoryModel : BaseNopEntityModel
-        {
-            public string Breadcrumb { get; set; }
-        }
+        //public partial class CategoryModel : BaseNopEntityModel
+        //{
+        //    public string Breadcrumb { get; set; }
+        //}
 
         #endregion
     }

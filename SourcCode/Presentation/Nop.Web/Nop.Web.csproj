@@ -349,6 +349,7 @@
     <Compile Include="Models\Common\SitemapModel.cs" />
     <Compile Include="Models\Divui\Banners\BannerModel.cs" />
     <Compile Include="Models\Divui\Catalog\AttractionModel.cs" />
+    <Compile Include="Models\Divui\Catalog\CategoryNavigationModel.cs" />
     <Compile Include="Models\Divui\Catalog\CategorySpecificationModel.cs" />
     <Compile Include="Models\Divui\Catalog\CollectionModel.cs" />
     <Compile Include="Models\Divui\Catalog\AttractionNavigationModel.cs" />
@@ -361,6 +362,7 @@
     <Compile Include="Models\Divui\Catalog\DvProductSpecificationModel.cs" />
     <Compile Include="Models\Divui\Catalog\ProductOptionModel.cs" />
     <Compile Include="Models\Divui\Catalog\ProductSimpleModel.cs" />
+    <Compile Include="Models\Divui\Catalog\SearchModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeOptionModel.cs" />
     <Compile Include="Models\Divui\ShoppingCart\ShoppingCartOptionModel.cs" />

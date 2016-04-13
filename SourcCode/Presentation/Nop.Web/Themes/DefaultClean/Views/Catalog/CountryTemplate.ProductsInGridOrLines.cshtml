@@ -152,7 +152,7 @@
                 </div>
             </div>
             <footer>
-                <button class="btn btn-warning" id="btnViewAll">@string.Format(T("Category.Destinations.ViewAll").Text, Model.Name)</button>
+                <button class="btn btn-warning" id="btnViewAll" onclick="setLocation('@Url.RouteUrl("ProductSearch", new { countryId = Model.Id })');">@string.Format(T("Category.Destinations.ViewAll").Text, Model.Name)</button>
                 <input type="hidden" value="1" id="pageNumber" />
                 <input type="hidden" value="@Model.Id" id="categoryId" />
                 <input type="hidden" value="@Model.PagingFilteringContext.PageSize" id="pageSize" />

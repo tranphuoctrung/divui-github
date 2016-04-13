@@ -12,6 +12,9 @@ using Nop.Web.Framework.UI.Paging;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Boards;
 using Nop.Web.Models.Common;
+using System.Web.Routing;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nop.Web.Extensions
 {
@@ -248,6 +251,59 @@ namespace Nop.Web.Extensions
                 return topic.GetSeName();
             });
             return cachedSeName;
+        }
+
+
+        public static string CreateDefaultUrl(this HtmlHelper helper)
+        {
+            var routeValues = new RouteValueDictionary();
+            var viewContext = helper.ViewContext;
+            string pageQueryName = "page";
+            bool renderEmptyParameters = true;
+            var booleanParameterNames = new List<string>();
+            var parametersWithEmptyValues = new List<string>();
+            foreach (var key in viewContext.RequestContext.HttpContext.Request.QueryString.AllKeys.Where(key => key != null))
+            {
+                var value = viewContext.RequestContext.HttpContext.Request.QueryString[key];
+                if (renderEmptyParameters && String.IsNullOrEmpty(value))
+                {
+                    //we store query string parameters with empty values separately
+                    //we need to do it because they are not properly processed in the UrlHelper.GenerateUrl method (dropped for some reasons)
+                    parametersWithEmptyValues.Add(key);
+                }
+                else
+                {
+                    if (booleanParameterNames.Contains(key, StringComparer.InvariantCultureIgnoreCase))
+                    {
+                        //little hack here due to ugly MVC implementation
+                        //find more info here: http://www.mindstorminteractive.com/topics/jquery-fix-asp-net-mvc-checkbox-truefalse-value/
+                        if (!String.IsNullOrEmpty(value) && value.Equals("true,false", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            value = "true";
+                        }
+                    }
+                    routeValues[key] = value;
+                }
+            }
+
+            //SEO. we do not render pageindex query string parameter for the first page
+            if (routeValues.ContainsKey(pageQueryName))
+            {
+                routeValues.Remove(pageQueryName);
+            }
+        
+
+            var url = UrlHelper.GenerateUrl(null, null, null, routeValues, RouteTable.Routes, viewContext.RequestContext, true);
+            if (renderEmptyParameters && parametersWithEmptyValues.Count > 0)
+            {
+                //we add such parameters manually because UrlHelper.GenerateUrl() ignores them
+                var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+                foreach (var key in parametersWithEmptyValues)
+                {
+                    url = webHelper.ModifyQueryString(url, key + "=", null);
+                }
+            }
+            return url;
         }
 
     }

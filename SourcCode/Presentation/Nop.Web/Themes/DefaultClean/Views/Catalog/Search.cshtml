@@ -1,133 +1,185 @@
 ﻿@model SearchModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Search").Text);
 }
 @using Nop.Web.Models.Catalog;
-<script type="text/javascript">
-    $(document).ready(function () {
 
-        $("#@Html.FieldIdFor(model => model.adv)").click(toggleAdvancedSearch);
 
-        toggleAdvancedSearch();
-    });
-
-    function toggleAdvancedSearch() {
-
-        if ($('#@Html.FieldIdFor(model => model.adv)').is(':checked')) {
-            $('#advanced-search-block').show();
-        }
-        else {
-            $('#advanced-search-block').hide();
-        }
-    }
-</script>
-<div class="page search-page">
-    <div class="page-title">
-        <h1>@T("Search")</h1>
-    </div>
-    <div class="page-body">
-        <div class="search-input">
-            @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get))
-            {
-                <div class="fieldset">
-                    <div class="form-fields">
-                        <div class="basic-search">
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.q, new { }, ":")
-                                @Html.TextBoxFor(model => model.q, new { @class = "search-text" })
-                            </div>
-                            @Html.Widget("productsearch_page_basic")
-                            <div class="inputs reversed">
-                                @Html.CheckBoxFor(model => model.adv)
-                                @Html.LabelFor(model => model.adv)
-                            </div>
-                        </div>
-                        <div class="advanced-search" id="advanced-search-block">
-                            @if (Model.AvailableCategories.Count > 0)
-                            {
-                                <div class="inputs">
-                                    @Html.LabelFor(model => model.cid, new { }, ":")
-                                    @Html.DropDownListFor(model => model.cid, Model.AvailableCategories)
-                                </div>
-                                <div class="inputs reversed">
-                                    @Html.CheckBoxFor(model => model.isc)
-                                    @Html.LabelFor(model => model.isc)
-                                </div>
-                            }
-                            @if (Model.AvailableManufacturers.Count > 0)
-                            {
-                                <div class="inputs">
-                                    @Html.LabelFor(model => model.mid, new { }, ":")
-                                    @Html.DropDownListFor(model => model.mid, Model.AvailableManufacturers)
-                                </div>
-                            }
-                            <div class="inputs">
-                                <label>@T("Search.PriceRange"):</label>
-                                <span class="price-range">
-                                    @T("Search.PriceRange.From")
-                                    @Html.TextBoxFor(model => model.pf, new { @class = "price-from" })
-                                    @T("Search.PriceRange.To")
-                                    @Html.TextBoxFor(model => model.pt, new { @class = "price-to" })
-                                </span>
-                            </div>
-                            <div class="inputs reversed">
-                                @Html.CheckBoxFor(model => model.sid)
-                                @Html.LabelFor(model => model.sid)
-                            </div>
-                            @Html.Widget("productsearch_page_advanced")
-                        </div>
+<div class="container">
+    <div class="row">
+@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get))
+{
+        <div class="col-sm-12">
+            <div class="search-header">
+                <div class="search-header-title">
+                    <h1>
+                        @T("Search.Title", Model.CityOrCountryName)
+                        <span class="product-count">@T("Search.Total", Model.PagingFilteringContext.TotalItems)</span>
+                    </h1>
+                </div>
+                <div class="search-header-filter is-true">
+                    <div class="search-header-filter-title-wrp">
+                        <h3 class="search-header-filter-title">
+                            @T("Search.Show")
+                        </h3>
+                    </div>
+                    <div class="search-header-filter-display-wrp">
+                        @if (Model.attractionId > 0)
+                        {
+                            <button type="button" onclick="$('#filter_attraction_@Model.categoryId').click(); return true;" class="btn btn-sm search-header-filter-pills">@T("Search.Attraction"): @Model.AttractionName <i class="icon-cancel-circled"></i></button>
+                        }
+                        @if (Model.categoryId > 0)
+                        {
+                            <button type="button" onclick="$('#filter_category_@Model.categoryId').click(); return true;"  class="btn btn-sm search-header-filter-pills">@T("Search.Category"): @Model.CategoryName <i class="icon-cancel-circled"></i></button>
+                        }
+                        @if (Model.collectionId > 0)
+                        {
+                            <button type="button" onclick="$('#filter_collection_@Model.collectionId').click(); return true;" class="btn btn-sm search-header-filter-pills">@T("Search.Collection"): @Model.CollectionName <i class="icon-cancel-circled"></i></button>
+                        }
                     </div>
                 </div>
-                <div class="buttons">
-                    <input type="submit" class="button-1 search-button" value="@T("Search.Button")" />
-                </div>
-            }
+            </div>
         </div>
-        @if (Model.Products.Count > 0)
-        {
-            @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
-        }
-        @Html.Widget("productsearch_page_before_results")
-        <div class="search-results">
-            @if (!String.IsNullOrEmpty(Model.Warning))
-            {
-                <div class="warning">
-                    @Model.Warning
+
+        <div class="col-sm-3">
+            <div class="filter-column filter-column-collapse">
+                <div class="filter-container" id="collapseFilters">
+                    <div class="filter filter-box">
+                        <div class="filter-box-title">
+                            <h4>@T("Search.Destination")</h4>
+                        </div>
+                        <div class="filter-box-cont-wrp">
+                            <div class="filter-country-select">
+                                <label>@T("Search.Countries")</label>
+                                @Html.DropDownListFor(model => model.countryId, Model.AvailableCountries, new { @class = "form-control" })
+                            </div>
+                            <div class="filter-city-select">
+                                <label>@T("Search.Cities")</label>
+                                @Html.DropDownListFor(model => model.cityId, Model.AvailableCities, new { @class = "form-control"})
+                                
+                            </div>
+                        </div>
+                    </div>
+                   @Html.Partial("CategoryNavigation", new CategoryNavigationModel() {
+                       CurrentCategoryId = Model.categoryId,
+                       Categories = Model.AvailableCategories,
+                       LocalizationResourceName = "Categories",
+                       CssClass = "filter_category",
+                       SearchInputName = "categoryId"
+                   })
+                   @Html.Partial("CategoryNavigation", new CategoryNavigationModel() {
+                      CurrentCategoryId = Model.collectionId,
+                      Categories = Model.AvailableCollections,
+                      LocalizationResourceName = "Collections",
+                      CssClass = "filter_collection",
+                      SearchInputName = "collectionId"
+                  })
+                   @Html.Partial("CategoryNavigation", new CategoryNavigationModel() {
+                      CurrentCategoryId = Model.attractionId,
+                      Categories = Model.AvailableAttractions,
+                      LocalizationResourceName = "Attractions",
+                      CssClass = "filter_attraction",
+                      SearchInputName = "attractionId"
+                  })
+                    
+                    @Html.Partial("_FilterSpecsBox", Model, new ViewDataDictionary())
+                    <script>
+                        $(document).ready(function () {
+                            $('.specs').click(function () {
+                                var queries = {};
+                                $.each(document.location.search.substr(1).split('&'), function (c, q) {
+                                    var i = q.split('=');
+                                    if (i != "" && i != undefined && i.length > 1)
+                                        queries[i[0].toString()] = i[1].toString();
+                                });
+
+                                var checkedVals = $('.specs:checkbox:checked').map(function () {
+                                    return this.value;
+                                }).get();
+
+                                queries['specs'] = checkedVals.join(",");
+
+                                var params = jQuery.param(queries);
+                                var url = '@Url.RouteUrl("ProductSearch")' + '?' + params;
+
+                                window.location.href = url;
+
+                            });
+
+                            $('.categories-filter').click(function () {
+                                var queries = {};
+                                $.each(document.location.search.substr(1).split('&'), function (c, q) {
+                                    var i = q.split('=');
+                                    if (i != "" && i != undefined && i.length > 1)
+                                        queries[i[0].toString()] = i[1].toString();
+                                });
+
+
+                                if ($(this).prop('checked')) {
+                                    queries[$(this).attr('name')] = $(this).val();
+                                } else {
+                                    queries[$(this).attr('name')] = 0;
+                                }
+
+                                //var checkedVals = $('.' + $(this).attr('data-css-class') + ':checkbox:checked').map(function () {
+                                //    return this.value;
+                                //}).get();
+
+                                //queries[$(this).attr('name')] = checkedVals.join(",");
+
+                                var params = jQuery.param(queries);
+
+                                var url = '@Url.RouteUrl("ProductSearch")' + '?' + params;
+
+                                window.location.href = url;
+
+                            });
+
+                        });
+                    </script>
+                    
                 </div>
-            }
+
+            </div>
+        </div>
+        <div class="col-sm-9">
+
             @if (Model.NoResults)
             {
                 <div class="no-result">
                     @T("Search.NoResultsText")
                 </div>
             }
-            
+
             @if (Model.Products.Count > 0)
             {
-                <div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
-                    <div class="item-grid">
+                <div class="product-listing">
+                    <div class="product-list product-list-horizontal">
                         @foreach (var product in Model.Products)
                         {
-                            <div class="item-box">
-                                @Html.Partial("_ProductBox", product)
-                            </div>
+                            @Html.Partial("_ProductBoxList", product)
                         }
                     </div>
+                    @{
+                        var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+                    }
+                    @if (!pager.IsEmpty())
+                    {
+                        <div class="product-list-pagination">
+                            <nav>
+                                @pager
+                            </nav>
+                        </div>
+                    }
                 </div>
-            }
-            @{
-                var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("adv").BooleanParameterName("isc").BooleanParameterName("sid").RenderEmptyParameters(true);
-            }
-            @if (!pager.IsEmpty())
-            {
-                <div class="pager">
-                    @pager
-                </div>
-            }
+                        }
         </div>
-        @Html.Widget("productsearch_page_after_results")
+}
     </div>
+
 </div>
+
+

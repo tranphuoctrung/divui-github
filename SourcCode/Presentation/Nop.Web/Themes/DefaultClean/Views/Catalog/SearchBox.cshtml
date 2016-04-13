@@ -5,7 +5,7 @@
     @Html.Widget("searchbox_before_search_button")
     <div class="input-group destination-search">
         <input type="text" class="form-control" name="q" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
-        @Html.Action("SearchHompageCategories", "Catalog")
+        @Html.Action("TopMenu", "Catalog", new { position = 2})
     </div>
     if (Model.SearchTermMinimumLength > 0)
     {

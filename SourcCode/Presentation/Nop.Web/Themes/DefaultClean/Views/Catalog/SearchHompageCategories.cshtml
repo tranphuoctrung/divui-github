@@ -27,7 +27,7 @@
 
 <ul class="destination-search-result dropdown-menu dv-dropdown-menu">
     @{
-        var rootCategories = Model.Categories.Where(x => x.DisplayedOnHomePage).ToList();
+        var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
         var groups = rootCategories.Split(3);
 
     }

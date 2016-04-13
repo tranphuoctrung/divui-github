@@ -2215,3 +2215,19 @@ img {
 .admin-header-links .impersonate a:hover {
 	background-color: #666;
 }
+
+/* Custom Filter*/
+.lbnavigation{
+
+    display:inline !important;
+
+}
+
+.filter-column .filters-list-item .is-active label, .filter-column .filters-list-item .is-active label:hover{
+    font-weight: bold;
+    background: #959595;
+    text-decoration: none;
+    color: white;
+    border-radius: 3px;
+}
+
