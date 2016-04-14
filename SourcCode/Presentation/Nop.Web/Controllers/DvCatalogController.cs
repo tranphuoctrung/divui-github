@@ -43,7 +43,9 @@ namespace Nop.Web.Controllers
         private readonly ICollectionService _collectionService;
         private readonly IAttractionService _attractionService;
         private readonly IBannerService _bannerService;
-
+        private readonly IMeasureService _measureService;
+        private readonly IPriceSetupService _priceSetupService;
+        private readonly IProductOptionService _productOptionService;
         #endregion
 
         #region Constructors
@@ -81,7 +83,10 @@ namespace Nop.Web.Controllers
             BlogSettings blogSettings,
             ForumSettings forumSettings,
             ICacheManager cacheManager,
-            IBannerService bannerService)
+            IBannerService bannerService,
+            IMeasureService measureService,
+            IPriceSetupService priceSetupService,
+            IProductOptionService productOptionService)
         {
             this._categoryService = categoryService;
             this._collectionService = collectionService;
@@ -117,9 +122,32 @@ namespace Nop.Web.Controllers
             this._forumSettings = forumSettings;
             this._cacheManager = cacheManager;
             this._bannerService = bannerService;
+            this._productOptionService = productOptionService;
+            this._priceSetupService = priceSetupService;
+            this._measureService = measureService;
         }
 
         #endregion
+
+        #region Utiles
+        [NonAction]
+        protected virtual IEnumerable<ProductOverviewModel> DvPrepareProductOverviewModels(IEnumerable<Product> products,
+            bool preparePriceModel = true, bool preparePictureModel = true,
+            int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
+            bool forceRedirectionAfterAddingToCart = false)
+        {
+            return this.DvPrepareProductOverviewModels(_productService,_priceSetupService,_measureService,
+                _workContext,_storeContext, _categoryService, _productOptionService, _specificationAttributeService,
+                _priceCalculationService, _priceFormatter, _permissionService,
+                _localizationService, _taxService, _currencyService,
+                _pictureService, _webHelper, _cacheManager,
+                _catalogSettings, _mediaSettings, products,
+                preparePriceModel, preparePictureModel,
+                productThumbPictureSize, prepareSpecificationAttributes,
+                forceRedirectionAfterAddingToCart);
+        }
+        #endregion
+
         #region Categories
 
         [NopHttpsRequirement(SslRequirement.No)]
@@ -294,41 +322,41 @@ namespace Nop.Web.Controllers
                 return pictureModel;
             });
 
-            //featured products
-            if (!_catalogSettings.IgnoreFeaturedProducts)
-            {
-                //We cache a value indicating whether we have featured products
-                IPagedList<Product> featuredProducts = null;
-                string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_FEATURED_PRODUCTS_KEY, categoryId,
-                    string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), _storeContext.CurrentStore.Id);
-                var hasFeaturedProductsCache = _cacheManager.Get<bool?>(cacheKey);
-                if (!hasFeaturedProductsCache.HasValue)
-                {
-                    //no value in the cache yet
-                    //let's load products and cache the result (true/false)
-                    featuredProducts = _productService.SearchProducts(
-                       categoryIds: new List<int> { category.Id },
-                       storeId: _storeContext.CurrentStore.Id,
-                       visibleIndividuallyOnly: true,
-                       featuredProducts: true);
-                    hasFeaturedProductsCache = featuredProducts.TotalCount > 0;
-                    _cacheManager.Set(cacheKey, hasFeaturedProductsCache, 60);
-                }
-                if (hasFeaturedProductsCache.Value && featuredProducts == null)
-                {
-                    //cache indicates that the category has featured products
-                    //let's load them
-                    featuredProducts = _productService.SearchProducts(
-                       categoryIds: new List<int> { category.Id },
-                       storeId: _storeContext.CurrentStore.Id,
-                       visibleIndividuallyOnly: true,
-                       featuredProducts: true);
-                }
-                if (featuredProducts != null)
-                {
-                    model.FeaturedProducts = PrepareProductOverviewModels(featuredProducts).ToList();
-                }
-            }
+            ////featured products
+            //if (!_catalogSettings.IgnoreFeaturedProducts)
+            //{
+            //    //We cache a value indicating whether we have featured products
+            //    IPagedList<Product> featuredProducts = null;
+            //    string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_FEATURED_PRODUCTS_KEY, categoryId,
+            //        string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), _storeContext.CurrentStore.Id);
+            //    var hasFeaturedProductsCache = _cacheManager.Get<bool?>(cacheKey);
+            //    if (!hasFeaturedProductsCache.HasValue)
+            //    {
+            //        //no value in the cache yet
+            //        //let's load products and cache the result (true/false)
+            //        featuredProducts = _productService.SearchProducts(
+            //           categoryIds: new List<int> { category.Id },
+            //           storeId: _storeContext.CurrentStore.Id,
+            //           visibleIndividuallyOnly: true,
+            //           featuredProducts: true);
+            //        hasFeaturedProductsCache = featuredProducts.TotalCount > 0;
+            //        _cacheManager.Set(cacheKey, hasFeaturedProductsCache, 60);
+            //    }
+            //    if (hasFeaturedProductsCache.Value && featuredProducts == null)
+            //    {
+            //        //cache indicates that the category has featured products
+            //        //let's load them
+            //        featuredProducts = _productService.SearchProducts(
+            //           categoryIds: new List<int> { category.Id },
+            //           storeId: _storeContext.CurrentStore.Id,
+            //           visibleIndividuallyOnly: true,
+            //           featuredProducts: true);
+            //    }
+            //    if (featuredProducts != null)
+            //    {
+            //        model.FeaturedProducts = DvPrepareProductOverviewModels(featuredProducts).ToList();
+            //    }
+            //}
 
 
             var categoryIds = new List<int>();
@@ -404,7 +432,7 @@ namespace Nop.Web.Controllers
                 case CategoryType.Destination:
                     defaultProductNumber = _catalogSettings.DefaultDestinationProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
 
-                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+                    model.Products = DvPrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
 
                     var categories = productCategories.Where(c => c.Category.CategoryTypeId == (int)CategoryType.Category)
                         .OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct();
@@ -547,7 +575,7 @@ namespace Nop.Web.Controllers
                 case CategoryType.Attraction:
                     defaultProductNumber = _catalogSettings.DefaultAttractionProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
 
-                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+                    model.Products = DvPrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
 
 
                     //var attractions2 = productCategories.OrderBy(pc => pc.DisplayOrder).Select(pc => pc.Category).Distinct()
@@ -593,7 +621,7 @@ namespace Nop.Web.Controllers
                 case CategoryType.Collection:
                     defaultProductNumber = _catalogSettings.DefaultCollectionProductNumber == 0 ? 8 : _catalogSettings.DefaultDestinationProductNumber;
 
-                    model.Products = PrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
+                    model.Products = DvPrepareProductOverviewModels(orderedproducts.Take(defaultProductNumber)).ToList();
 
                     return View("CollectionTemplate.ProductsInGridOrLines", model);
                 default:
@@ -648,7 +676,7 @@ namespace Nop.Web.Controllers
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize
                 );
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -824,7 +852,7 @@ namespace Nop.Web.Controllers
                 }
                 if (featuredProducts != null)
                 {
-                    model.FeaturedProducts = PrepareProductOverviewModels(featuredProducts).ToList();
+                    model.FeaturedProducts = DvPrepareProductOverviewModels(featuredProducts).ToList();
                 }
             }
 
@@ -851,7 +879,7 @@ namespace Nop.Web.Controllers
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -1030,7 +1058,7 @@ namespace Nop.Web.Controllers
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize
                 );
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -1227,7 +1255,7 @@ namespace Nop.Web.Controllers
                 }
                 if (featuredProducts != null)
                 {
-                    model.FeaturedProducts = PrepareProductOverviewModels(featuredProducts).ToList();
+                    model.FeaturedProducts = DvPrepareProductOverviewModels(featuredProducts).ToList();
                 }
             }
 
@@ -1254,7 +1282,7 @@ namespace Nop.Web.Controllers
                 orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -1731,7 +1759,7 @@ namespace Nop.Web.Controllers
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize
                 );
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
 
@@ -2044,7 +2072,7 @@ namespace Nop.Web.Controllers
             products = new PagedList<Product>(searchproducts.ToList(), pageIndex: command.PageNumber - 1, pageSize: command.PageSize);
 
 
-            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.Products = DvPrepareProductOverviewModels(products).ToList();
 
             var attractions = new List<Category>();
             foreach (var p in products)
@@ -2122,7 +2150,7 @@ namespace Nop.Web.Controllers
                 visibleIndividuallyOnly: true,
                 pageSize: productNumber);
 
-            var models = PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
+            var models = DvPrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
             var result = (from p in models
                           select new
                           {

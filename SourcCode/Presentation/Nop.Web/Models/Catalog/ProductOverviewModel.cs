@@ -7,13 +7,13 @@ namespace Nop.Web.Models.Catalog
 {
     public partial class ProductOverviewModel : BaseNopEntityModel
     {
-        public ProductOverviewModel()
-        {
-            ProductPrice = new ProductPriceModel();
-            DefaultPictureModel = new PictureModel();
-            SpecificationAttributeModels = new List<ProductSpecificationModel>();
-            ReviewOverviewModel = new ProductReviewOverviewModel();
-        }
+        //public ProductOverviewModel()
+        //{
+        //    ProductPrice = new ProductPriceModel();
+        //    DefaultPictureModel = new PictureModel();
+        //    SpecificationAttributeModels = new List<ProductSpecificationModel>();
+        //    ReviewOverviewModel = new ProductReviewOverviewModel();
+        //}
 
         public string Name { get; set; }
         public string ShortDescription { get; set; }

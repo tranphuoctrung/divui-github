@@ -45,6 +45,8 @@ namespace Nop.Web.Models.Catalog
         public CategoryModel ProductAttraction { get; set; }
         public partial class ProductPriceModel {
             public decimal SavePercent { get; set; }
+            public decimal SaveValue { get; set; }
+            public string strSaveValue { get; set; }
         }
     }
 }

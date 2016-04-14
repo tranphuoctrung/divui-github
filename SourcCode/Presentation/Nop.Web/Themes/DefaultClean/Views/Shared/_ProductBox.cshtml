@@ -9,17 +9,17 @@
     string addtocartlink = "";
     var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
     var quantity = 1;
-    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
-    {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
-    }
-    else
-    {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
-    }
+    //if (Model.DvProductPrice.ForceRedirectionAfterAddingToCart)
+    //{
+    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    //}
+    //else
+    //{
+    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    //}
 
-    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
-    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+    //var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    //var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
 }
 <div class="col-lg-3 col-md-3 col-sm-6 product-card product-card-vertical">
     <div class="product-card-cont-container">
@@ -92,7 +92,7 @@
                     <div class="product-card-price-wrp">
                         <span class="price-from">@T("ProductPrice.From")</span>
                         <span class="price-display">
-                            @Model.ProductPrice.Price
+                            @Model.DvProductPrice.Price
                         </span>
                     </div>
                 </div>

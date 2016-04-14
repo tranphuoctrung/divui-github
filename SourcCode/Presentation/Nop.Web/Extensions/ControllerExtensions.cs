@@ -19,6 +19,8 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
 using Nop.Web.Models.Divui.Catalog;
+using Nop.Services.Divui.Catalog;
+using Nop.Core.Domain.Divui.Catalog;
 
 namespace Nop.Web.Extensions
 {
@@ -398,6 +400,217 @@ namespace Nop.Web.Extensions
                             picture.AltAttribute :
                             string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name);
                         
+                        return pictureModel;
+                    });
+
+                    #endregion
+                }
+
+                //specs
+                if (prepareSpecificationAttributes)
+                {
+                    model.SpecificationAttributeModels = PrepareProductSpecificationModel(controller, workContext,
+                         specificationAttributeService, cacheManager, product);
+                }
+
+                //reviews
+                model.ReviewOverviewModel = new ProductReviewOverviewModel
+                {
+                    ProductId = product.Id,
+                    RatingSum = product.ApprovedRatingSum,
+                    TotalReviews = product.ApprovedTotalReviews,
+                    AllowCustomerReviews = product.AllowCustomerReviews
+                };
+
+                models.Add(model);
+            }
+            return models;
+        }
+
+        public static IEnumerable<ProductOverviewModel> DvPrepareProductOverviewModels(this Controller controller,
+            IProductService productService,
+            IPriceSetupService priceSetupService,
+            IMeasureService measureService,
+            IWorkContext workContext,
+            IStoreContext storeContext,
+            ICategoryService categoryService,
+            IProductOptionService productOptionService,
+            ISpecificationAttributeService specificationAttributeService,
+            IPriceCalculationService priceCalculationService,
+            IPriceFormatter priceFormatter,
+            IPermissionService permissionService,
+            ILocalizationService localizationService,
+            ITaxService taxService,
+            ICurrencyService currencyService,
+            IPictureService pictureService,
+            IWebHelper webHelper,
+            ICacheManager cacheManager,
+            CatalogSettings catalogSettings,
+            MediaSettings mediaSettings,
+            IEnumerable<Product> products,
+            bool preparePriceModel = true, bool preparePictureModel = true,
+            int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
+            bool forceRedirectionAfterAddingToCart = false)
+        {
+            if (products == null)
+                throw new ArgumentNullException("products");
+
+            var models = new List<ProductOverviewModel>();
+            foreach (var product in products)
+            {
+                var model = new ProductOverviewModel
+                {
+                    Id = product.Id,
+                    Name = product.GetLocalized(x => x.Name),
+                    ShortDescription = product.GetLocalized(x => x.ShortDescription),
+                    FullDescription = product.GetLocalized(x => x.FullDescription),
+                    IsNew = product.IsNew,
+                    IsSpecial = product.IsSpecial,
+                    SeName = product.GetSeName(),
+                    MarkAsNew = product.MarkAsNew &&
+                        (!product.MarkAsNewStartDateTimeUtc.HasValue || product.MarkAsNewStartDateTimeUtc.Value < DateTime.UtcNow) &&
+                        (!product.MarkAsNewEndDateTimeUtc.HasValue || product.MarkAsNewEndDateTimeUtc.Value > DateTime.UtcNow)
+                };
+                //price
+                if (preparePriceModel)
+                {
+                    #region productoption
+                    model.DvProductPrice = new ProductDetailsModel.ProductPriceModel();
+                    model.DvProductPrice.PriceValue = decimal.MaxValue;
+                    var options = productOptionService.GetAllProductOptions(productId: product.Id);
+                    model.ProductOptions = options.Select(op =>
+                    {
+                        var m = new ProductOptionModel()
+                        {
+                            Name = op.GetLocalized(o => o.Name),
+                            Description = op.GetLocalized(o => o.Description)
+                        };
+
+                        foreach (var p in op.Products)
+                        {
+                            var productSimple = new ProductSimpleModel()
+                            {
+                                Name = p.GetLocalized(c => c.Name),
+                                Overview = p.GetLocalized(c => c.Overview),
+                                ProductId = p.Id,
+                                AgeRange = p.AgeRange,
+                                AgeRangeCondition = p.AgeRangeCondition
+                            };
+
+                            productSimple.AgeRangeName = p.AgeRangeType.GetLocalizedEnum(localizationService, workContext);
+
+                            productSimple.ProductPrice.HidePrices = false;
+                            if (p.CustomerEntersPrice)
+                            {
+                                productSimple.ProductPrice.CustomerEntersPrice = true;
+                            }
+                            else
+                            {
+                                if (p.CallForPrice)
+                                {
+                                    productSimple.ProductPrice.CallForPrice = true;
+                                }
+                                else
+                                {
+                                    decimal taxRate;
+                                    decimal oldPriceBase = taxService.GetProductPrice(p, p.OldPrice, out taxRate);
+                                    decimal finalPriceWithoutDiscountBase = taxService.GetProductPrice(p, priceCalculationService.GetFinalPrice(p, workContext.CurrentCustomer, includeDiscounts: false), out taxRate);
+                                    decimal finalPriceWithDiscountBase = taxService.GetProductPrice(p, priceCalculationService.GetFinalPrice(p, workContext.CurrentCustomer, includeDiscounts: true), out taxRate);
+
+                                    decimal oldPrice = currencyService.ConvertFromPrimaryStoreCurrency(oldPriceBase, workContext.WorkingCurrency);
+                                    decimal finalPriceWithoutDiscount = currencyService.ConvertFromPrimaryStoreCurrency(finalPriceWithoutDiscountBase, workContext.WorkingCurrency);
+
+                                    // get setup prices
+                                    var setupPrices = priceSetupService.GetAllPriceSetups(productId: p.Id,
+                                        customerRoleIds: workContext.CurrentCustomer.CustomerRoles.Select(r => r.Id).ToList(), toDate: DateTime.Now);
+
+                                    foreach (var setupprice in setupPrices)
+                                    {
+                                        if (setupprice.Quantity == 1)
+                                        {
+                                            finalPriceWithoutDiscount = setupprice.Price;
+                                        }
+                                    }
+
+                                    decimal finalPriceWithDiscount = currencyService.ConvertFromPrimaryStoreCurrency(finalPriceWithDiscountBase, workContext.WorkingCurrency);
+
+
+                                    if (finalPriceWithoutDiscountBase != oldPriceBase && oldPriceBase > decimal.Zero)
+                                        productSimple.ProductPrice.OldPrice = priceFormatter.FormatPrice(oldPrice);
+
+                                    productSimple.ProductPrice.Price = priceFormatter.FormatPrice(finalPriceWithoutDiscount);
+
+                                    if (finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
+                                        productSimple.ProductPrice.PriceWithDiscount = priceFormatter.FormatPrice(finalPriceWithDiscount);
+
+                                    productSimple.ProductPrice.PriceValue = finalPriceWithDiscount;
+
+
+
+                                    //property for German market
+                                    //we display tax/shipping info only with "shipping enabled" for this product
+                                    //we also ensure this it's not free shipping
+                                    productSimple.ProductPrice.DisplayTaxShippingInfo = catalogSettings.DisplayTaxShippingInfoProductDetailsPage
+                                        && p.IsShipEnabled &&
+                                        !p.IsFreeShipping;
+
+                                    //PAngV baseprice (used in Germany)
+                                    productSimple.ProductPrice.BasePricePAngV = p.FormatBasePrice(finalPriceWithDiscountBase,
+                                        localizationService, measureService, currencyService, workContext, priceFormatter);
+
+                                    //currency code
+                                    productSimple.ProductPrice.CurrencyCode = workContext.WorkingCurrency.CurrencyCode;
+
+                                    if (p.AgeRangeType == DvAgeRangeType.Adult)
+                                    {
+                                        if (finalPriceWithDiscount < model.DvProductPrice.PriceValue)
+                                        {
+                                            model.DvProductPrice = productSimple.ProductPrice;
+                                            model.DvProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
+                                            model.DvProductPrice.SaveValue = finalPriceWithoutDiscount - oldPrice;
+                                            model.DvProductPrice.strSaveValue = priceFormatter.FormatPrice(finalPriceWithoutDiscount - oldPrice);
+
+                                        }
+
+                                    }
+                                    
+                                }
+                            }
+
+                        }
+                        return m;
+
+                    }).ToList();
+
+                    #endregion
+                }
+
+                //picture
+                if (preparePictureModel)
+                {
+                    #region Prepare product picture
+
+                    //If a size has been set in the view, we use it in priority
+                    int pictureSize = productThumbPictureSize.HasValue ? productThumbPictureSize.Value : mediaSettings.ProductThumbPictureSize;
+                    //prepare picture model
+                    var defaultProductPictureCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DEFAULTPICTURE_MODEL_KEY, product.Id, pictureSize, true, workContext.WorkingLanguage.Id, webHelper.IsCurrentConnectionSecured(), storeContext.CurrentStore.Id);
+                    model.DefaultPictureModel = cacheManager.Get(defaultProductPictureCacheKey, () =>
+                    {
+                        var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
+                        var pictureModel = new PictureModel
+                        {
+                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize),
+                            FullSizeImageUrl = pictureService.GetPictureUrl(picture)
+                        };
+                        //"title" attribute
+                        pictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.TitleAttribute)) ?
+                            picture.TitleAttribute :
+                            string.Format(localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), model.Name);
+                        //"alt" attribute
+                        pictureModel.AlternateText = (picture != null && !string.IsNullOrEmpty(picture.AltAttribute)) ?
+                            picture.AltAttribute :
+                            string.Format(localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), model.Name);
+
                         return pictureModel;
                     });
 

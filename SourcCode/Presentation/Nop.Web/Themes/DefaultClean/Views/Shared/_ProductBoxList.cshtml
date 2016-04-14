@@ -9,14 +9,14 @@
     string addtocartlink = "";
     var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
     var quantity = 1;
-    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
-    {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
-    }
-    else
-    {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
-    }
+    //if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    //{
+    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    //}
+    //else
+    //{
+    //    addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    //}
 
     var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
     var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
@@ -55,18 +55,7 @@
                             {
                                 ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
                             }
-                            @*<div class="product-card-rating">
-                                <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
-                                    <div class="rating">
-                                        <div style="width: @(ratingPercent)%">
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="product-card-rating-counts">
-                                    @string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)
-                                </span>
-                            </div>*@
-
+                            
                             <div class="product-card-rating">
 
                                 <span class="rating">
@@ -95,27 +84,38 @@
                     <div class="product-card-short-desc">
                         @Html.Raw(Model.ShortDescription)
                     </div>
-                    <span class="duration-label">
-                        <i class="icon icon-clock-5"></i>Thời lượng:
-                        <span class="duration-value">8 giờ</span>
-                    </span>
+                    @{
+                        var spec = Model.SpecificationAttributeModels.FirstOrDefault(m => m.SystemName == "TourDuration");
+                    }
+                    @if (spec != null)
+                    {
+                        <span class="duration-label">
+                            <i class="icon icon-clock-5"></i>@spec.SpecificationAttributeName
+                            <span class="duration-value">@spec.ValueRaw</span>
+                        </span>
+                    }
+                    
                 </div>
                 <div class="product-card-right-columns">
                     @Html.Widget("productbox_addinfo_before", Model.Id)
                     <div class="product-card-price-wrp">
                         <span class="price-from">
-                            Giá chỉ từ
-                            @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                            @T("ProductPrice.From")
+                            @if (!String.IsNullOrEmpty(Model.DvProductPrice.OldPrice))
                             {
-                                <span class="old-price">@Model.ProductPrice.OldPrice</span>
+                                <span class="old-price">@Model.DvProductPrice.OldPrice</span>
                             }
                         </span>
                         <span class="price-display">
-                            @Model.ProductPrice.Price
+                            @Model.DvProductPrice.Price
                         </span>
                         @Html.Widget("productbox_addinfo_middle", Model.Id)
-                        <span class="price-saving-value">Tiết kiệm 100.000đ!</span>
-                        <button class="btn btn-warning btn-sm view-details"><strong>XEM CHI TIẾT</strong></button>
+                        @if (Model.DvProductPrice.SavePercent > 0)
+                        {
+                            <span class="price-saving-value">@string.Format(T("Products.SavingValue").Text, Model.DvProductPrice.strSaveValue)</span>
+                        }
+                        
+                        <button class="btn btn-warning btn-sm view-details"><strong>@T("Products.ViewDetail")</strong></button>
                         @Html.Widget("productbox_addinfo_after", Model.Id)
                     </div>
                 </div>

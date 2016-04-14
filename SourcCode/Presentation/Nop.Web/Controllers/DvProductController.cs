@@ -441,7 +441,8 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region productoption
-
+            model.ProductPrice = new ProductDetailsModel.ProductPriceModel();
+            model.ProductPrice.PriceValue = decimal.MaxValue;
             var options = _productOptionService.GetAllProductOptions(productId: product.Id);
             model.ProductOptions = options.Select(op =>
             {

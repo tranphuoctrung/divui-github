@@ -361,6 +361,7 @@
     <Compile Include="Models\Divui\Catalog\DvProductDetailsModel.cs" />
     <Compile Include="Models\Divui\Catalog\DvProductSpecificationModel.cs" />
     <Compile Include="Models\Divui\Catalog\ProductOptionModel.cs" />
+    <Compile Include="Models\Divui\Catalog\ProductOverviewModel.cs" />
     <Compile Include="Models\Divui\Catalog\ProductSimpleModel.cs" />
     <Compile Include="Models\Divui\Catalog\SearchModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeModel.cs" />
