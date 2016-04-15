@@ -115,7 +115,7 @@
                             <span class="price-saving-value">@string.Format(T("Products.SavingValue").Text, Model.DvProductPrice.strSaveValue)</span>
                         }
                         
-                        <button class="btn btn-warning btn-sm view-details"><strong>@T("Products.ViewDetail")</strong></button>
+                        <button class="btn btn-warning btn-sm view-details" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })');"><strong>@T("Products.ViewDetail")</strong></button>
                         @Html.Widget("productbox_addinfo_after", Model.Id)
                     </div>
                 </div>

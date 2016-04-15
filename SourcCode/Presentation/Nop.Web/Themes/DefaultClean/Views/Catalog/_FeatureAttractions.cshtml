@@ -8,14 +8,16 @@
             @foreach (var item in Model)
             {
                 <div class="highlights-entry-wrp">
-                    <div class="img-container">
-                        <img src="@item.PictureModel.FullSizeImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
-                    </div>
-                    <div class="highlights-entry-header">
-                        <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                        <div class="img-container">
+                            <img src="@item.PictureModel.FullSizeImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
+                        </div>
+                        <div class="highlights-entry-header">
+
                             <h4 class="title">@item.Name</h4>
-                        </a>
-                    </div>
+
+                        </div>
+                    </a>
                     <p class="highlights-entry-desc">
                         @Html.Raw(item.ShortDescription)
                     </p>
