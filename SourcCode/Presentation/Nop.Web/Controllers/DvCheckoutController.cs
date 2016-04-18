@@ -30,7 +30,7 @@ using Nop.Web.Models.Checkout;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.ShoppingCart;
 using Nop.Core.Domain.Tax;
-
+using Nop.Services.Discounts;
 
 namespace Nop.Web.Controllers
 {
@@ -40,6 +40,8 @@ namespace Nop.Web.Controllers
         #region Fields
 
         private readonly TaxSettings _taxSettings;
+        private readonly ShoppingCartSettings _shoppingCartSettings;
+        private readonly IDiscountService _discountService;
 
         #endregion
 
@@ -75,7 +77,9 @@ namespace Nop.Web.Controllers
             PaymentSettings paymentSettings,
             ShippingSettings shippingSettings,
             AddressSettings addressSettings,
-            TaxSettings taxSettings)
+            TaxSettings taxSettings,
+            ShoppingCartSettings shoppingCartSettings,
+            IDiscountService discountService)
         {
             this._workContext = workContext;
             this._storeContext = storeContext;
@@ -109,6 +113,8 @@ namespace Nop.Web.Controllers
             this._shippingSettings = shippingSettings;
             this._addressSettings = addressSettings;
             this._taxSettings = taxSettings;
+            this._shoppingCartSettings = shoppingCartSettings;
+            this._discountService = discountService;
         }
 
         #endregion
@@ -349,6 +355,7 @@ namespace Nop.Web.Controllers
             return model;
         }
 
+        [HttpGet]
         public ActionResult OnePageCheckout()
         {
             //validation
@@ -371,6 +378,100 @@ namespace Nop.Web.Controllers
                 DisableBillingAddressCheckoutStep = _orderSettings.DisableBillingAddressCheckoutStep
             };
             model.OrderTotals = PrepareOrderTotalsModel(cart, false);
+
+            model.BillingAddress = PrepareBillingAddressModel(prePopulateNewAddressWithCustomerFields: true);
+
+            model.DiscountBox.Display = _shoppingCartSettings.ShowDiscountBox;
+            var discountCouponCode = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.DiscountCouponCode);
+            var discount = _discountService.GetDiscountByCouponCode(discountCouponCode);
+            if (discount != null &&
+                discount.RequiresCouponCode &&
+                _discountService.ValidateDiscount(discount, _workContext.CurrentCustomer).IsValid)
+                model.DiscountBox.CurrentCode = discount.CouponCode;
+
+            return View(model);
+        }
+
+        [ValidateInput(false)]
+        [HttpPost, ActionName("OnePageCheckout")]
+        [FormValueRequired("applydiscountcouponcode")]
+        public ActionResult ApplyDiscountCoupon(OnePageCheckoutModel model , AddressModel addressModel, string discountcouponcode, FormCollection form)
+        {
+            model.CouponCollapsed = true;
+            //trim
+            if (discountcouponcode != null)
+                discountcouponcode = discountcouponcode.Trim();
+
+            //validation
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                .LimitPerStore(_storeContext.CurrentStore.Id)
+                .ToList();
+            if (cart.Count == 0)
+                return RedirectToRoute("ShoppingCart");
+
+            if (!_orderSettings.OnePageCheckoutEnabled)
+                return RedirectToRoute("Checkout");
+
+            if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
+                return new HttpUnauthorizedResult();
+
+            model.OrderTotals = PrepareOrderTotalsModel(cart, false);
+
+            if(model.BillingAddress == null)
+                model.BillingAddress = PrepareBillingAddressModel(prePopulateNewAddressWithCustomerFields: true);
+
+            model.DiscountBox.Display = _shoppingCartSettings.ShowDiscountBox;
+
+            if (!String.IsNullOrWhiteSpace(discountcouponcode))
+            {
+                //we find even hidden records here. this way we can display a user-friendly message if it's expired
+                var discount = _discountService.GetDiscountByCouponCode(discountcouponcode, true);
+                if (discount != null && discount.RequiresCouponCode)
+                {
+                    var validationResult = _discountService.ValidateDiscount(discount, _workContext.CurrentCustomer, discountcouponcode);
+                    if (validationResult.IsValid)
+                    {
+                        //valid
+                        _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.DiscountCouponCode, discountcouponcode);
+                        model.DiscountBox.Message = _localizationService.GetResource("ShoppingCart.DiscountCouponCode.Applied");
+                        model.DiscountBox.IsApplied = true;
+                        model.DiscountBox.CurrentCode = discount.CouponCode;
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(validationResult.UserError))
+                        {
+                            //some user error
+                            model.DiscountBox.Message = validationResult.UserError;
+                            model.DiscountBox.IsApplied = false;
+                        }
+                        else
+                        {
+                            //general error text
+                            model.DiscountBox.Message = _localizationService.GetResource("ShoppingCart.DiscountCouponCode.WrongDiscount");
+                            model.DiscountBox.IsApplied = false;
+                        }
+                    }
+
+                    
+                        
+                }
+                else
+                {
+                    //discount cannot be found
+                    model.DiscountBox.Message = _localizationService.GetResource("ShoppingCart.DiscountCouponCode.WrongDiscount");
+                    model.DiscountBox.IsApplied = false;
+                }
+            }
+            else
+            {
+                //empty coupon code
+                model.DiscountBox.Message = _localizationService.GetResource("ShoppingCart.DiscountCouponCode.WrongDiscount");
+                model.DiscountBox.IsApplied = false;
+            }
+
+
             return View(model);
         }
 

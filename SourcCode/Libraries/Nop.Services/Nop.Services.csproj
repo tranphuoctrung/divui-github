@@ -270,6 +270,8 @@
     <Compile Include="Divui\Catalog\IDvCategoryService.cs" />
     <Compile Include="Divui\Catalog\IProductOptionService.cs" />
     <Compile Include="Divui\Catalog\IDvProductService.cs" />
+    <Compile Include="Divui\Orders\IShoppingCartService.cs" />
+    <Compile Include="Divui\Orders\ShoppingCartService.cs" />
     <Compile Include="Divui\Security\DvStandardPermissionProvider.cs" />
     <Compile Include="Divui\ExportImport\DvExportManager.cs" />
     <Compile Include="Divui\ExportImport\IDvExportManager.cs" />

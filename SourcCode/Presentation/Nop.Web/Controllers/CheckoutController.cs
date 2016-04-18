@@ -182,8 +182,8 @@ namespace Nop.Web.Controllers
 
             //new address
             model.NewAddress.CountryId = selectedCountryId;
-            model.NewAddress.PrepareModel(address: 
-                null,
+            model.NewAddress.PrepareModel(address:
+                addresses.FirstOrDefault(),
                 excludeProperties: false,
                 addressSettings: _addressSettings,
                 localizationService: _localizationService,

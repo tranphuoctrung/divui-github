@@ -10,7 +10,6 @@ namespace Nop.Core.Domain.Orders
     public partial class OrderItem : BaseEntity
     {
         private ICollection<GiftCard> _associatedGiftCards;
-        private ICollection<OrderItemAttributeMapping> _orderItemAttributeMapping;
 
         /// <summary>
         /// Gets or sets the order item identifier
@@ -125,15 +124,6 @@ namespace Nop.Core.Domain.Orders
         {
             get { return _associatedGiftCards ?? (_associatedGiftCards = new List<GiftCard>()); }
             protected set { _associatedGiftCards = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the associated gift card
-        /// </summary>
-        public virtual ICollection<OrderItemAttributeMapping> OrderItemAttributeMappings
-        {
-            get { return _orderItemAttributeMapping ?? (_orderItemAttributeMapping = new List<OrderItemAttributeMapping>()); }
-            protected set { _orderItemAttributeMapping = value; }
         }
     }
 }

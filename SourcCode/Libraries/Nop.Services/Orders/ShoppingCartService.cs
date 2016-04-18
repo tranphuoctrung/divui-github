@@ -47,72 +47,72 @@ namespace Nop.Services.Orders
 
         #endregion
 
-        #region Ctor
+        //#region Ctor
 
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        /// <param name="sciRepository">Shopping cart repository</param>
-        /// <param name="workContext">Work context</param>
-        /// <param name="storeContext">Store context</param>
-        /// <param name="currencyService">Currency service</param>
-        /// <param name="productService">Product settings</param>
-        /// <param name="localizationService">Localization service</param>
-        /// <param name="productAttributeParser">Product attribute parser</param>
-        /// <param name="checkoutAttributeService">Checkout attribute service</param>
-        /// <param name="checkoutAttributeParser">Checkout attribute parser</param>
-        /// <param name="priceFormatter">Price formatter</param>
-        /// <param name="customerService">Customer service</param>
-        /// <param name="shoppingCartSettings">Shopping cart settings</param>
-        /// <param name="eventPublisher">Event publisher</param>
-        /// <param name="permissionService">Permission service</param>
-        /// <param name="aclService">ACL service</param>
-        /// <param name="storeMappingService">Store mapping service</param>
-        /// <param name="genericAttributeService">Generic attribute service</param>
-        /// <param name="productAttributeService">Product attribute service</param>
-        /// <param name="dateTimeHelper">Datetime helper</param>
-        public ShoppingCartService(IRepository<ShoppingCartItem> sciRepository,
-            IWorkContext workContext, 
-            IStoreContext storeContext,
-            ICurrencyService currencyService,
-            IProductService productService,
-            ILocalizationService localizationService,
-            IProductAttributeParser productAttributeParser,
-            ICheckoutAttributeService checkoutAttributeService,
-            ICheckoutAttributeParser checkoutAttributeParser,
-            IPriceFormatter priceFormatter,
-            ICustomerService customerService,
-            ShoppingCartSettings shoppingCartSettings,
-            IEventPublisher eventPublisher,
-            IPermissionService permissionService, 
-            IAclService aclService,
-            IStoreMappingService storeMappingService,
-            IGenericAttributeService genericAttributeService,
-            IProductAttributeService productAttributeService,
-            IDateTimeHelper dateTimeHelper)
-        {
-            this._sciRepository = sciRepository;
-            this._workContext = workContext;
-            this._storeContext = storeContext;
-            this._currencyService = currencyService;
-            this._productService = productService;
-            this._localizationService = localizationService;
-            this._productAttributeParser = productAttributeParser;
-            this._checkoutAttributeService = checkoutAttributeService;
-            this._checkoutAttributeParser = checkoutAttributeParser;
-            this._priceFormatter = priceFormatter;
-            this._customerService = customerService;
-            this._shoppingCartSettings = shoppingCartSettings;
-            this._eventPublisher = eventPublisher;
-            this._permissionService = permissionService;
-            this._aclService = aclService;
-            this._storeMappingService = storeMappingService;
-            this._genericAttributeService = genericAttributeService;
-            this._productAttributeService = productAttributeService;
-            this._dateTimeHelper = dateTimeHelper;
-        }
+        ///// <summary>
+        ///// Ctor
+        ///// </summary>
+        ///// <param name="sciRepository">Shopping cart repository</param>
+        ///// <param name="workContext">Work context</param>
+        ///// <param name="storeContext">Store context</param>
+        ///// <param name="currencyService">Currency service</param>
+        ///// <param name="productService">Product settings</param>
+        ///// <param name="localizationService">Localization service</param>
+        ///// <param name="productAttributeParser">Product attribute parser</param>
+        ///// <param name="checkoutAttributeService">Checkout attribute service</param>
+        ///// <param name="checkoutAttributeParser">Checkout attribute parser</param>
+        ///// <param name="priceFormatter">Price formatter</param>
+        ///// <param name="customerService">Customer service</param>
+        ///// <param name="shoppingCartSettings">Shopping cart settings</param>
+        ///// <param name="eventPublisher">Event publisher</param>
+        ///// <param name="permissionService">Permission service</param>
+        ///// <param name="aclService">ACL service</param>
+        ///// <param name="storeMappingService">Store mapping service</param>
+        ///// <param name="genericAttributeService">Generic attribute service</param>
+        ///// <param name="productAttributeService">Product attribute service</param>
+        ///// <param name="dateTimeHelper">Datetime helper</param>
+        //public ShoppingCartService(IRepository<ShoppingCartItem> sciRepository,
+        //    IWorkContext workContext, 
+        //    IStoreContext storeContext,
+        //    ICurrencyService currencyService,
+        //    IProductService productService,
+        //    ILocalizationService localizationService,
+        //    IProductAttributeParser productAttributeParser,
+        //    ICheckoutAttributeService checkoutAttributeService,
+        //    ICheckoutAttributeParser checkoutAttributeParser,
+        //    IPriceFormatter priceFormatter,
+        //    ICustomerService customerService,
+        //    ShoppingCartSettings shoppingCartSettings,
+        //    IEventPublisher eventPublisher,
+        //    IPermissionService permissionService, 
+        //    IAclService aclService,
+        //    IStoreMappingService storeMappingService,
+        //    IGenericAttributeService genericAttributeService,
+        //    IProductAttributeService productAttributeService,
+        //    IDateTimeHelper dateTimeHelper)
+        //{
+        //    this._sciRepository = sciRepository;
+        //    this._workContext = workContext;
+        //    this._storeContext = storeContext;
+        //    this._currencyService = currencyService;
+        //    this._productService = productService;
+        //    this._localizationService = localizationService;
+        //    this._productAttributeParser = productAttributeParser;
+        //    this._checkoutAttributeService = checkoutAttributeService;
+        //    this._checkoutAttributeParser = checkoutAttributeParser;
+        //    this._priceFormatter = priceFormatter;
+        //    this._customerService = customerService;
+        //    this._shoppingCartSettings = shoppingCartSettings;
+        //    this._eventPublisher = eventPublisher;
+        //    this._permissionService = permissionService;
+        //    this._aclService = aclService;
+        //    this._storeMappingService = storeMappingService;
+        //    this._genericAttributeService = genericAttributeService;
+        //    this._productAttributeService = productAttributeService;
+        //    this._dateTimeHelper = dateTimeHelper;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Methods
 

@@ -35,6 +35,8 @@
         confirmOrderStepNumber--;
     }
 }
+@using (Html.BeginRouteForm("CheckoutOnePage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 <div class="container">
     @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Confirm })
 
@@ -45,21 +47,8 @@
                 <h2 class="title"><span class="step-count">1</span>@T("Checkout.CustomerInfo")</h2>
                 <div class="row">
                     <div class="col-md-9">
-                        <form id="co-billing-form" action="">
-                            <div id="checkout-billing-load">
-                                @Html.Action("OpcBillingForm", "Checkout")
-                                @*billing address content will be loaded here*@
-                            </div>
-                        </form>
-                        <script type="text/javascript">
-                            Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
-                            if ($("#billing-address-select").length > 0) {
-                                Billing.newAddress(!$('#billing-address-select').val());
-                            }
-                        </script>
-                        <div class="buttons" id="billing-buttons-container" style="display:none;">
-                            <input type="button" title="@T("Common.Continue")" class="button-1 new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
-                            <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                        <div id="checkout-billing-load">
+                            @Html.Partial("OpcBillingAddress", Model.BillingAddress)
                         </div>
                     </div>
 
@@ -85,37 +74,50 @@
                         @Model.OrderTotals.OrderTotal
                     </span>
                 </div>
-                <div class="redeem-code-wrp">
-                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Bạn có mã giảm giá (Coupon/Promotion Code)? <i class="icon icon-plus-circle"></i></a>
-                    <div class="collapse" id="collapseExample">
-                        <div class="well">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Vui lòng nhập tại đây">
-                                <button class="btn btn-warning">Áp dụng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @Html.Partial("_DiscountBox", Model)
             </div>
             <div class="newsletter-agree">
                 <label>
                     <input type="checkbox" name="newsletter_subcribed" checked="checked">
                     <div class="newsletter-agree-cont">
-                        Tôi đồng ý nhận các bản tin (newsletter) qua email để cập nhật các kinh nghiệm du lịch, deal khuyến mại.(Đừng lo, bạn có thể ngưng nhận tin bất kỳ lúc nào)
+                        @T("Checkout.Newsletter.Description")
                     </div>
                 </label>
             </div>
+            <div id="terms-of-service-warning-box" title="@T("Checkout.TermsOfService")" style="display:none;">
+                <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+            </div>
+
             <div class="alert alert-danger tou" role="alert">
                 <label>
-                    <input type="checkbox" name="term_of_use"> &nbsp
-                    <span>Tôi đồng ý với các <a href="#">điều khoản & điều kiện sử dụng</a> của ĐI VUI</span>
+                    <input type="checkbox" id="termsofservice" name="term_of_use"> &nbsp
+                    <span>@T("Checkout.TermsOfService.IAccept")<a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofuse" })', 450, 500, true)">@T("Checkout.TermsOfService.Read")</a></span>
                 </label>
             </div>
+
+            <script type="text/javascript">
+                               $(document).ready(function () {
+                                   $('#checkout').click(function () {
+                                       //terms of service
+                                       var termOfServiceOk = true;
+                                       if ($('#termsofservice').length > 0) {
+                                           //terms of service element exists
+                                           if (!$('#termsofservice').is(':checked')) {
+                                               $("#terms-of-service-warning-box").dialog();
+                                               termOfServiceOk = false;
+                                           } else {
+                                               termOfServiceOk = true;
+                                           }
+                                       }
+                                       return termOfServiceOk;
+                                   });
+                               });
+            </script>
+           
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <button class="btn btn-warning"><strong>HOÀN TẤT ĐẶT VÉ</strong><i class="icon  icon-right-big"></i></button>
+                        <button type="button" id="checkout" class="btn btn-warning"><strong>@T("Checkout.Finish")</strong><i class="icon  icon-right-big"></i></button>
                     </div>
                 </div>
             </div>
@@ -149,4 +151,4 @@
         </div>  
     </div>
 </div>
-
+}

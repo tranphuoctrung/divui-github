@@ -54,12 +54,11 @@
                         <div class="filter-box-cont-wrp">
                             <div class="filter-country-select">
                                 <label>@T("Search.Countries")</label>
-                                @Html.DropDownListFor(model => model.countryId, Model.AvailableCountries, new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.countryId, Model.AvailableCountries, new { @class = "form-control ddldestination", data_name = "countryId" })
                             </div>
                             <div class="filter-city-select">
                                 <label>@T("Search.Cities")</label>
-                                @Html.DropDownListFor(model => model.cityId, Model.AvailableCities, new { @class = "form-control"})
-                                
+                                @Html.DropDownListFor(model => model.cityId, Model.AvailableCities, new { @class = "form-control ddldestination", data_name="cityId"})
                             </div>
                         </div>
                     </div>
@@ -129,6 +128,25 @@
                                 //}).get();
 
                                 //queries[$(this).attr('name')] = checkedVals.join(",");
+
+                                var params = jQuery.param(queries);
+
+                                var url = '@Url.RouteUrl("ProductSearch")' + '?' + params;
+
+                                window.location.href = url;
+
+                            });
+
+                            $('.ddldestination').change(function () {
+                                var queries = {};
+                                $.each(document.location.search.substr(1).split('&'), function (c, q) {
+                                    var i = q.split('=');
+                                    if (i != "" && i != undefined && i.length > 1)
+                                        queries[i[0].toString()] = i[1].toString();
+                                });
+
+
+                                queries[$(this).attr('data-name')] = $(this).val();
 
                                 var params = jQuery.param(queries);
 

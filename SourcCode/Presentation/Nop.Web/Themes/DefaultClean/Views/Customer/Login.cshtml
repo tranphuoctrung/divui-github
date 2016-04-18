@@ -21,7 +21,7 @@
 <div class="container login-page">
     <div class="row">
         <div class="login-cont">
-            @if (Model.CheckoutAsGuest)
+            @*@if (Model.CheckoutAsGuest)
             {
                 <div class="new-wrapper checkout-as-guest-or-register-block">
                     <div class="title">
@@ -38,10 +38,11 @@
             }
             else
             {
-                <h1 class="login-title">@T("Account.Login.Welcome")</h1>
-                <p class="login-intro">@T("Account.Login.Info")</p>
                 
-            }
+                
+            }*@
+            <h1 class="login-title">@T("Account.Login.Welcome")</h1>
+            <p class="login-intro">@T("Account.Login.Info")</p>
             <div class="login-form">
                 <form class="facebook-form">
                     @*@Html.Action("ExternalMethods", "ExternalAuthentication")*@

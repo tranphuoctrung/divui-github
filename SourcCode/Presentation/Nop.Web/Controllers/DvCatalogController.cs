@@ -1878,13 +1878,12 @@ namespace Nop.Web.Controllers
                         {
                             model.countryId = country.Id;
 
-
                         }
                     }
 
-                    var city = destinations.FirstOrDefault(d => d.ParentCategoryId == model.countryId);
-                    if (city != null)
-                        model.cityId = city.Id;
+                    //var city = destinations.FirstOrDefault(d => d.ParentCategoryId == model.countryId);
+                    //if (city != null)
+                    //    model.cityId = city.Id;
                 }
                 else
                 {
@@ -2081,7 +2080,7 @@ namespace Nop.Web.Controllers
                 attractions.AddRange(listAttraction);
             }
 
-            model.AvailableAttractions = PrepareCategorySimpleModels(rootCategoryId: 0, allCategories: attractions).ToList();
+            model.AvailableAttractions = PrepareCategorySimpleModels(rootCategoryId: 0, allCategories: attractions.Distinct().ToList()).ToList();
 
 
             model.NoResults = !model.Products.Any();

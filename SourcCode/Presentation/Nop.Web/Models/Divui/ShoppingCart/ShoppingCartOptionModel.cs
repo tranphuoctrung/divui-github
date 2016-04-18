@@ -52,7 +52,6 @@ namespace Nop.Web.Models.ShoppingCart
         public partial class ShoppingCartItemModel {
             public int AgeRangeTypeId { get; set; }
             public string AgeRangeCondition { get; set; }
-
             public ProductDetailsModel.ProductAttributeModel ProductAttribute { get; set; }
         }
         #endregion

@@ -76,6 +76,7 @@
     <Compile Include="Mapping\Divui\Catalog\ProductAttractionMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\CategorySpecificationAttributeMap.cs" />
     <Compile Include="Mapping\Divui\Discounts\DvDiscountMap.cs" />
+    <Compile Include="Mapping\Divui\Orders\ShoppingCartItemAttributeMappingMap.cs" />
     <Compile Include="Mapping\Orders\ReturnRequestReason.cs" />
     <Compile Include="Mapping\Orders\ReturnRequestAction.cs" />
     <Compile Include="Mapping\Topics\TopicTemplateMap.cs" />

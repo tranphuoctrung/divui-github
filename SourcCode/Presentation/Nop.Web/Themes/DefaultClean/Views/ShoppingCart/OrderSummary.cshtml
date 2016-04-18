@@ -27,17 +27,18 @@
                         <span class="price-display">@option.strTotal</span>
                     </div>
                 </header>
+                @{
+                    var psa = option.Items.FirstOrDefault(c => c.AgeRangeTypeId == (int)DvAgeRangeType.Adult);
+                }
                 <div class="cart-item-content">
                     <div class="img-wrp">
-                        <a href="#">
-                            <img src="//cdn2.getyourguide.com/img/tour_img-330494-89.jpg">
+                        <a href="@Url.RouteUrl("Product", new { SeName = psa.ProductSeName })">
+                            <img src="@psa.Picture.FullSizeImageUrl">
                         </a>
                     </div>
                     <div class="details">
                         <ul class="details-list">
-                            @{
-            var psa = option.Items.FirstOrDefault(c => c.AgeRangeTypeId == (int)DvAgeRangeType.Adult);
-                            }
+                           
 
 
                             <li class="details-list-row"><strong>@T("ShoppingCart.SelectedDate")</strong> @Html.Raw(psa.AttributeInfo)</li>
