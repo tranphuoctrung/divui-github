@@ -366,6 +366,7 @@
     <Compile Include="Models\Divui\Catalog\SearchModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeOptionModel.cs" />
+    <Compile Include="Models\Divui\ShoppingCart\PickupModel.cs" />
     <Compile Include="Models\Divui\ShoppingCart\ShoppingCartOptionModel.cs" />
     <Compile Include="Models\Vendors\ApplyVendorModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />

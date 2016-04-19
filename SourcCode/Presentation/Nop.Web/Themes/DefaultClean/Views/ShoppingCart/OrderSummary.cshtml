@@ -14,8 +14,8 @@
         if (Model.OrderReviewData.Display)
         {
             <h2 class="title"><span class="step-count">2</span>@T("Checkout.Cart")</h2>
-        }
-
+                    }
+        int i = 0;
         foreach (var option in Model.OptionItems)
         {
             <div class="cart-item">
@@ -29,11 +29,11 @@
                 </header>
                 @{
                     var psa = option.Items.FirstOrDefault(c => c.AgeRangeTypeId == (int)DvAgeRangeType.Adult);
-                }
+        }
                 <div class="cart-item-content">
                     <div class="img-wrp">
                         <a href="@Url.RouteUrl("Product", new { SeName = psa.ProductSeName })">
-                            <img src="@psa.Picture.FullSizeImageUrl">
+                            <img src="@psa.Picture.ImageUrl">
                         </a>
                     </div>
                     <div class="details">
@@ -85,15 +85,19 @@
                             </li>
                         </ul>
                         @if (Model.OrderReviewData.Display)
-                        {
-                            if (psa.ProductAttribute != null)
-                            {
+    {
+        if (psa.ProductAttribute != null)
+        {
                                 <div class="pickup-info">
                                     <div class="well">
                                         <h5>@psa.ProductAttribute.Name</h5>
-                                        <p>@psa.ProductAttribute.Description</p>
+                                        @Html.Raw(@psa.ProductAttribute.Description)
+                                        @Html.Hidden(string.Format("Pickups[{0}].ProductAttributeId", i), psa.ProductAttribute.ProductAttributeId)
+                                        @Html.Hidden(string.Format("Pickups[{0}].ProductId", i), psa.ProductAttribute.ProductId)
+                                        @Html.Hidden(string.Format("Pickups[{0}].ProductOptionId", i), option.ProductOptionId)
+                                        @Html.Hidden(string.Format("Pickups[{0}].AttributeControlTypeId", i), (int)psa.ProductAttribute.AttributeControlType)
                                         <div class="form-group">
-                                            <input type="text" name="pickup" class="form-control" placeholder="Nhập Tên và Địa chỉ khách sạn">
+                                            <input type="text" name="Pickups[@i].Value" class="form-control" placeholder="Nhập Tên và Địa chỉ khách sạn">
                                         </div>
                                     </div>
                                 </div>
@@ -105,26 +109,28 @@
                     <div class="cart-control">
                         <input type="checkbox" name="removefromcart" value="@psa.Id" style="display:none;">
                         @if (psc != null)
-                        {
+    {
                             <input type="checkbox" name="removefromcart" value="@psc.Id" style="display:none;">
                         }
                         @if (psk != null)
-                        {
+    {
                             <input type="checkbox" name="removefromcart" value="@psk.Id" style="display:none;">
                         }
 
                         @if (pss != null)
-                        {
+    {
                             <input type="checkbox" name="removefromcart" value="@pss.Id" style="display:none;">
                         }
                         @if (!Model.OrderReviewData.Display)
-                        {
+    {
                             <a class="remove-product" href="#" target="_self"><i class="icon icon-cancel"></i>@T("ShoppingCart.Remove")</a>
                         }
                         
                     </div>
                 </div>
             </div>
+
+            i++;
         }
         if (!Model.OrderReviewData.Display)
         {
@@ -152,20 +158,20 @@
                 $(document).ready(function () {
 
                     $(".remove-product").click(function (e) {
-                        e.preventDefault();
+            e.preventDefault();
 
-                        var control = $(this).closest("div.cart-control");
-                        var selects = $(this).closest("div.cart-control").find("input:checkbox");
+            var control = $(this).closest("div.cart-control");
+            var selects = $(this).closest("div.cart-control").find("input:checkbox");
 
-                        selects.each(function () {
+            selects.each(function () {
                             $(this).prop("checked", true);
-                        });
+            });
 
                         $("#updatecart").click();
 
 
-                    });
-                });
+        });
+    });
             </script>
         }
         

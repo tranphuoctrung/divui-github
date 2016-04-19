@@ -3,7 +3,7 @@
 @if (Model.DiscountBox.Display)
 {
     <div class="redeem-code-wrp">
-        <a data-toggle="collapse" id="collapseExample" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">@T("ShoppingCart.DiscountCouponCode") <i class="icon icon-plus-circle"></i></a>
+        <a data-toggle="collapse" id="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">@T("ShoppingCart.DiscountCouponCode") <i class="icon icon-plus-circle"></i></a>
         <div class="collapse" id="collapseExample">
             <div class="well">
                 <div class="form-group">
@@ -32,7 +32,7 @@
     {
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#collapseExample').trigger('click');
+                $('#collapse').trigger('click');
             });
         </script>
     }
