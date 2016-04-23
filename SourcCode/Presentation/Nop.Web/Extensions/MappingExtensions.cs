@@ -118,6 +118,7 @@ namespace Nop.Web.Extensions
                 model.ZipPostalCode = address.ZipPostalCode;
                 model.PhoneNumber = address.PhoneNumber;
                 model.FaxNumber = address.FaxNumber;
+                model.FullName = address.FullName;
             }
 
             if (address == null && prePopulateWithCustomerFields)
@@ -125,6 +126,7 @@ namespace Nop.Web.Extensions
                 if (customer == null)
                     throw new Exception("Customer cannot be null when prepopulating an address");
                 model.Email = customer.Email;
+                model.FullName = address.FullName;
                 model.FirstName = customer.GetAttribute<string>(SystemCustomerAttributeNames.FirstName);
                 model.LastName = customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName);
                 model.Company = customer.GetAttribute<string>(SystemCustomerAttributeNames.Company);
@@ -209,6 +211,7 @@ namespace Nop.Web.Extensions
             model.PhoneRequired = addressSettings.PhoneRequired;
             model.FaxEnabled = addressSettings.FaxEnabled;
             model.FaxRequired = addressSettings.FaxRequired;
+            
 
             //customer attribute services
             if (addressAttributeService != null && addressAttributeParser != null)
@@ -361,7 +364,7 @@ namespace Nop.Web.Extensions
             destination.ZipPostalCode = model.ZipPostalCode;
             destination.PhoneNumber = model.PhoneNumber;
             destination.FaxNumber = model.FaxNumber;
-
+            destination.FullName = model.FullName;
             return destination;
         }
 

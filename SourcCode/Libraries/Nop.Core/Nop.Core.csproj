@@ -116,6 +116,7 @@
     <Compile Include="Domain\Divui\Catalog\DvCatalogSettings.cs" />
     <Compile Include="Domain\Divui\Catalog\DvCategory.cs" />
     <Compile Include="Domain\Divui\Catalog\DvSpecificationAttribute.cs" />
+    <Compile Include="Domain\Divui\Common\Address.cs" />
     <Compile Include="Domain\Divui\Orders\OrderItemAttributeMapping.cs" />
     <Compile Include="Domain\Divui\Catalog\PriceSetup.cs" />
     <Compile Include="Domain\Divui\Catalog\ProductAttributeSystemNames.cs" />

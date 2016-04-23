@@ -8,11 +8,11 @@ namespace Nop.Web.Models.ShoppingCart
 {
     public partial class WishlistModel : BaseNopModel
     {
-        public WishlistModel()
-        {
-            Items = new List<ShoppingCartItemModel>();
-            Warnings = new List<string>();
-        }
+        //public WishlistModel()
+        //{
+        //    Items = new List<ShoppingCartItemModel>();
+        //    Warnings = new List<string>();
+        //}
 
         public Guid CustomerGuid { get; set; }
         public string CustomerFullname { get; set; }

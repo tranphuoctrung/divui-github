@@ -8,25 +8,29 @@
             {
             <a href="@Url.RouteUrl("CustomerInfo")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Info)
                                                                    {<text>active</text>}
-                                                                   ">@T("Account.CustomerInfo")</a>
+                                                                   "><i class="icon icon-home"></i>@T("Account.CustomerInfo")</a>
         }
-        @if (!Model.HideAddresses)
+        @*@if (!Model.HideAddresses)
             {
             
                 <a href="@Url.RouteUrl("CustomerAddresses")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Addresses)
                                                                         {<text>active</text>}
                                                                         ">@T("Account.CustomerAddresses")</a>
                                                                     
-        }
+        }*@
         @if (!Model.HideOrders)
             {
            
                 <a href="@Url.RouteUrl("CustomerOrders")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Orders)
                                                                      {<text>active</text>}
-                                                                    ">@T("Account.CustomerOrders")</a>
+                                                                    "><i class="icon icon-doc-text"></i>@T("Account.CustomerOrders")</a>
                                                                 
         }
-        @if (!Model.HideReturnRequests)
+        <a href="@Url.RouteUrl("Wishlist")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Wishlist)
+                                                                     {<text>active</text>}
+                                                                    "><i class="icon icon-heart-empty-1"></i>@T("Account.Wishlist")</a>
+
+        @*@if (!Model.HideReturnRequests)
             {
             
                 <a href="@Url.RouteUrl("CustomerReturnRequests")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.ReturnRequests)
@@ -41,32 +45,35 @@
                                                                                    {<text>active</text>}
                                                                                   ">@T("Account.DownloadableProducts")</a>
                                                                            
-        }
-        @if (!Model.HideBackInStockSubscriptions)
+        }*@
+        @*@if (!Model.HideBackInStockSubscriptions)
             {
             
                 <a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.BackInStockSubscriptions)
                                                                                    {<text>active</text>}
                                                                                    ">@T("Account.BackInStockSubscriptions")</a>
                                                                             
-        }
+        }*@
         @if (!Model.HideRewardPoints)
             {
             
                 <a href="@Url.RouteUrl("CustomerRewardPoints")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.RewardPoints)
                                                                            {<text>active</text>}
-                                                                           ">@T("Account.RewardPoints")</a>
+                                                                           "><i class="icon icon-gift-1"></i>@T("Account.RewardPoints")</a>
                                                                     
         }
+        <a href="#" class="list-group-item"><i class="icon icon-share-1"></i>Giới thiệu bạn bè</a>
+        <a href="#" class="list-group-item"><i class="icon icon-edit-3"></i>Đánh giá</a>
+
         @if (!Model.HideChangePassword)
             {
             
                 <a href="@Url.RouteUrl("CustomerChangePassword")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.ChangePassword)
                                                                              {<text>active</text>}
-                                                                             ">@T("Account.ChangePassword")</a>
+                                                                             "><i class="icon icon-cog-5"></i>@T("Account.ChangePassword")</a>
                                                                         
         }
-        @if (!Model.HideAvatar)
+        @*@if (!Model.HideAvatar)
             {
             
                 <a href="@Url.RouteUrl("CustomerAvatar")" class="list-group-item @if (Model.SelectedTab == CustomerNavigationEnum.Avatar)
@@ -81,7 +88,11 @@
                                                                                  {<text>active</text>}
                                                                                  ">@T("Account.ForumSubscriptions")</a>
                                                                             
-        }
+        }*@
+
+        <a href="@Url.RouteUrl("Logout")" class="list-group-item"><i class="icon icon-cancel"></i>@T("Account.Logout")</a>
+
+
         @Html.Widget("account_navigation_after")
     </ul>
 

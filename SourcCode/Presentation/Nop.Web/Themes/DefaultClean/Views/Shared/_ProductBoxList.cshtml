@@ -22,7 +22,7 @@
     var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
 }
 <article class="product-card-cont-container product-card-cont-horizontal" data-productid="@Model.Id">
-    <a class="product-card-link" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+    <a class="product-card-link" id="link_product_@Model.Id" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
         <div class="product-card-content">
             <div class="product-card-img-wrp">
                 <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
@@ -114,8 +114,8 @@
                         {
                             <span class="price-saving-value">@string.Format(T("Products.SavingValue").Text, Model.DvProductPrice.strSaveValue)</span>
                         }
-                        
-                        <button class="btn btn-warning btn-sm view-details" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })');"><strong>@T("Products.ViewDetail")</strong></button>
+                        <button type="button" class="btn btn-primary btn-sm view-details" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;"><strong>@T("ShoppingCart.AddToWishlist")</strong></button>
+                        <button type="button" class="btn btn-warning btn-sm view-details" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })');" ><strong>@T("Products.ViewDetail")</strong></button>
                         @Html.Widget("productbox_addinfo_after", Model.Id)
                     </div>
                 </div>

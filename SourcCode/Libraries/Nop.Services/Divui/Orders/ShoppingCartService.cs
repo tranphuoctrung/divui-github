@@ -256,10 +256,28 @@ namespace Nop.Services.Orders
             {
                 //update existing shopping cart item
                 int newQuantity = shoppingCartItem.Quantity + quantity;
-                warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
-                    storeId, attributesXml,
-                    customerEnteredPrice, rentalStartDate, rentalEndDate,
-                    newQuantity, automaticallyAddRequiredProductsIfEnabled));
+                
+                switch (shoppingCartType)
+                {
+                    case ShoppingCartType.ShoppingCart:
+                        {
+                            warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
+                                storeId, attributesXml,
+                                customerEnteredPrice, rentalStartDate, rentalEndDate,
+                                newQuantity, automaticallyAddRequiredProductsIfEnabled));
+                        }
+                        break;
+                    case ShoppingCartType.Wishlist:
+                        {
+                            warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
+                                storeId, attributesXml,
+                                customerEnteredPrice, rentalStartDate, rentalEndDate,
+                                newQuantity, automaticallyAddRequiredProductsIfEnabled, false, false, false, false, false));
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
                 if (warnings.Count == 0)
                 {
@@ -274,38 +292,49 @@ namespace Nop.Services.Orders
             }
             else
             {
-                //new shopping cart item
-                warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
-                    storeId, attributesXml, customerEnteredPrice,
-                    rentalStartDate, rentalEndDate,
-                    quantity, automaticallyAddRequiredProductsIfEnabled));
+                
+                //maximum items validation
+                switch (shoppingCartType)
+                {
+                    case ShoppingCartType.ShoppingCart:
+                        {
+                            //new shopping cart item
+                            warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
+                                storeId, attributesXml, customerEnteredPrice,
+                                rentalStartDate, rentalEndDate,
+                                quantity, automaticallyAddRequiredProductsIfEnabled, getAttributesWarnings: false));
+
+
+                            if (cart.Count >= _shoppingCartSettings.MaximumShoppingCartItems)
+                            {
+                                warnings.Add(string.Format(_localizationService.GetResource("ShoppingCart.MaximumShoppingCartItems"), _shoppingCartSettings.MaximumShoppingCartItems));
+                                return warnings;
+                            }
+                        }
+                        break;
+                    case ShoppingCartType.Wishlist:
+                        {
+                            //new shopping cart item
+                            warnings.AddRange(GetShoppingCartItemWarnings(customer, shoppingCartType, product,
+                                storeId, attributesXml, customerEnteredPrice,
+                                rentalStartDate, rentalEndDate,
+                                quantity, automaticallyAddRequiredProductsIfEnabled,false, false, false, false, false));
+
+
+                            if (cart.Count >= _shoppingCartSettings.MaximumWishlistItems)
+                            {
+                                warnings.Add(string.Format(_localizationService.GetResource("ShoppingCart.MaximumWishlistItems"), _shoppingCartSettings.MaximumWishlistItems));
+                                return warnings;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 if (warnings.Count == 0)
                 {
-                    //maximum items validation
-                    switch (shoppingCartType)
-                    {
-                        case ShoppingCartType.ShoppingCart:
-                            {
-                                if (cart.Count >= _shoppingCartSettings.MaximumShoppingCartItems)
-                                {
-                                    warnings.Add(string.Format(_localizationService.GetResource("ShoppingCart.MaximumShoppingCartItems"), _shoppingCartSettings.MaximumShoppingCartItems));
-                                    return warnings;
-                                }
-                            }
-                            break;
-                        case ShoppingCartType.Wishlist:
-                            {
-                                if (cart.Count >= _shoppingCartSettings.MaximumWishlistItems)
-                                {
-                                    warnings.Add(string.Format(_localizationService.GetResource("ShoppingCart.MaximumWishlistItems"), _shoppingCartSettings.MaximumWishlistItems));
-                                    return warnings;
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-
+                   
                     DateTime now = DateTime.UtcNow;
                     shoppingCartItem = new ShoppingCartItem
                     {
@@ -320,15 +349,32 @@ namespace Nop.Services.Orders
                         CreatedOnUtc = now,
                         UpdatedOnUtc = now
                     };
+
                     customer.ShoppingCartItems.Add(shoppingCartItem);
 
                     _customerService.UpdateCustomer(customer);
 
-                    foreach (var attribute in shoppingCartItemAttributeMappings)
+                    //maximum items validation
+                    switch (shoppingCartType)
                     {
-                        attribute.ShoppingCartItemId = shoppingCartItem.Id;
-                        InsertShoppingCartItemAttributeMapping(attribute);
+                        case ShoppingCartType.ShoppingCart:
+                            {
+                                foreach (var attribute in shoppingCartItemAttributeMappings)
+                                {
+                                    attribute.ShoppingCartItemId = shoppingCartItem.Id;
+                                    InsertShoppingCartItemAttributeMapping(attribute);
+                                }
+                            }
+                            break;
+                        case ShoppingCartType.Wishlist:
+                            {
+                                
+                            }
+                            break;
+                        default:
+                            break;
                     }
+                    
 
 
                     //updated "HasShoppingCartItems" property used for performance optimization
@@ -419,4 +465,6 @@ namespace Nop.Services.Orders
             return warnings;
         }
     }
+
+
 }

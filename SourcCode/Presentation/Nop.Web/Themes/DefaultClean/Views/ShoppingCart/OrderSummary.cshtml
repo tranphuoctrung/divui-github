@@ -29,6 +29,10 @@
                 </header>
                 @{
                     var psa = option.Items.FirstOrDefault(c => c.AgeRangeTypeId == (int)DvAgeRangeType.Adult);
+                    if(psa == null)
+                    {
+                        continue;
+                    }
         }
                 <div class="cart-item-content">
                     <div class="img-wrp">

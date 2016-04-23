@@ -239,6 +239,7 @@
     <Compile Include="Controllers\DvCatalogController.cs" />
     <Compile Include="Controllers\DvCheckoutController.cs" />
     <Compile Include="Controllers\DvCommonController.cs" />
+    <Compile Include="Controllers\DvOrderController.cs" />
     <Compile Include="Controllers\DvProductController.cs" />
     <Compile Include="Controllers\DvShoppingCartController.cs" />
     <Compile Include="Controllers\DvTopicController.cs" />
@@ -366,8 +367,11 @@
     <Compile Include="Models\Divui\Catalog\SearchModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeModel.cs" />
     <Compile Include="Models\Divui\Catalog\SpecificationAttributeOptionModel.cs" />
+    <Compile Include="Models\Divui\Checkout\CheckoutCompletedModel.cs" />
+    <Compile Include="Models\Divui\Order\OrderDetailsModel.cs" />
     <Compile Include="Models\Divui\ShoppingCart\PickupModel.cs" />
     <Compile Include="Models\Divui\ShoppingCart\ShoppingCartOptionModel.cs" />
+    <Compile Include="Models\Divui\ShoppingCart\WishlistModel.cs" />
     <Compile Include="Models\Vendors\ApplyVendorModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -2356,6 +2360,7 @@
     <Folder Include="Plugins\bin\" />
     <Folder Include="Views\DvCatalog\" />
     <Folder Include="Views\DvCheckout\" />
+    <Folder Include="Views\DvOrder\" />
     <Folder Include="Views\DvProduct\" />
     <Folder Include="Views\DvShoppingCart\" />
     <Folder Include="Views\DvTopic\" />

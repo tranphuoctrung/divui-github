@@ -77,6 +77,9 @@
                                                                                  else
                                                                                  {<text>inactive</text>}">@T("Account.ForumSubscriptions")</a></li>
             }
+
+            <li><i class="icon icon-cancel"></i><a href="@Url.RouteUrl("Logout")" class="icon icon-logout">@T("Account.Logout")</a></li>
+
             @Html.Widget("account_navigation_after")
         </ul>
     </div>

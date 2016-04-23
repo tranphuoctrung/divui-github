@@ -7,19 +7,19 @@ namespace Nop.Web.Models.Order
 {
     public partial class OrderDetailsModel : BaseNopEntityModel
     {
-        public OrderDetailsModel()
-        {
-            TaxRates = new List<TaxRate>();
-            GiftCards = new List<GiftCard>();
-            Items = new List<OrderItemModel>();
-            OrderNotes = new List<OrderNote>();
-            Shipments = new List<ShipmentBriefModel>();
+        //public OrderDetailsModel()
+        //{
+        //    TaxRates = new List<TaxRate>();
+        //    GiftCards = new List<GiftCard>();
+        //    Items = new List<OrderItemModel>();
+        //    OrderNotes = new List<OrderNote>();
+        //    Shipments = new List<ShipmentBriefModel>();
 
-            BillingAddress = new AddressModel();
-            ShippingAddress = new AddressModel();
+        //    BillingAddress = new AddressModel();
+        //    ShippingAddress = new AddressModel();
 
-            CustomValues = new Dictionary<string, object>();
-        }
+        //    CustomValues = new Dictionary<string, object>();
+        //}
 
         public bool PrintMode { get; set; }
         public bool PdfInvoiceDisabled { get; set; }

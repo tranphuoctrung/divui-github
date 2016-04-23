@@ -95,15 +95,12 @@
                         @Html.ValidationMessageFor(model => model.DateOfBirthYear)
                     </div>
                 }
-                if (Model.PhoneEnabled)
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Phone)
-                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = T("Account.Fields.Phone.Hint").Text })
-                        @Html.ValidationMessageFor(model => model.Phone)
-                    </div>
-                }
-                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone)
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = T("Account.Fields.Phone.Hint").Text })
+                    @Html.ValidationMessageFor(model => model.Phone)
+                </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email)
                     @Html.TextBoxFor(model => model.Email, new { type = "email", @class = "form-control", placeholder = T("Account.Fields.Email.Hint").Text })

@@ -383,7 +383,7 @@ namespace Nop.Web.Controllers
                 pageSize: command.PageSize
                 );
 
-            var orderedproducts = products.OrderBy(p => p.ApprovedTotalReviews).ThenBy(p => p.DisplayOrder).ToList();
+            var orderedproducts = products.OrderByDescending(p => p.ApprovedTotalReviews).ThenBy(p => p.DisplayOrder).ToList();
             
             
 

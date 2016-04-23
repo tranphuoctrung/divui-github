@@ -94,98 +94,98 @@ namespace Nop.Web.Controllers
 
         #endregion
 
-		#region Constructors
+		//#region Constructors
 
-        public ShoppingCartController(IProductService productService, 
-            IStoreContext storeContext,
-            IWorkContext workContext,
-            IShoppingCartService shoppingCartService, 
-            IPictureService pictureService,
-            ILocalizationService localizationService, 
-            IProductAttributeService productAttributeService, 
-            IProductAttributeFormatter productAttributeFormatter,
-            IProductAttributeParser productAttributeParser,
-            ITaxService taxService, ICurrencyService currencyService, 
-            IPriceCalculationService priceCalculationService,
-            IPriceFormatter priceFormatter,
-            ICheckoutAttributeParser checkoutAttributeParser,
-            ICheckoutAttributeFormatter checkoutAttributeFormatter, 
-            IOrderProcessingService orderProcessingService,
-            IDiscountService discountService,
-            ICustomerService customerService, 
-            IGiftCardService giftCardService,
-            ICountryService countryService,
-            IStateProvinceService stateProvinceService,
-            IShippingService shippingService, 
-            IOrderTotalCalculationService orderTotalCalculationService,
-            ICheckoutAttributeService checkoutAttributeService, 
-            IPaymentService paymentService,
-            IWorkflowMessageService workflowMessageService,
-            IPermissionService permissionService, 
-            IDownloadService downloadService,
-            ICacheManager cacheManager,
-            IWebHelper webHelper, 
-            ICustomerActivityService customerActivityService,
-            IGenericAttributeService genericAttributeService,
-            IAddressAttributeFormatter addressAttributeFormatter,
-            HttpContextBase httpContext,
-            MediaSettings mediaSettings,
-            ShoppingCartSettings shoppingCartSettings,
-            CatalogSettings catalogSettings, 
-            OrderSettings orderSettings,
-            ShippingSettings shippingSettings, 
-            TaxSettings taxSettings,
-            CaptchaSettings captchaSettings, 
-            AddressSettings addressSettings,
-            RewardPointsSettings rewardPointsSettings)
-        {
-            this._productService = productService;
-            this._workContext = workContext;
-            this._storeContext = storeContext;
-            this._shoppingCartService = shoppingCartService;
-            this._pictureService = pictureService;
-            this._localizationService = localizationService;
-            this._productAttributeService = productAttributeService;
-            this._productAttributeFormatter = productAttributeFormatter;
-            this._productAttributeParser = productAttributeParser;
-            this._taxService = taxService;
-            this._currencyService = currencyService;
-            this._priceCalculationService = priceCalculationService;
-            this._priceFormatter = priceFormatter;
-            this._checkoutAttributeParser = checkoutAttributeParser;
-            this._checkoutAttributeFormatter = checkoutAttributeFormatter;
-            this._orderProcessingService = orderProcessingService;
-            this._discountService = discountService;
-            this._customerService = customerService;
-            this._giftCardService = giftCardService;
-            this._countryService = countryService;
-            this._stateProvinceService = stateProvinceService;
-            this._shippingService = shippingService;
-            this._orderTotalCalculationService = orderTotalCalculationService;
-            this._checkoutAttributeService = checkoutAttributeService;
-            this._paymentService = paymentService;
-            this._workflowMessageService = workflowMessageService;
-            this._permissionService = permissionService;
-            this._downloadService = downloadService;
-            this._cacheManager = cacheManager;
-            this._webHelper = webHelper;
-            this._customerActivityService = customerActivityService;
-            this._genericAttributeService = genericAttributeService;
-            this._addressAttributeFormatter = addressAttributeFormatter;
-            this._httpContext = httpContext;
+  //      public ShoppingCartController(IProductService productService, 
+  //          IStoreContext storeContext,
+  //          IWorkContext workContext,
+  //          IShoppingCartService shoppingCartService, 
+  //          IPictureService pictureService,
+  //          ILocalizationService localizationService, 
+  //          IProductAttributeService productAttributeService, 
+  //          IProductAttributeFormatter productAttributeFormatter,
+  //          IProductAttributeParser productAttributeParser,
+  //          ITaxService taxService, ICurrencyService currencyService, 
+  //          IPriceCalculationService priceCalculationService,
+  //          IPriceFormatter priceFormatter,
+  //          ICheckoutAttributeParser checkoutAttributeParser,
+  //          ICheckoutAttributeFormatter checkoutAttributeFormatter, 
+  //          IOrderProcessingService orderProcessingService,
+  //          IDiscountService discountService,
+  //          ICustomerService customerService, 
+  //          IGiftCardService giftCardService,
+  //          ICountryService countryService,
+  //          IStateProvinceService stateProvinceService,
+  //          IShippingService shippingService, 
+  //          IOrderTotalCalculationService orderTotalCalculationService,
+  //          ICheckoutAttributeService checkoutAttributeService, 
+  //          IPaymentService paymentService,
+  //          IWorkflowMessageService workflowMessageService,
+  //          IPermissionService permissionService, 
+  //          IDownloadService downloadService,
+  //          ICacheManager cacheManager,
+  //          IWebHelper webHelper, 
+  //          ICustomerActivityService customerActivityService,
+  //          IGenericAttributeService genericAttributeService,
+  //          IAddressAttributeFormatter addressAttributeFormatter,
+  //          HttpContextBase httpContext,
+  //          MediaSettings mediaSettings,
+  //          ShoppingCartSettings shoppingCartSettings,
+  //          CatalogSettings catalogSettings, 
+  //          OrderSettings orderSettings,
+  //          ShippingSettings shippingSettings, 
+  //          TaxSettings taxSettings,
+  //          CaptchaSettings captchaSettings, 
+  //          AddressSettings addressSettings,
+  //          RewardPointsSettings rewardPointsSettings)
+  //      {
+  //          this._productService = productService;
+  //          this._workContext = workContext;
+  //          this._storeContext = storeContext;
+  //          this._shoppingCartService = shoppingCartService;
+  //          this._pictureService = pictureService;
+  //          this._localizationService = localizationService;
+  //          this._productAttributeService = productAttributeService;
+  //          this._productAttributeFormatter = productAttributeFormatter;
+  //          this._productAttributeParser = productAttributeParser;
+  //          this._taxService = taxService;
+  //          this._currencyService = currencyService;
+  //          this._priceCalculationService = priceCalculationService;
+  //          this._priceFormatter = priceFormatter;
+  //          this._checkoutAttributeParser = checkoutAttributeParser;
+  //          this._checkoutAttributeFormatter = checkoutAttributeFormatter;
+  //          this._orderProcessingService = orderProcessingService;
+  //          this._discountService = discountService;
+  //          this._customerService = customerService;
+  //          this._giftCardService = giftCardService;
+  //          this._countryService = countryService;
+  //          this._stateProvinceService = stateProvinceService;
+  //          this._shippingService = shippingService;
+  //          this._orderTotalCalculationService = orderTotalCalculationService;
+  //          this._checkoutAttributeService = checkoutAttributeService;
+  //          this._paymentService = paymentService;
+  //          this._workflowMessageService = workflowMessageService;
+  //          this._permissionService = permissionService;
+  //          this._downloadService = downloadService;
+  //          this._cacheManager = cacheManager;
+  //          this._webHelper = webHelper;
+  //          this._customerActivityService = customerActivityService;
+  //          this._genericAttributeService = genericAttributeService;
+  //          this._addressAttributeFormatter = addressAttributeFormatter;
+  //          this._httpContext = httpContext;
 
-            this._mediaSettings = mediaSettings;
-            this._shoppingCartSettings = shoppingCartSettings;
-            this._catalogSettings = catalogSettings;
-            this._orderSettings = orderSettings;
-            this._shippingSettings = shippingSettings;
-            this._taxSettings = taxSettings;
-            this._captchaSettings = captchaSettings;
-            this._addressSettings = addressSettings;
-            this._rewardPointsSettings = rewardPointsSettings;
-        }
+  //          this._mediaSettings = mediaSettings;
+  //          this._shoppingCartSettings = shoppingCartSettings;
+  //          this._catalogSettings = catalogSettings;
+  //          this._orderSettings = orderSettings;
+  //          this._shippingSettings = shippingSettings;
+  //          this._taxSettings = taxSettings;
+  //          this._captchaSettings = captchaSettings;
+  //          this._addressSettings = addressSettings;
+  //          this._rewardPointsSettings = rewardPointsSettings;
+  //      }
 
-        #endregion
+  //      #endregion
 
         #region Utilities
 
@@ -1363,188 +1363,188 @@ namespace Nop.Web.Controllers
 
         #region Shopping cart
         
-        //add product to cart using AJAX
-        //currently we use this method on catalog pages (category/manufacturer/etc)
-        [HttpPost]
-        public ActionResult AddProductToCart_Catalog(int productId, int shoppingCartTypeId,
-            int quantity, bool forceredirection = false)
-        {
-            var cartType = (ShoppingCartType)shoppingCartTypeId;
+        ////add product to cart using AJAX
+        ////currently we use this method on catalog pages (category/manufacturer/etc)
+        //[HttpPost]
+        //public ActionResult AddProductToCart_Catalog(int productId, int shoppingCartTypeId,
+        //    int quantity, bool forceredirection = false)
+        //{
+        //    var cartType = (ShoppingCartType)shoppingCartTypeId;
 
-            var product = _productService.GetProductById(productId);
-            if (product == null)
-                //no product found
-                return Json(new
-                {
-                    success = false,
-                    message = "No product found with the specified ID"
-                });
+        //    var product = _productService.GetProductById(productId);
+        //    if (product == null)
+        //        //no product found
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "No product found with the specified ID"
+        //        });
 
-            //we can add only simple products
-            if (product.ProductType != ProductType.SimpleProduct)
-            {
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    //we can add only simple products
+        //    if (product.ProductType != ProductType.SimpleProduct)
+        //    {
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            //products with "minimum order quantity" more than a specified qty
-            if (product.OrderMinimumQuantity > quantity)
-            {
-                //we cannot add to the cart such products from category pages
-                //it can confuse customers. That's why we redirect customers to the product details page
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    //products with "minimum order quantity" more than a specified qty
+        //    if (product.OrderMinimumQuantity > quantity)
+        //    {
+        //        //we cannot add to the cart such products from category pages
+        //        //it can confuse customers. That's why we redirect customers to the product details page
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            if (product.CustomerEntersPrice)
-            {
-                //cannot be added to the cart (requires a customer to enter price)
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    if (product.CustomerEntersPrice)
+        //    {
+        //        //cannot be added to the cart (requires a customer to enter price)
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            if (product.IsRental)
-            {
-                //rental products require start/end dates to be entered
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    if (product.IsRental)
+        //    {
+        //        //rental products require start/end dates to be entered
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            var allowedQuantities = product.ParseAllowedQuantities();
-            if (allowedQuantities.Length > 0)
-            {
-                //cannot be added to the cart (requires a customer to select a quantity from dropdownlist)
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    var allowedQuantities = product.ParseAllowedQuantities();
+        //    if (allowedQuantities.Length > 0)
+        //    {
+        //        //cannot be added to the cart (requires a customer to select a quantity from dropdownlist)
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            if (product.ProductAttributeMappings.Count > 0)
-            {
-                //product has some attributes. let a customer see them
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    if (product.ProductAttributeMappings.Count > 0)
+        //    {
+        //        //product has some attributes. let a customer see them
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            //get standard warnings without attribute validations
-            //first, try to find existing shopping cart item
-            var cart = _workContext.CurrentCustomer.ShoppingCartItems
-                .Where(sci => sci.ShoppingCartType == cartType)
-                .LimitPerStore(_storeContext.CurrentStore.Id)
-                .ToList();
-            var shoppingCartItem = _shoppingCartService.FindShoppingCartItemInTheCart(cart, cartType, product);
-            //if we already have the same product in the cart, then use the total quantity to validate
-            var quantityToValidate = shoppingCartItem != null ? shoppingCartItem.Quantity + quantity : quantity;
-            var addToCartWarnings = _shoppingCartService
-                .GetShoppingCartItemWarnings(_workContext.CurrentCustomer, cartType,
-                product, _storeContext.CurrentStore.Id, string.Empty, 
-                decimal.Zero, null, null, quantityToValidate, false, true, false, false, false);
-            if (addToCartWarnings.Count > 0)
-            {
-                //cannot be added to the cart
-                //let's display standard warnings
-                return Json(new
-                {
-                    success = false,
-                    message = addToCartWarnings.ToArray()
-                });
-            }
+        //    //get standard warnings without attribute validations
+        //    //first, try to find existing shopping cart item
+        //    var cart = _workContext.CurrentCustomer.ShoppingCartItems
+        //        .Where(sci => sci.ShoppingCartType == cartType)
+        //        .LimitPerStore(_storeContext.CurrentStore.Id)
+        //        .ToList();
+        //    var shoppingCartItem = _shoppingCartService.FindShoppingCartItemInTheCart(cart, cartType, product);
+        //    //if we already have the same product in the cart, then use the total quantity to validate
+        //    var quantityToValidate = shoppingCartItem != null ? shoppingCartItem.Quantity + quantity : quantity;
+        //    var addToCartWarnings = _shoppingCartService
+        //        .GetShoppingCartItemWarnings(_workContext.CurrentCustomer, cartType,
+        //        product, _storeContext.CurrentStore.Id, string.Empty, 
+        //        decimal.Zero, null, null, quantityToValidate, false, true, false, false, false);
+        //    if (addToCartWarnings.Count > 0)
+        //    {
+        //        //cannot be added to the cart
+        //        //let's display standard warnings
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = addToCartWarnings.ToArray()
+        //        });
+        //    }
 
-            //now let's try adding product to the cart (now including product attribute validation, etc)
-            addToCartWarnings = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
-                product: product,
-                shoppingCartType: cartType,
-                storeId: _storeContext.CurrentStore.Id,
-                quantity: quantity);
-            if (addToCartWarnings.Count > 0)
-            {
-                //cannot be added to the cart
-                //but we do not display attribute and gift card warnings here. let's do it on the product details page
-                return Json(new
-                {
-                    redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
-                });
-            }
+        //    //now let's try adding product to the cart (now including product attribute validation, etc)
+        //    addToCartWarnings = _shoppingCartService.AddToCart(customer: _workContext.CurrentCustomer,
+        //        product: product,
+        //        shoppingCartType: cartType,
+        //        storeId: _storeContext.CurrentStore.Id,
+        //        quantity: quantity);
+        //    if (addToCartWarnings.Count > 0)
+        //    {
+        //        //cannot be added to the cart
+        //        //but we do not display attribute and gift card warnings here. let's do it on the product details page
+        //        return Json(new
+        //        {
+        //            redirect = Url.RouteUrl("Product", new { SeName = product.GetSeName() }),
+        //        });
+        //    }
 
-            //added to the cart/wishlist
-            switch (cartType)
-            {
-                case ShoppingCartType.Wishlist:
-                    {
-                        //activity log
-                        _customerActivityService.InsertActivity("PublicStore.AddToWishlist", _localizationService.GetResource("ActivityLog.PublicStore.AddToWishlist"), product.Name);
+        //    //added to the cart/wishlist
+        //    switch (cartType)
+        //    {
+        //        case ShoppingCartType.Wishlist:
+        //            {
+        //                //activity log
+        //                _customerActivityService.InsertActivity("PublicStore.AddToWishlist", _localizationService.GetResource("ActivityLog.PublicStore.AddToWishlist"), product.Name);
 
-                        if (_shoppingCartSettings.DisplayWishlistAfterAddingProduct || forceredirection)
-                        {
-                            //redirect to the wishlist page
-                            return Json(new
-                            {
-                                redirect = Url.RouteUrl("Wishlist"),
-                            });
-                        }
+        //                if (_shoppingCartSettings.DisplayWishlistAfterAddingProduct || forceredirection)
+        //                {
+        //                    //redirect to the wishlist page
+        //                    return Json(new
+        //                    {
+        //                        redirect = Url.RouteUrl("Wishlist"),
+        //                    });
+        //                }
                         
-                        //display notification message and update appropriate blocks
-                        var updatetopwishlistsectionhtml = string.Format(_localizationService.GetResource("Wishlist.HeaderQuantity"),
-                        _workContext.CurrentCustomer.ShoppingCartItems
-                        .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
-                        .LimitPerStore(_storeContext.CurrentStore.Id)
-                        .ToList()
-                        .GetTotalProducts());
-                        return Json(new
-                        {
-                            success = true,
-                            message = string.Format(_localizationService.GetResource("Products.ProductHasBeenAddedToTheWishlist.Link"), Url.RouteUrl("Wishlist")),
-                            updatetopwishlistsectionhtml = updatetopwishlistsectionhtml,
-                        });
-                    }
-                case ShoppingCartType.ShoppingCart:
-                default:
-                    {
-                        //activity log
-                        _customerActivityService.InsertActivity("PublicStore.AddToShoppingCart", _localizationService.GetResource("ActivityLog.PublicStore.AddToShoppingCart"), product.Name);
+        //                //display notification message and update appropriate blocks
+        //                var updatetopwishlistsectionhtml = string.Format(_localizationService.GetResource("Wishlist.HeaderQuantity"),
+        //                _workContext.CurrentCustomer.ShoppingCartItems
+        //                .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
+        //                .LimitPerStore(_storeContext.CurrentStore.Id)
+        //                .ToList()
+        //                .GetTotalProducts());
+        //                return Json(new
+        //                {
+        //                    success = true,
+        //                    message = string.Format(_localizationService.GetResource("Products.ProductHasBeenAddedToTheWishlist.Link"), Url.RouteUrl("Wishlist")),
+        //                    updatetopwishlistsectionhtml = updatetopwishlistsectionhtml,
+        //                });
+        //            }
+        //        case ShoppingCartType.ShoppingCart:
+        //        default:
+        //            {
+        //                //activity log
+        //                _customerActivityService.InsertActivity("PublicStore.AddToShoppingCart", _localizationService.GetResource("ActivityLog.PublicStore.AddToShoppingCart"), product.Name);
 
-                        if (_shoppingCartSettings.DisplayCartAfterAddingProduct || forceredirection)
-                        {
-                            //redirect to the shopping cart page
-                            return Json(new
-                            {
-                                redirect = Url.RouteUrl("ShoppingCart"),
-                            });
-                        }
+        //                if (_shoppingCartSettings.DisplayCartAfterAddingProduct || forceredirection)
+        //                {
+        //                    //redirect to the shopping cart page
+        //                    return Json(new
+        //                    {
+        //                        redirect = Url.RouteUrl("ShoppingCart"),
+        //                    });
+        //                }
                         
-                        //display notification message and update appropriate blocks
-                        var updatetopcartsectionhtml = string.Format(_localizationService.GetResource("ShoppingCart.HeaderQuantity"),
-                        _workContext.CurrentCustomer.ShoppingCartItems
-                        .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
-                        .LimitPerStore(_storeContext.CurrentStore.Id)
-                        .ToList()
-                        .GetTotalProducts());
+        //                //display notification message and update appropriate blocks
+        //                var updatetopcartsectionhtml = string.Format(_localizationService.GetResource("ShoppingCart.HeaderQuantity"),
+        //                _workContext.CurrentCustomer.ShoppingCartItems
+        //                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+        //                .LimitPerStore(_storeContext.CurrentStore.Id)
+        //                .ToList()
+        //                .GetTotalProducts());
                         
-                        var updateflyoutcartsectionhtml = _shoppingCartSettings.MiniShoppingCartEnabled
-                            ? this.RenderPartialViewToString("FlyoutShoppingCart", PrepareMiniShoppingCartModel())
-                            : "";
+        //                var updateflyoutcartsectionhtml = _shoppingCartSettings.MiniShoppingCartEnabled
+        //                    ? this.RenderPartialViewToString("FlyoutShoppingCart", PrepareMiniShoppingCartModel())
+        //                    : "";
 
-                        return Json(new
-                        {
-                            success = true,
-                            message = string.Format(_localizationService.GetResource("Products.ProductHasBeenAddedToTheCart.Link"), Url.RouteUrl("ShoppingCart")),
-                            updatetopcartsectionhtml = updatetopcartsectionhtml,
-                            updateflyoutcartsectionhtml = updateflyoutcartsectionhtml
-                        });
-                    }
-            }
-        }
+        //                return Json(new
+        //                {
+        //                    success = true,
+        //                    message = string.Format(_localizationService.GetResource("Products.ProductHasBeenAddedToTheCart.Link"), Url.RouteUrl("ShoppingCart")),
+        //                    updatetopcartsectionhtml = updatetopcartsectionhtml,
+        //                    updateflyoutcartsectionhtml = updateflyoutcartsectionhtml
+        //                });
+        //            }
+        //    }
+        //}
 
         ////add product to cart using AJAX
         ////currently we use this method on the product details pages
@@ -2446,25 +2446,25 @@ namespace Nop.Web.Controllers
 
         #region Wishlist
 
-        [NopHttpsRequirement(SslRequirement.Yes)]
-        public ActionResult Wishlist(Guid? customerGuid)
-        {
-            if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
-                return RedirectToRoute("HomePage");
+        //[NopHttpsRequirement(SslRequirement.Yes)]
+        //public ActionResult Wishlist(Guid? customerGuid)
+        //{
+        //    if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
+        //        return RedirectToRoute("HomePage");
 
-            Customer customer = customerGuid.HasValue ? 
-                _customerService.GetCustomerByGuid(customerGuid.Value)
-                : _workContext.CurrentCustomer;
-            if (customer == null)
-                return RedirectToRoute("HomePage");
-            var cart = customer.ShoppingCartItems
-                .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
-                .LimitPerStore(_storeContext.CurrentStore.Id)
-                .ToList();
-            var model = new WishlistModel();
-            PrepareWishlistModel(model, cart, !customerGuid.HasValue);
-            return View(model);
-        }
+        //    Customer customer = customerGuid.HasValue ? 
+        //        _customerService.GetCustomerByGuid(customerGuid.Value)
+        //        : _workContext.CurrentCustomer;
+        //    if (customer == null)
+        //        return RedirectToRoute("HomePage");
+        //    var cart = customer.ShoppingCartItems
+        //        .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
+        //        .LimitPerStore(_storeContext.CurrentStore.Id)
+        //        .ToList();
+        //    var model = new WishlistModel();
+        //    PrepareWishlistModel(model, cart, !customerGuid.HasValue);
+        //    return View(model);
+        //}
 
         [ValidateInput(false)]
         [HttpPost, ActionName("Wishlist")]

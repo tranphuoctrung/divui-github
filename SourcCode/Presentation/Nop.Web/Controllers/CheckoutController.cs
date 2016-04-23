@@ -451,87 +451,87 @@ namespace Nop.Web.Controllers
 
         #region Methods (common)
 
-        public ActionResult Index()
-        {
-            var cart = _workContext.CurrentCustomer.ShoppingCartItems
-                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
-                .LimitPerStore(_storeContext.CurrentStore.Id)
-                .ToList();
-            if (cart.Count == 0)
-                return RedirectToRoute("ShoppingCart");
+        //public ActionResult Index()
+        //{
+        //    var cart = _workContext.CurrentCustomer.ShoppingCartItems
+        //        .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+        //        .LimitPerStore(_storeContext.CurrentStore.Id)
+        //        .ToList();
+        //    if (cart.Count == 0)
+        //        return RedirectToRoute("ShoppingCart");
 
-            if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
-                return new HttpUnauthorizedResult();
+        //    if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
+        //        return new HttpUnauthorizedResult();
 
-            //reset checkout data
-            _customerService.ResetCheckoutData(_workContext.CurrentCustomer, _storeContext.CurrentStore.Id);
+        //    //reset checkout data
+        //    _customerService.ResetCheckoutData(_workContext.CurrentCustomer, _storeContext.CurrentStore.Id);
 
-            //validation (cart)
-            var checkoutAttributesXml = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.CheckoutAttributes, _genericAttributeService, _storeContext.CurrentStore.Id);
-            var scWarnings = _shoppingCartService.GetShoppingCartWarnings(cart, checkoutAttributesXml, true);
-            if (scWarnings.Count > 0)
-                return RedirectToRoute("ShoppingCart");
-            //validation (each shopping cart item)
-            foreach (ShoppingCartItem sci in cart)
-            {
-                var sciWarnings = _shoppingCartService.GetShoppingCartItemWarnings(_workContext.CurrentCustomer,
-                    sci.ShoppingCartType,
-                    sci.Product,
-                    sci.StoreId,
-                    sci.AttributesXml,
-                    sci.CustomerEnteredPrice,
-                    sci.RentalStartDateUtc,
-                    sci.RentalEndDateUtc,
-                    sci.Quantity,
-                    false);
-                if (sciWarnings.Count > 0)
-                    return RedirectToRoute("ShoppingCart");
-            }
+        //    //validation (cart)
+        //    var checkoutAttributesXml = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.CheckoutAttributes, _genericAttributeService, _storeContext.CurrentStore.Id);
+        //    var scWarnings = _shoppingCartService.GetShoppingCartWarnings(cart, checkoutAttributesXml, true);
+        //    if (scWarnings.Count > 0)
+        //        return RedirectToRoute("ShoppingCart");
+        //    //validation (each shopping cart item)
+        //    foreach (ShoppingCartItem sci in cart)
+        //    {
+        //        var sciWarnings = _shoppingCartService.GetShoppingCartItemWarnings(_workContext.CurrentCustomer,
+        //            sci.ShoppingCartType,
+        //            sci.Product,
+        //            sci.StoreId,
+        //            sci.AttributesXml,
+        //            sci.CustomerEnteredPrice,
+        //            sci.RentalStartDateUtc,
+        //            sci.RentalEndDateUtc,
+        //            sci.Quantity,
+        //            false, getAttributesWarnings: false);
+        //        if (sciWarnings.Count > 0)
+        //            return RedirectToRoute("ShoppingCart");
+        //    }
 
-            if (_orderSettings.OnePageCheckoutEnabled)
-                return RedirectToRoute("CheckoutOnePage");
+        //    if (_orderSettings.OnePageCheckoutEnabled)
+        //        return RedirectToRoute("CheckoutOnePage");
             
-            return RedirectToRoute("CheckoutBillingAddress");
-        }
+        //    return RedirectToRoute("CheckoutBillingAddress");
+        //}
 
-        public ActionResult Completed(int? orderId)
-        {
-            //validation
-            if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
-                return new HttpUnauthorizedResult();
+        //public ActionResult Completed(int? orderId)
+        //{
+        //    //validation
+        //    if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
+        //        return new HttpUnauthorizedResult();
 
-            Order order = null;
-            if (orderId.HasValue)
-            {
-                //load order by identifier (if provided)
-                order = _orderService.GetOrderById(orderId.Value);
-            }
-            if (order == null)
-            {
-                order = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                customerId: _workContext.CurrentCustomer.Id, pageSize: 1)
-                    .FirstOrDefault();
-            }
-            if (order == null || order.Deleted || _workContext.CurrentCustomer.Id != order.CustomerId)
-            {
-                return RedirectToRoute("HomePage");
-            }
+        //    Order order = null;
+        //    if (orderId.HasValue)
+        //    {
+        //        //load order by identifier (if provided)
+        //        order = _orderService.GetOrderById(orderId.Value);
+        //    }
+        //    if (order == null)
+        //    {
+        //        order = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+        //        customerId: _workContext.CurrentCustomer.Id, pageSize: 1)
+        //            .FirstOrDefault();
+        //    }
+        //    if (order == null || order.Deleted || _workContext.CurrentCustomer.Id != order.CustomerId)
+        //    {
+        //        return RedirectToRoute("HomePage");
+        //    }
 
-            //disable "order completed" page?
-            if (_orderSettings.DisableOrderCompletedPage)
-            {
-                return RedirectToRoute("OrderDetails", new {orderId = order.Id});
-            }
+        //    //disable "order completed" page?
+        //    if (_orderSettings.DisableOrderCompletedPage)
+        //    {
+        //        return RedirectToRoute("OrderDetails", new {orderId = order.Id});
+        //    }
 
-            //model
-            var model = new CheckoutCompletedModel
-            {
-                OrderId = order.Id,
-                OnePageCheckoutEnabled = _orderSettings.OnePageCheckoutEnabled
-            };
+        //    //model
+        //    var model = new CheckoutCompletedModel
+        //    {
+        //        OrderId = order.Id,
+        //        OnePageCheckoutEnabled = _orderSettings.OnePageCheckoutEnabled
+        //    };
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         #endregion
 

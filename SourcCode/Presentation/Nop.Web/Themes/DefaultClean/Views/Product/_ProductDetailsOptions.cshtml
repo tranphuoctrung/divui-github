@@ -86,7 +86,7 @@
                                             <label class="select">
                                                 <span class="label">@T("Products.AgeRangeAdult")</span>
                                                 <span class="label-description">@psa.AgeRangeCondition &nbsp</span>
-                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psa.ProductId), psa.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psa.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Adult", data_option_id = option.ProductOptionId, data_product_simple_id = psa.ProductId })
+                                                @Html.DropDownList(string.Format("addtocart_{0}.EnteredQuantity", psa.ProductId), psa.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psa.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Adult", data_option_id = option.ProductOptionId, data_product_simple_id = psa.ProductId })
                                                 
                                             </label>
                                             @{
@@ -100,15 +100,16 @@
                                     @if (psc != null)
                                     {
                                         <form action="/@psc.SeName" id="product-details-form-@psc.ProductId" method="post" style="float:left;">
+                                            @Html.Hidden("productAdultId", @psa.ProductId)
                                             <label class="select">
                                                 <span class="label">@T("Products.AgeRangeChild")</span>
                                                 <span class="label-description">@psc.AgeRangeCondition &nbsp</span>
-                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psc.ProductId), psc.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psc.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Child", data_option_id = option.ProductOptionId, data_product_simple_id = psc.ProductId })
+                                                @Html.DropDownList(string.Format("addtocart_{0}.EnteredQuantity", psc.ProductId), psc.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psc.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Child", data_option_id = option.ProductOptionId, data_product_simple_id = psc.ProductId })
                                             </label>
                                             @{
                                                 var dataDictAttributes = new ViewDataDictionary();
                                                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", psc.ProductId);
-                                                @Html.Partial("_ProductDetailsAttributes", psc.ProductAttributes, dataDictAttributes)
+                                                @Html.Partial("_ProductDetailsAttributes", psa.ProductAttributes, dataDictAttributes)
                                             }
                                         </form>
                                         
@@ -118,16 +119,17 @@
                                     @if (psk != null)
                                     {
                                         <form action="/@psk.SeName" id="product-details-form-@psk.ProductId" method="post" style="float:left;">
+                                            @Html.Hidden("productAdultId", @psa.ProductId)
                                             <label class="select">
                                                 <span class="label">@T("Products.AgeRangeKid")</span>
                                                 <span class="label-description">@psk.AgeRangeCondition</span>
-                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", psk.ProductId), psk.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psk.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Kid", data_option_id = option.ProductOptionId, data_product_simple_id = psk.ProductId })
+                                                @Html.DropDownList(string.Format("addtocart_{0}.EnteredQuantity", psk.ProductId), psk.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", psk.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Kid", data_option_id = option.ProductOptionId, data_product_simple_id = psk.ProductId })
                                             
                                             </label>
                                             @{
                                                 var dataDictAttributes = new ViewDataDictionary();
                                                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", psk.ProductId);
-                                                @Html.Partial("_ProductDetailsAttributes", psk.ProductAttributes, dataDictAttributes)
+                                                @Html.Partial("_ProductDetailsAttributes", psa.ProductAttributes, dataDictAttributes)
                                             }
                                         </form>
                                         
@@ -137,15 +139,16 @@
                                     @if (pss != null)
                                     {
                                         <form action="/@pss.SeName" id="product-details-form-@pss.ProductId" method="post" style="float:left;">
+                                            @Html.Hidden("productAdultId", @psa.ProductId)
                                             <label class="select">
                                                 <span class="label">@T("Products.AgeRangeSenior")</span>
                                                 <span class="label-description">@pss.AgeRangeCondition</span>
-                                                @Html.DropDownList(string.Format("addtocart_{0}_EnteredQuantity", pss.ProductId), pss.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", pss.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Senior", data_option_id = option.ProductOptionId, data_product_simple_id = pss.ProductId })
+                                                @Html.DropDownList(string.Format("addtocart_{0}.EnteredQuantity", pss.ProductId), pss.AvaliableQuantities, new { id = string.Format("addtocart_{0}_EnteredQuantity", pss.ProductId), @class = "offer-type-list form-control quantity quantity_" + option.ProductOptionId, data_type = "Senior", data_option_id = option.ProductOptionId, data_product_simple_id = pss.ProductId })
                                             </label>
                                             @{
                                                 var dataDictAttributes = new ViewDataDictionary();
                                                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", pss.ProductId);
-                                                @Html.Partial("_ProductDetailsAttributes", pss.ProductAttributes, dataDictAttributes)
+                                                @Html.Partial("_ProductDetailsAttributes", psa.ProductAttributes, dataDictAttributes)
                                             }
                                         </form>
                                     }
@@ -167,9 +170,10 @@
                                 </div>
 
                                 <script>
+                                    console.log("#addtocartproduct-option-@(option.ProductOptionId)");
                                     $("#addtocartproduct-option-@option.ProductOptionId").click(function (e) {
                                         e.preventDefault();
-                                        console.log("#addtocartproduct-option-@(option.ProductOptionId) => cliked");
+                                        console.log("#addtocartproduct-option-@(option.ProductOptionId) => clicked");
                                         @if(psc != null)
                                         {
                                             <text>

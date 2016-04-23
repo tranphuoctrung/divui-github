@@ -48,9 +48,8 @@ namespace Nop.Services.Orders
         /// <returns>Result</returns>
         public static int GetTotalProductOptions(this IList<ShoppingCartItem> shoppingCart)
         {
-            int result = 0;
-            var productoptions = shoppingCart.Select(sci => sci.Product.ProductOptions.FirstOrDefault()).ToList();
-            return productoptions.Count;
+            var productOptions = shoppingCart.Select(p => p.Product.ProductOptions.FirstOrDefault()).Distinct().ToList();
+            return productOptions.Count;
         }
 
         /// <summary>

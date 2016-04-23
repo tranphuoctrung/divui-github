@@ -1,37 +1,158 @@
 ﻿@model CheckoutCompletedModel
 @using Nop.Web.Models.Checkout;
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Checkout").Text);
 }
-<div class="page checkout-page order-completed-page">
-    @if (!Model.OnePageCheckoutEnabled)
-    {
-        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
-    }
-    <div class="page-title">
-        <h1>@T("Checkout.ThankYou")</h1>
-    </div>
-    <div class="page-body checkout-data">
-        @Html.Widget("checkout_completed_top", Model.OrderId)
-        <div class="section order-completed">
-            <div class="title">
-                <strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>
+<div class="container confirmation-page">
+    @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
+    <div class="row">
+        <div class="col-md-8 confirmation-info-wrp">
+            <div class="order-status-msg">
+                <h2 class="title">@T("Checkout.YourOrderHasBeenSuccessfullyProcessed") <strong>@Model.OrderId</strong></h2>
+                <p>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed.Info")</p>
             </div>
-            <div class="details">
-                <div class="order-number">
-                    <strong>@T("Checkout.OrderNumber"): @Model.OrderId</strong>
-                </div>
-                <div class="details-link">
-                    <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">@T("Checkout.PlacedOrderDetails")</a>
+            <div class="cfm-order-info">
+                <h2 class="title">@T("Checkout.Order.Info")</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">@T("Checkout.OrderNumber") <span class="cfm-order-id">@Model.OrderId</span></div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td width="30%">@T("Checkout.Order.Total") </td>
+                                <td>@Model.OrderDetails.OrderTotal</td>
+                            </tr>
+                            <tr>
+                                <td>@T("Checkout.Order.PaymentMethodStatus")</td>
+                                <td>@Model.OrderDetails.PaymentMethodStatus</td>
+                            </tr>
+                            <tr>
+                                <td>@T("Checkout.Order.PaymentMethod")</td>
+                                <td>@Model.OrderDetails.PaymentMethod</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="buttons">
-                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-1 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
+            <div class="cfm-customer-info">
+                <h2 class="title">@T("Checkout.Customer.Info")</h2>
+                <div class="panel panel-default">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td width="30%">@T("Checkout.Customer.FullName")</td>
+                                <td>@Model.OrderDetails.BillingAddress.FullName</td>
+                            </tr>
+                            <tr>
+                                <td>@T("Checkout.Customer.Email")</td>
+                                <td>@Model.OrderDetails.BillingAddress.Email</td>
+                            </tr>
+                            <tr>
+                                <td>@T("Checkout.Customer.PhoneNumber")</td>
+                                <td>@Model.OrderDetails.BillingAddress.PhoneNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="cfm-voucher-info">
+                <h2 class="title">@T("Checkout.Order.OrderItems")</h2>
+                @foreach (var item in Model.OrderDetails.OptionItems)
+                {
+                    <div class="cart-item">
+                        <header class="header">
+                            <div class="title">
+                                <h3 class="title-content"><a href="@Url.RouteUrl("Product", new { SeName = item.SeName })"> @item.ProductOptionName</a></h3>
+                            </div>
+                            <div class="price">
+                                <span class="price-display">@item.strTotal</span>
+                            </div>
+                        </header>
+                        <div class="cart-item-content">
+                            <div class="img-wrp">
+                                <a href="@Url.RouteUrl("Product", new { SeName = item.SeName})">
+                                    <img src="@item.Picture.FullSizeImageUrl">
+                                </a>
+                            </div>
+                            <div class="details">
+                                <ul class="details-list">
+                                    @if (item.SelectedDateAttribute != null)
+                                    {
+                                        <li class="details-list-row"><strong>@T("Checkout.Order.SelectedDate")</strong> &nbsp;@item.SelectedDateAttribute.Value</li>
+                                    }
+                                    
+                                    <li class="details-list-row"><strong>@T("Checkout.Order.CustomerNumber")</strong> 
+                                        &nbsp;
+                                        @T("ShoppingCart.CustomerNumber.AgeRange.Adult", item.AdultNumber)
+                                        @if (item.ChildNumber > 0)
+                                        {
+                                            <text>
+                                                , @T("ShoppingCart.CustomerNumber.AgeRange.Child", item.ChildNumber)
+                                            </text>
+                                        }
+
+                                        @if (item.KidNumber > 0)
+                                        {
+                                            <text>
+                                                , @T("ShoppingCart.CustomerNumber.AgeRange.Kid", item.KidNumber)
+                                            </text>
+                                        }
+
+                                        @if (item.SeniorNumber > 0)
+                                        {
+                                            <text>
+                                                , @T("ShoppingCart.CustomerNumber.AgeRange.Senior", item.SeniorNumber)
+                                            </text>
+                                        }
+
+                                    </li>
+                                    @if (item.PickupAttribute != null)
+                                    {
+                                        <li class="details-list-row"><strong>@T("Checkout.Order.Pickup")</strong>&nbsp;@item.PickupAttribute.Value</li>
+                                    }
+                                    
+                                    <li class="details-list-row"><strong>@T("Checkout.Order.Status")</strong>&nbsp;@Model.OrderDetails.OrderStatus</li>
+                                </ul>
+                                <div class="cfm-voucher-action">
+                                    <a class="btn btn-primary btn-sm cfm-voucher-btn">@T("Checkout.Order.Print.Voucher")</a>
+                                    <a class="btn btn-default btn-sm cfm-guide-btn">@T("Checkout.Order.Print.Guide")</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="sub-col-box why-book">
+                <h4 class="title">Tự tin đặt vé với ĐI VUI</h4>
+                <ul>
+                    <li class="icon save">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
+                            <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
+                        </div>
+                    </li>
+                    <li class="icon voucher24">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
+                            <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
+                        </div>
+                    </li>
+                    <li class="icon support">
+                        <div class="why-book-cont-wrp">
+                            <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
+                            <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        @Html.Widget("checkout_completed_bottom", Model.OrderId)
     </div>
 </div>
