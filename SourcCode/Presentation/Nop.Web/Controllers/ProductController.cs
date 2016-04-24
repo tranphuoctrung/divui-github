@@ -882,45 +882,45 @@ namespace Nop.Web.Controllers
         //    return model;
         //}
 
-        [NonAction]
-        protected virtual void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
-        {
-            if (product == null)
-                throw new ArgumentNullException("product");
+        //[NonAction]
+        //protected virtual void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
+        //{
+        //    if (product == null)
+        //        throw new ArgumentNullException("product");
 
-            if (model == null)
-                throw new ArgumentNullException("model");
+        //    if (model == null)
+        //        throw new ArgumentNullException("model");
 
-            model.ProductId = product.Id;
-            model.ProductName = product.GetLocalized(x => x.Name);
-            model.ProductSeName = product.GetSeName();
+        //    model.ProductId = product.Id;
+        //    model.ProductName = product.GetLocalized(x => x.Name);
+        //    model.ProductSeName = product.GetSeName();
 
-            var productReviews = product.ProductReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
-            foreach (var pr in productReviews)
-            {
-                var customer = pr.Customer;
-                model.Items.Add(new ProductReviewModel
-                {
-                    Id = pr.Id,
-                    CustomerId = pr.CustomerId,
-                    CustomerName = customer.FormatUserName(),
-                    AllowViewingProfiles = _customerSettings.AllowViewingProfiles && customer != null && !customer.IsGuest(),
-                    Title = pr.Title,
-                    ReviewText = pr.ReviewText,
-                    Rating = pr.Rating,
-                    Helpfulness = new ProductReviewHelpfulnessModel
-                    {
-                        ProductReviewId = pr.Id,
-                        HelpfulYesTotal = pr.HelpfulYesTotal,
-                        HelpfulNoTotal = pr.HelpfulNoTotal,
-                    },
-                    WrittenOnStr = _dateTimeHelper.ConvertToUserTime(pr.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
-                });
-            }
+        //    var productReviews = product.ProductReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
+        //    foreach (var pr in productReviews)
+        //    {
+        //        var customer = pr.Customer;
+        //        model.Items.Add(new ProductReviewModel
+        //        {
+        //            Id = pr.Id,
+        //            CustomerId = pr.CustomerId,
+        //            CustomerName = customer.FormatUserName(),
+        //            AllowViewingProfiles = _customerSettings.AllowViewingProfiles && customer != null && !customer.IsGuest(),
+        //            Title = pr.Title,
+        //            ReviewText = pr.ReviewText,
+        //            Rating = pr.Rating,
+        //            Helpfulness = new ProductReviewHelpfulnessModel
+        //            {
+        //                ProductReviewId = pr.Id,
+        //                HelpfulYesTotal = pr.HelpfulYesTotal,
+        //                HelpfulNoTotal = pr.HelpfulNoTotal,
+        //            },
+        //            WrittenOnStr = _dateTimeHelper.ConvertToUserTime(pr.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
+        //        });
+        //    }
 
-            model.AddProductReview.CanCurrentCustomerLeaveReview = _catalogSettings.AllowAnonymousUsersToReviewProduct || !_workContext.CurrentCustomer.IsGuest();
-            model.AddProductReview.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnProductReviewPage;
-        }
+        //    model.AddProductReview.CanCurrentCustomerLeaveReview = _catalogSettings.AllowAnonymousUsersToReviewProduct || !_workContext.CurrentCustomer.IsGuest();
+        //    model.AddProductReview.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnProductReviewPage;
+        //}
 
         #endregion
 
@@ -1239,22 +1239,22 @@ namespace Nop.Web.Controllers
 
         #region Product reviews
 
-        [NopHttpsRequirement(SslRequirement.No)]
-        public ActionResult ProductReviews(int productId)
-        {
-            var product = _productService.GetProductById(productId);
-            if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
-                return RedirectToRoute("HomePage");
+        //[NopHttpsRequirement(SslRequirement.No)]
+        //public ActionResult ProductReviews(int productId)
+        //{
+        //    var product = _productService.GetProductById(productId);
+        //    if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
+        //        return RedirectToRoute("HomePage");
 
-            var model = new ProductReviewsModel();
-            PrepareProductReviewsModel(model, product);
-            //only registered users can leave reviews
-            if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
-                ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
-            //default value
-            model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
-            return View(model);
-        }
+        //    var model = new ProductReviewsModel();
+        //    PrepareProductReviewsModel(model, product);
+        //    //only registered users can leave reviews
+        //    if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
+        //        ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
+        //    //default value
+        //    model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
+        //    return View(model);
+        //}
 
         [HttpPost, ActionName("ProductReviews")]
         [PublicAntiForgery]

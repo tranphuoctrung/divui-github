@@ -2079,6 +2079,51 @@ img {
   border-left: #eeeeee solid 1px;
   padding-left: 20px;
 }
+
+.activty-review-input-cont {
+  margin-bottom: 20px;
+}
+
+/* Star Rating */
+.activity-review-rating-scale {
+  display: inline-block;
+  /***** CSS Magic to Highlight Stars on Hover *****/
+  /* hover previous stars in list */
+}
+.activity-review-rating-scale .rating {
+  border: none;
+  float: left;
+}
+.activity-review-rating-scale .rating > input {
+  display: none;
+}
+.activity-review-rating-scale .rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: "fontello";
+  display: inline-block;
+  content: '\e80b';
+}
+.activity-review-rating-scale .rating > .half:before {
+  content: '\e80d';
+  position: absolute;
+}
+.activity-review-rating-scale .rating > label {
+  color: #ddd;
+  float: right;
+  font-size: 36px;
+}
+.activity-review-rating-scale .rating > input:checked ~ label,
+.activity-review-rating-scale .rating:not(:checked) > label:hover,
+.activity-review-rating-scale .rating:not(:checked) > label:hover ~ label {
+  color: #fe5815;
+}
+.activity-review-rating-scale .rating > input:checked + label:hover,
+.activity-review-rating-scale .rating > input:checked ~ label:hover,
+.activity-review-rating-scale .rating > label:hover ~ input:checked ~ label,
+.activity-review-rating-scale .rating > input:checked ~ label:hover ~ label {
+  color: #fea07b;
+}
 /**************** FOOTER****************
 *****************************************/
 .box-link-list {

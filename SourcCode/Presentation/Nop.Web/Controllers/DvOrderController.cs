@@ -29,6 +29,8 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Media;
 using Nop.Web.Models.Media;
+using Nop.Web.Models.Catalog;
+using Nop.Services.Customers;
 
 namespace Nop.Web.Controllers
 {
@@ -38,6 +40,8 @@ namespace Nop.Web.Controllers
         private readonly MediaSettings _mediaSettings;
         private readonly ICacheManager _cacheManager;
         private readonly IPictureService _pictureService;
+        private readonly IProductService _productService;
+        private readonly CustomerSettings _customerSettings;
         #endregion
 
         #region Constructors
@@ -70,7 +74,9 @@ namespace Nop.Web.Controllers
             PdfSettings pdfSettings,
              MediaSettings mediaSettings,
             ICacheManager cacheManager,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IProductService productService,
+            CustomerSettings customerSettings)
         {
             this._orderService = orderService;
             this._shipmentService = shipmentService;
@@ -102,6 +108,8 @@ namespace Nop.Web.Controllers
             this._mediaSettings = mediaSettings;
             this._cacheManager = cacheManager;
             this._pictureService = pictureService;
+            this._productService = productService;
+            this._customerSettings = customerSettings;
 
         }
 
@@ -531,5 +539,7 @@ namespace Nop.Web.Controllers
             return model;
         }
         #endregion
+
+        
     }
 }

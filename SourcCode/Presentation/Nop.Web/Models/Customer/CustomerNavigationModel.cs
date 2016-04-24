@@ -30,6 +30,7 @@ namespace Nop.Web.Models.Customer
         ChangePassword = 70,
         Avatar = 80,
         ForumSubscriptions = 90,
-        Wishlist = 100
+        Wishlist = 100,
+        CustomerReviews = 110
     }
 }

@@ -48,6 +48,7 @@ namespace Nop.Web.Controllers
         private readonly IProductOptionService _productOptionService;
         private readonly IPriceSetupService _priceSetupService;
         private readonly IAvailabilitySetupService _availabilitySetupService;
+        private readonly IOrderService _orderService;
         #endregion
 
         #region Constructors
@@ -94,7 +95,8 @@ namespace Nop.Web.Controllers
             ICacheManager cacheManager,
             IProductOptionService productOptionService,
             IPriceSetupService priceSetupService,
-            IAvailabilitySetupService availabilitySetupService)
+            IAvailabilitySetupService availabilitySetupService,
+            IOrderService orderService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -139,7 +141,7 @@ namespace Nop.Web.Controllers
             this._productOptionService = productOptionService;
             this._priceSetupService = priceSetupService;
             this._availabilitySetupService = availabilitySetupService;
-
+            this._orderService = orderService;
         }
 
         #endregion
@@ -1388,5 +1390,270 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region Product reviews
+
+        [NonAction]
+        protected virtual void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
+        {
+            if (product == null)
+                throw new ArgumentNullException("product");
+
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            model.ProductId = product.Id;
+            model.ProductName = product.GetLocalized(x => x.Name);
+            model.ProductSeName = product.GetSeName();
+
+            #region Pictures
+
+
+            //default picture
+            var defaultPictureSize = _mediaSettings.ProductDetailsPictureSize;
+            //prepare picture models
+            var productPicturesCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DETAILS_PICTURES_MODEL_KEY, product.Id, defaultPictureSize, false, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+            var cachedPictures = _cacheManager.Get(productPicturesCacheKey, () =>
+            {
+                var pictures = _pictureService.GetPicturesByProductId(product.Id);
+                var defaultPicture = pictures.FirstOrDefault();
+                var defaultPictureModel = new PictureModel
+                {
+                    ImageUrl = _pictureService.GetPictureUrl(defaultPicture, defaultPictureSize, true),
+                    FullSizeImageUrl = _pictureService.GetPictureUrl(defaultPicture, 0, true),
+                    Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name)),
+                    AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name)),
+                };
+                //"title" attribute
+                defaultPictureModel.Title = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.TitleAttribute)) ?
+                    defaultPicture.TitleAttribute :
+                    string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name));
+                //"alt" attribute
+                defaultPictureModel.AlternateText = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.AltAttribute)) ?
+                    defaultPicture.AltAttribute :
+                    string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name));
+
+                //all pictures
+                var pictureModels = new List<PictureModel>();
+                foreach (var picture in pictures)
+                {
+                    var pictureModel = new PictureModel
+                    {
+                        ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
+                        FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                        Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name)),
+                        AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name)),
+                    };
+                    //"title" attribute
+                    pictureModel.Title = !string.IsNullOrEmpty(picture.TitleAttribute) ?
+                        picture.TitleAttribute :
+                        string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name));
+                    //"alt" attribute
+                    pictureModel.AlternateText = !string.IsNullOrEmpty(picture.AltAttribute) ?
+                        picture.AltAttribute :
+                        string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name));
+
+                    pictureModels.Add(pictureModel);
+                }
+
+                return new { DefaultPictureModel = defaultPictureModel, PictureModels = pictureModels };
+            });
+            model.Picture = cachedPictures.DefaultPictureModel;
+
+
+            #endregion
+
+            var productReviews = product.ProductReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
+            foreach (var pr in productReviews)
+            {
+                var customer = pr.Customer;
+                model.Items.Add(new ProductReviewModel
+                {
+                    Id = pr.Id,
+                    CustomerId = pr.CustomerId,
+                    CustomerName = customer.FormatUserName(),
+                    AllowViewingProfiles = _customerSettings.AllowViewingProfiles && customer != null && !customer.IsGuest(),
+                    Title = pr.Title,
+                    ReviewText = pr.ReviewText,
+                    Rating = pr.Rating,
+                    Helpfulness = new ProductReviewHelpfulnessModel
+                    {
+                        ProductReviewId = pr.Id,
+                        HelpfulYesTotal = pr.HelpfulYesTotal,
+                        HelpfulNoTotal = pr.HelpfulNoTotal,
+                    },
+                    WrittenOnStr = _dateTimeHelper.ConvertToUserTime(pr.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
+                });
+            }
+
+            model.AddProductReview.CanCurrentCustomerLeaveReview = _catalogSettings.AllowAnonymousUsersToReviewProduct || !_workContext.CurrentCustomer.IsGuest();
+            model.AddProductReview.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnProductReviewPage;
+        }
+
+
+        [NonAction]
+        protected virtual List<OrderReviewModel> PrepareOrderReviewDetailsModel(Order order, ref List<OrderReviewModel> listReviews)
+        {
+            if (order == null)
+                throw new ArgumentNullException("order");
+
+            var orderItems = _orderService.GetAllOrderItems(order.Id, null, null, null, null, null, null);
+
+            var productGroupIds = orderItems.Select(p => p.Product.ParentGroupedProductId).Distinct().ToList();
+
+            foreach (var productId in productGroupIds)
+            {
+                var product = _productService.GetProductById(productId);
+                var model = listReviews.FirstOrDefault(m => m.ProductId == productId);
+
+                if (model == null)
+                {
+
+                    model = new OrderReviewModel();
+                    model.ProductId = productId;
+                    model.ProductName = product.GetLocalized(p => p.Name);
+                    model.ProductSeName = product.GetSeName();
+                    listReviews.Add(model);
+                }
+
+                model.OrderId = order.Id;
+                model.CreatedOn = _dateTimeHelper.ConvertToUserTime(order.CreatedOnUtc, DateTimeKind.Utc);
+                model.OrderStatus = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext);
+                
+                var item = orderItems.Where(it => it.Product.ParentGroupedProductId == productId && it.Product.AgeRangeType == DvAgeRangeType.Adult).OrderByDescending(it => it.Id).FirstOrDefault();
+
+                var startDateAttribute = item.OrderItemAttributeMappings.FirstOrDefault(p => p.ProductAttribute.SystemName == ProductAttributeSystemNames.StartDate);
+                if (startDateAttribute != null)
+                {
+                    model.Date = startDateAttribute.Value;
+                }
+
+                #region Pictures
+
+
+                //default picture
+                var defaultPictureSize = _mediaSettings.ProductDetailsPictureSize;
+                //prepare picture models
+                var productPicturesCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DETAILS_PICTURES_MODEL_KEY, product.Id, defaultPictureSize, false, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+                var cachedPictures = _cacheManager.Get(productPicturesCacheKey, () =>
+                {
+                    var pictures = _pictureService.GetPicturesByProductId(product.Id);
+                    var defaultPicture = pictures.FirstOrDefault();
+                    var defaultPictureModel = new PictureModel
+                    {
+                        ImageUrl = _pictureService.GetPictureUrl(defaultPicture, defaultPictureSize, true),
+                        FullSizeImageUrl = _pictureService.GetPictureUrl(defaultPicture, 0, true),
+                        Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name)),
+                        AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name)),
+                    };
+                    //"title" attribute
+                    defaultPictureModel.Title = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.TitleAttribute)) ?
+                        defaultPicture.TitleAttribute :
+                        string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name));
+                    //"alt" attribute
+                    defaultPictureModel.AlternateText = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.AltAttribute)) ?
+                        defaultPicture.AltAttribute :
+                        string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name));
+
+                    //all pictures
+                    var pictureModels = new List<PictureModel>();
+                    foreach (var picture in pictures)
+                    {
+                        var pictureModel = new PictureModel
+                        {
+                            ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
+                            FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                            Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name)),
+                            AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name)),
+                        };
+                        //"title" attribute
+                        pictureModel.Title = !string.IsNullOrEmpty(picture.TitleAttribute) ?
+                            picture.TitleAttribute :
+                            string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), product.GetLocalized(x => x.Name));
+                        //"alt" attribute
+                        pictureModel.AlternateText = !string.IsNullOrEmpty(picture.AltAttribute) ?
+                            picture.AltAttribute :
+                            string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), product.GetLocalized(x => x.Name));
+
+                        pictureModels.Add(pictureModel);
+                    }
+
+                    return new { DefaultPictureModel = defaultPictureModel, PictureModels = pictureModels };
+                });
+                model.Picture = cachedPictures.DefaultPictureModel;
+
+
+                #endregion
+
+                var productReviews = product.ProductReviews.Where(pr => pr.IsApproved && pr.CustomerId == _workContext.CurrentCustomer.Id).OrderByDescending(pr => pr.CreatedOnUtc);
+                foreach (var pr in productReviews)
+                {
+                    var customer = pr.Customer;
+                    model.Items.Add(new ProductReviewModel
+                    {
+                        Id = pr.Id,
+                        CustomerId = pr.CustomerId,
+                        CustomerName = customer.FormatUserName(),
+                        AllowViewingProfiles = _customerSettings.AllowViewingProfiles && customer != null && !customer.IsGuest(),
+                        Title = pr.Title,
+                        ReviewText = pr.ReviewText,
+                        Rating = pr.Rating,
+                        Helpfulness = new ProductReviewHelpfulnessModel
+                        {
+                            ProductReviewId = pr.Id,
+                            HelpfulYesTotal = pr.HelpfulYesTotal,
+                            HelpfulNoTotal = pr.HelpfulNoTotal,
+                        },
+                        WrittenOnStr = _dateTimeHelper.ConvertToUserTime(pr.CreatedOnUtc, DateTimeKind.Utc).ToString("g"),
+                    });
+                }
+
+                
+            }
+
+            return listReviews;
+        }
+
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ProductReviews(ProductReviewsModel model)
+        {
+            var product = _productService.GetProductById(model.ProductId);
+            if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
+                return RedirectToRoute("HomePage");
+            
+            PrepareProductReviewsModel(model, product);
+            //only registered users can leave reviews
+            if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
+                ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
+            //default value
+            model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
+            return View(model);
+        }
+
+        public ActionResult CustomerReviews()
+        {
+            if (!_workContext.CurrentCustomer.IsRegistered())
+                return new HttpUnauthorizedResult();
+
+            var model = new CustomerReviewListModel();
+            var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
+                customerId: _workContext.CurrentCustomer.Id).OrderBy(order => order.CreatedOnUtc);
+            var orderReviews = new List<OrderReviewModel>();
+            foreach (var order in orders)
+            {
+                PrepareOrderReviewDetailsModel(order, ref orderReviews);
+                
+            }
+
+            model.OrderReviews = orderReviews;
+
+            return View(model);
+        }
+
+
+        #endregion
+
+
     }
 }

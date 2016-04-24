@@ -1,0 +1,156 @@
+﻿@model ProductReviewsModel
+@using Nop.Web.Models.Catalog;
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+
+    //title
+    Html.AddTitleParts(Model.ProductName);
+    Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
+}
+<div class="container submit-review-page">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>@T("Reviews.ProductReviews.Title")</h2>
+            <div class="acc-activity-review-card">
+                <div class="col-md-6">
+                    <div class="acc-activity-review-info-wrp">
+                        <div class="acc-activity-review-photo">
+                            <img class="img-responsive" src="@Model.Picture.FullSizeImageUrl">
+                        </div>
+                        <div class="acc-activity-review-info">
+                            <h6 class="acc-activity-review-info-title"><a href="#">Vé tham quan Garden By The Bay - Khu vườn trên Vịnh</a></h6>
+                            <ul class="acc-activity-review-info-detail">
+                                <li>@T("Order.SelectedDate"): @Model.Date</li>
+                                <li>@T("Order.OrderNumber"): @Model.OrderId</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                
+                
+                @if (Model.AddProductReview.SuccessfullyAdded)
+                {
+                    <div class="alert alert-info" role="alert">
+                        @Model.AddProductReview.Result
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Date)
+                            @Html.HiddenFor(model => model.OrderId)
+                            @Html.HiddenFor(model => model.ProductId)
+
+                            var validationSummary = Html.ValidationSummary(true);
+                            if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                            {
+                                <div class="alert alert-warning" role="alert">
+                                    @validationSummary
+                                </div>
+                            }
+
+                            <div class="acc-activity-review-cont-wrp">
+                                <div class="activity-review-rating-scale">
+
+                                    <h6 class="acc-activity-review-cont-title">@T("Reviews.Write")</h6>
+                                    <fieldset class="rating">
+                                        <input type="radio" id="star5" name="AddProductReview.Rating" value="5">
+                                        <label class="full" for="star5" title="Awesome - 5 stars"></label>
+                                        <input type="radio" id="star4" name="AddProductReview.Rating" value="4">
+                                        <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                                        <input type="radio" id="star3" name="AddProductReview.Rating" value="3">
+                                        <label class="full" for="star3" title="Meh - 3 stars"></label>
+                                        <input type="radio" id="star2" name="AddProductReview.Rating" value="2">
+                                        <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                                        <input type="radio" id="star1" name="AddProductReview.Rating" value="1">
+                                        <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                                    </fieldset>
+                                </div>
+                                <div class="activity-review-input-wrp">
+                                    <div class="activity-review-input-title">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AddProductReview.Title)
+                                            @Html.TextBoxFor(model => model.AddProductReview.Title, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "form-control", placeholder = T("Reviews.Fields.Title.Hint") }) : (object)(new { @class = "form-control", disabled = "disabled", placeholder = T("Reviews.Fields.Title.Hint") }))
+                                            @Html.RequiredHint()
+                                            @Html.ValidationMessageFor(model => model.AddProductReview.Title)
+                                        </div>
+                                    </div>
+                                    <div class="activty-review-input-cont">
+                                        @Html.LabelFor(model => model.AddProductReview.ReviewText, new { }, ":")
+                                        @Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? (object)(new { @class = "form-control", rows = "5" , placeholder = T("Reviews.Fields.ReviewText.Hint") }) : (object)(new { @class = "review-text", disabled = "disabled", rows = "5", placeholder = T("Reviews.Fields.ReviewText.Hint") }))
+                                        @Html.RequiredHint()
+                                        @Html.ValidationMessageFor(model => model.AddProductReview.ReviewText)
+                                    </div>
+                                    @if (Model.AddProductReview.DisplayCaptcha)
+                                    {
+                                        <div class="captcha-box">
+                                            @Html.Raw(Html.GenerateCaptcha())
+                                        </div>
+                                    }
+                                </div>
+                                <input type="submit" name="add-review" class="btn btn-sm btn-warning" value="@T("Reviews.SubmitButton")" />
+                            </div>
+                        }
+                        
+                    </div>
+                }
+
+
+                @*@if (Model.Items.Count > 0)
+        {
+                    <div class="product-review-list">
+                        <div class="title">
+                            <strong>@T("Reviews.ExistingReviews")</strong>
+                        </div>
+                        @foreach (var review in Model.Items)
+                {
+                    int ratingPercent = review.Rating * 20;
+                            <div class="product-review-item">
+                                <div class="review-item-head">
+                                    <div class="review-title">
+                                        <strong>@review.Title</strong>
+                                    </div>
+                                    <div class="product-review-box">
+                                        <div class="rating">
+                                            <div style="width: @(ratingPercent)%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <div class="review-text">
+                                        @Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(review.ReviewText, false, true, false, false, false, false))
+                                    </div>
+                                    <div class="review-info">
+                                        <span class="user">
+                                            <label>@T("Reviews.From"):</label>
+                                            @if (review.AllowViewingProfiles)
+                                    {
+                                                <a href="@Url.RouteUrl("CustomerProfile", new { id = review.CustomerId })">@(review.CustomerName)</a>
+                                    }
+                                    else
+                                    {
+                                                @review.CustomerName
+                                    }
+                                        </span>
+                                        <span class="separator">|</span>
+                                        <span class="date">
+                                            <label>@T("Reviews.Date"):</label>
+                                            <span>@review.WrittenOnStr</span>
+                                        </span>
+                                    </div>
+                                    @Html.Partial("_ProductReviewHelpfulness", review.Helpfulness, new ViewDataDictionary())
+                                    @Html.Widget("productreviews_page_inside_review", review.Id)
+                                </div>
+                            </div>
+                }
+                    </div>
+        }*@
+            </div>
+        </div>
+    </div>
+</div>

@@ -63,7 +63,7 @@
                                                                     
         }
         <a href="#" class="list-group-item"><i class="icon icon-share-1"></i>Giới thiệu bạn bè</a>
-        <a href="#" class="list-group-item"><i class="icon icon-edit-3"></i>Đánh giá</a>
+        <a href="@Url.RouteUrl("CustomerReviews")" class="list-group-item"><i class="icon icon-edit-3"></i>@T("CustomerReviews")</a>
 
         @if (!Model.HideChangePassword)
             {

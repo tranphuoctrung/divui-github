@@ -193,6 +193,7 @@ namespace Nop.Web.Infrastructure
                             "productreviews/{productId}",
                             new { controller = "Product", action = "ProductReviews" },
                             new[] { "Nop.Web.Controllers" });
+            
             //back in stock notifications
             routes.MapLocalizedRoute("BackInStockSubscribePopup",
                             "backinstocksubscribe/{productId}",

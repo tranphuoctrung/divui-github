@@ -1,0 +1,101 @@
+﻿@model CustomerReviewListModel
+@using Nop.Web.Models.Customer;
+@using Nop.Web.Models.Catalog;
+
+@using Nop.Core;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwoAcc.cshtml";
+    Html.AddTitleParts(T("PageTitle.CustomerReviews").Text);
+}
+
+@section left
+{
+    @Html.Action("CustomerNavigation", "Customer", new { selectedTabId = CustomerNavigationEnum.CustomerReviews })
+}
+
+<div class="static-page-cont-wrp">
+    <h2 class="page-title">@T("Account.CustomerReviews")</h2>
+    @if (Model.OrderReviews.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12 acc-activity-review-wrp">
+
+                @foreach (var orderreiview in Model.OrderReviews)
+                {
+                    <div class="acc-activity-review-card">
+                        <div class="col-md-6">
+                            <div class="acc-activity-review-info-wrp">
+                                <div class="acc-activity-review-photo">
+                                    <img class="img-responsive" src="@orderreiview.Picture.FullSizeImageUrl">
+                                </div>
+                                <div class="acc-activity-review-info">
+                                    <h6 class="acc-activity-review-info-title"><a href="@Url.RouteUrl("Product", new { SeName = orderreiview.ProductSeName })">@orderreiview.ProductName</a></h6>
+                                    <ul class="acc-activity-review-info-detail">
+                                        <li>@T("Order.SelectedDate"): @orderreiview.Date</li>
+                                        <li>@T("Order.OrderNumber"): @orderreiview.OrderId</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @if (orderreiview.Items.Count > 0)
+                        {
+                            var review = orderreiview.Items.FirstOrDefault();
+                            if (review != null)
+                            {
+                                <div class="col-md-6">
+                                    <div class="acc-activity-review-cont-wrp">
+                                        <h6 class="acc-activity-review-cont-title">@review.Title</h6>
+                                        <div class="product-card-rating">
+                                            <span class="rating">
+                                                @for (int i = 0; i < review.Rating; i++)
+                                                {
+                                                    <i class="icon-star-8 voted"></i>
+                                                }
+
+                                                @for (int i = 0; i < (5 - review.Rating); i++)
+                                                {
+                                                    <i class="icon-star-8 devote"></i>
+                                                }
+                                            </span>
+                                            <span class="produc-card-rating-date">
+                                                @review.WrittenOnStr
+                                            </span>
+                                        </div>
+                                        <p>@review.ReviewText</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                <div class="acc-activity-review-cont-wrp">
+                                    <h6 class="acc-activity-review-cont-title">@T("CustomerReviews.NoReviews")</h6>
+                                    <div class="product-card-rating">
+                                        <span class="rating">
+                                            <i class="icon-star-8 devote"></i>
+                                            <i class="icon-star-8 devote"></i>
+                                            <i class="icon-star-8 devote"></i>
+                                            <i class="icon-star-8 devote"></i>
+                                            <i class="icon-star-8 devote"></i>
+                                        </span>
+                                    </div>
+                                    <button type="button" onclick="setLocation('@Url.RouteUrl("ProductReviews", new { ProductId = orderreiview.ProductId, Date = orderreiview.Date, OrderId = orderreiview.OrderId })');" class="btn btn-sm btn-warning">@T("CustomerReviews.Reviews.Button")</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            @T("Account.CustomerReviews.NoReiviews")
+        </div>
+    }
+    
+</div>
+
