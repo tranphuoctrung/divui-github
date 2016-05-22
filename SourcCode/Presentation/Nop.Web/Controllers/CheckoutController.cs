@@ -2003,7 +2003,7 @@ namespace Nop.Web.Controllers
                     Order = order
                 };
 
-                _paymentService.PostProcessPayment(postProcessPaymentRequest);
+                paymentMethod.PostProcessPayment(postProcessPaymentRequest);
 
                 if (_webHelper.IsRequestBeingRedirected || _webHelper.IsPostBeingDone)
                 {

@@ -88,51 +88,51 @@ namespace Nop.Services.Catalog
 
         #endregion
         
-        #region Ctor
+        //#region Ctor
 
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        /// <param name="cacheManager">Cache manager</param>
-        /// <param name="categoryRepository">Category repository</param>
-        /// <param name="productCategoryRepository">ProductCategory repository</param>
-        /// <param name="productRepository">Product repository</param>
-        /// <param name="aclRepository">ACL record repository</param>
-        /// <param name="storeMappingRepository">Store mapping repository</param>
-        /// <param name="workContext">Work context</param>
-        /// <param name="storeContext">Store context</param>
-        /// <param name="eventPublisher">Event publisher</param>
-        /// <param name="storeMappingService">Store mapping service</param>
-        /// <param name="aclService">ACL service</param>
-        /// <param name="catalogSettings">Catalog settings</param>
-        public CategoryService(ICacheManager cacheManager,
-            IRepository<Category> categoryRepository,
-            IRepository<ProductCategory> productCategoryRepository,
-            IRepository<Product> productRepository,
-            IRepository<AclRecord> aclRepository,
-            IRepository<StoreMapping> storeMappingRepository,
-            IWorkContext workContext,
-            IStoreContext storeContext,
-            IEventPublisher eventPublisher,
-            IStoreMappingService storeMappingService,
-            IAclService aclService,
-            CatalogSettings catalogSettings)
-        {
-            this._cacheManager = cacheManager;
-            this._categoryRepository = categoryRepository;
-            this._productCategoryRepository = productCategoryRepository;
-            this._productRepository = productRepository;
-            this._aclRepository = aclRepository;
-            this._storeMappingRepository = storeMappingRepository;
-            this._workContext = workContext;
-            this._storeContext = storeContext;
-            this._eventPublisher = eventPublisher;
-            this._storeMappingService = storeMappingService;
-            this._aclService = aclService;
-            this._catalogSettings = catalogSettings;
-        }
+        ///// <summary>
+        ///// Ctor
+        ///// </summary>
+        ///// <param name="cacheManager">Cache manager</param>
+        ///// <param name="categoryRepository">Category repository</param>
+        ///// <param name="productCategoryRepository">ProductCategory repository</param>
+        ///// <param name="productRepository">Product repository</param>
+        ///// <param name="aclRepository">ACL record repository</param>
+        ///// <param name="storeMappingRepository">Store mapping repository</param>
+        ///// <param name="workContext">Work context</param>
+        ///// <param name="storeContext">Store context</param>
+        ///// <param name="eventPublisher">Event publisher</param>
+        ///// <param name="storeMappingService">Store mapping service</param>
+        ///// <param name="aclService">ACL service</param>
+        ///// <param name="catalogSettings">Catalog settings</param>
+        //public CategoryService(ICacheManager cacheManager,
+        //    IRepository<Category> categoryRepository,
+        //    IRepository<ProductCategory> productCategoryRepository,
+        //    IRepository<Product> productRepository,
+        //    IRepository<AclRecord> aclRepository,
+        //    IRepository<StoreMapping> storeMappingRepository,
+        //    IWorkContext workContext,
+        //    IStoreContext storeContext,
+        //    IEventPublisher eventPublisher,
+        //    IStoreMappingService storeMappingService,
+        //    IAclService aclService,
+        //    CatalogSettings catalogSettings)
+        //{
+        //    this._cacheManager = cacheManager;
+        //    this._categoryRepository = categoryRepository;
+        //    this._productCategoryRepository = productCategoryRepository;
+        //    this._productRepository = productRepository;
+        //    this._aclRepository = aclRepository;
+        //    this._storeMappingRepository = storeMappingRepository;
+        //    this._workContext = workContext;
+        //    this._storeContext = storeContext;
+        //    this._eventPublisher = eventPublisher;
+        //    this._storeMappingService = storeMappingService;
+        //    this._aclService = aclService;
+        //    this._catalogSettings = catalogSettings;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Methods
 

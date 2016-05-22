@@ -22,6 +22,7 @@ namespace Nop.Web.Models.Order
         //}
 
         public bool PrintMode { get; set; }
+        
         public bool PdfInvoiceDisabled { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -78,10 +79,12 @@ namespace Nop.Web.Models.Order
         public partial class OrderItemModel : BaseNopEntityModel
         {
             public Guid OrderItemGuid { get; set; }
-            public string Sku { get; set; }
+            
             public int ProductId { get; set; }
             public string ProductName { get; set; }
             public string ProductSeName { get; set; }
+
+            public string Sku { get; set; }
             public string UnitPrice { get; set; }
             public string SubTotal { get; set; }
             public int Quantity { get; set; }

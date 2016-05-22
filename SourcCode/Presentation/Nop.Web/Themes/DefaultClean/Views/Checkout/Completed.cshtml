@@ -116,10 +116,14 @@
                                     
                                     <li class="details-list-row"><strong>@T("Checkout.Order.Status")</strong>&nbsp;@Model.OrderDetails.OrderStatus</li>
                                 </ul>
-                                <div class="cfm-voucher-action">
-                                    <a class="btn btn-primary btn-sm cfm-voucher-btn">@T("Checkout.Order.Print.Voucher")</a>
-                                    <a class="btn btn-default btn-sm cfm-guide-btn">@T("Checkout.Order.Print.Guide")</a>
-                                </div>
+                                @if (Model.OrderDetails.PaymentStatus == Nop.Core.Domain.Payments.PaymentStatus.Paid)
+                                {
+                                    <div class="cfm-voucher-action">
+                                        <a class="btn btn-primary btn-sm cfm-voucher-btn" target="_blank" href="@Url.Action("PrintGuideToUse", "Order", new { orderId = Model.OrderId, productOptionId = item.ProductOptionId, type = 2})">@T("Checkout.Order.Print.Voucher")</a>
+                                        <a class="btn btn-default btn-sm cfm-guide-btn" target="_blank" href="@Url.Action("PrintGuideToUse", "Order", new { orderId = Model.OrderId, productOptionId = item.ProductOptionId, type = 1})">@T("Checkout.Order.Print.Guide")</a>
+                                    </div>
+                                }
+                                
                             </div>
                         </div>
                     </div>
@@ -130,29 +134,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="sub-col-box why-book">
-                <h4 class="title">Tự tin đặt vé với ĐI VUI</h4>
-                <ul>
-                    <li class="icon save">
-                        <div class="why-book-cont-wrp">
-                            <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
-                            <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
-                        </div>
-                    </li>
-                    <li class="icon voucher24">
-                        <div class="why-book-cont-wrp">
-                            <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
-                            <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
-                        </div>
-                    </li>
-                    <li class="icon support">
-                        <div class="why-book-cont-wrp">
-                            <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
-                            <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            @Html.Partial("_WhyBook")
         </div>
     </div>
 </div>

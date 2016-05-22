@@ -39,6 +39,7 @@ namespace Nop.Web.Models.Catalog
 
         public List<ProductOptionModel> ProductOptions { get; set; }
 
+        
         public ProductReviewsModel ProductReviews { get; set; }
 
         public CategoryModel ProductDestination { get; set; }

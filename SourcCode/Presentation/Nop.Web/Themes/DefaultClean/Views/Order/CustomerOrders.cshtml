@@ -23,7 +23,7 @@
                 <div class="cfm-voucher-info">
                     <div class="order-header">
                         <h3 class="order-numb">@T("Account.CustomerOrders.OrderNumber") &nbsp; @order.Id</h3>
-                        <span class="order-date">@T("Account.CustomerOrders.CreatedDate"): @order.CreatedOn.ToString("dd/MM/YYY")</span>
+                        <span class="order-date">@T("Account.CustomerOrders.CreatedDate"): @order.CreatedOn.ToString("dd/MM/yyyy")</span>
                     </div>
                     @foreach (var item in order.OptionItems)
                     {
@@ -82,9 +82,13 @@
 
                                         <li class="details-list-row"><strong>@T("Checkout.Order.Status")</strong>&nbsp;@order.OrderStatus</li>
                                     </ul>
+                                    @if (order.PaymentStatus == Nop.Core.Domain.Payments.PaymentStatus.Paid)
+                                    {
+                                        
+                                    }
                                     <div class="cfm-voucher-action">
-                                        <a class="btn btn-primary btn-sm cfm-voucher-btn">@T("Checkout.Order.Print.Voucher")</a>
-                                        <a class="btn btn-default btn-sm cfm-guide-btn">@T("Checkout.Order.Print.Guide")</a>
+                                        <a class="btn btn-primary btn-sm cfm-voucher-btn" target="_blank" href="@Url.Action("PrintGuideToUse", "Order", new { orderId = order.Id, productOptionId = item.ProductOptionId, type = 2})">@T("Checkout.Order.Print.Voucher")</a>
+                                        <a class="btn btn-default btn-sm cfm-guide-btn" target="_blank" href="@Url.Action("PrintGuideToUse", "Order", new { orderId = order.Id, productOptionId = item.ProductOptionId, type = 1})">@T("Checkout.Order.Print.Guide")</a>
                                     </div>
                                 </div>
                             </div>

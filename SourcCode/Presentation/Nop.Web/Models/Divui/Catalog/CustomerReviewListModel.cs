@@ -8,11 +8,19 @@ namespace Nop.Web.Models.Catalog
 {
     public partial class ProductReviewsModel
     {
+        public ProductReviewsModel()
+        {
+            Items = new List<ProductReviewModel>();
+            AddProductReview = new AddProductReviewModel();
+            PagingFilteringContext = new CatalogPagingFilteringModel();
+        }
+
         public string Date { get; set; }
         public int OrderId { get; set; }
 
         public PictureModel Picture { get; set; }
 
+        public CatalogPagingFilteringModel PagingFilteringContext { get; set; }
     }
     public class CustomerReviewListModel
     {

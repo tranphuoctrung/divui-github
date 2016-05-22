@@ -11,11 +11,66 @@ using Nop.Services.Customers;
 using Nop.Services.Events;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using System.Data;
+using Nop.Data;
 
 namespace Nop.Services.Catalog
 {
     public partial class CategoryService
     {
+        private readonly IDataProvider _dataProvider;
+        private readonly IDbContext _dbContext;
+
+        #region Ctor
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="cacheManager">Cache manager</param>
+        /// <param name="categoryRepository">Category repository</param>
+        /// <param name="productCategoryRepository">ProductCategory repository</param>
+        /// <param name="productRepository">Product repository</param>
+        /// <param name="aclRepository">ACL record repository</param>
+        /// <param name="storeMappingRepository">Store mapping repository</param>
+        /// <param name="workContext">Work context</param>
+        /// <param name="storeContext">Store context</param>
+        /// <param name="eventPublisher">Event publisher</param>
+        /// <param name="storeMappingService">Store mapping service</param>
+        /// <param name="aclService">ACL service</param>
+        /// <param name="catalogSettings">Catalog settings</param>
+        public CategoryService(ICacheManager cacheManager,
+            IRepository<Category> categoryRepository,
+            IRepository<ProductCategory> productCategoryRepository,
+            IRepository<Product> productRepository,
+            IRepository<AclRecord> aclRepository,
+            IRepository<StoreMapping> storeMappingRepository,
+            IWorkContext workContext,
+            IStoreContext storeContext,
+            IEventPublisher eventPublisher,
+            IStoreMappingService storeMappingService,
+            IAclService aclService,
+            CatalogSettings catalogSettings,
+            IDataProvider dataProvider,
+            IDbContext dbContext
+            )
+        {
+            this._cacheManager = cacheManager;
+            this._categoryRepository = categoryRepository;
+            this._productCategoryRepository = productCategoryRepository;
+            this._productRepository = productRepository;
+            this._aclRepository = aclRepository;
+            this._storeMappingRepository = storeMappingRepository;
+            this._workContext = workContext;
+            this._storeContext = storeContext;
+            this._eventPublisher = eventPublisher;
+            this._storeMappingService = storeMappingService;
+            this._aclService = aclService;
+            this._catalogSettings = catalogSettings;
+            this._dataProvider = dataProvider;
+            this._dbContext = dbContext;
+        }
+
+        #endregion
         /// <summary>
         /// Key for caching
         /// </summary>
@@ -243,6 +298,37 @@ namespace Nop.Services.Catalog
                 var productCategories = new PagedList<ProductCategory>(query, pageIndex, pageSize);
                 return productCategories;
             });
+        }
+
+
+        /// <summary>
+        /// Gets a category
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <returns>Category</returns>
+        public virtual Category GetCategoryByName(string name, int languageId)
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+
+            var pKeywords = _dataProvider.GetParameter();
+            pKeywords.ParameterName = "Keywords";
+            pKeywords.Value = name != null ? (object)name : DBNull.Value;
+            pKeywords.DbType = DbType.String;
+
+            var pLanguageId = _dataProvider.GetParameter();
+            pLanguageId.ParameterName = "LanguageId";
+            pLanguageId.Value = languageId;
+            pLanguageId.DbType = DbType.Int32;
+
+
+            var categories = _dbContext.ExecuteStoredProcedureList<Category>(
+                    "GetCategoryByName",
+                    pKeywords,
+                    pLanguageId
+                    );
+
+            return categories.FirstOrDefault();
         }
 
     }

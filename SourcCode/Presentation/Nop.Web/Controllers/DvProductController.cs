@@ -905,7 +905,7 @@ namespace Nop.Web.Controllers
 
             #region productreviews
             
-            PrepareProductReviewsModel(model.ProductReviews, product);
+            PrepareProductReviewsModel(model.ProductReviews, product, 0, _catalogSettings.DefaultCategoryPageSize);
 
             #endregion
 
@@ -1394,7 +1394,7 @@ namespace Nop.Web.Controllers
         #region Product reviews
 
         [NonAction]
-        protected virtual void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
+        protected virtual void PrepareProductReviewsModel(ProductReviewsModel model, Product product, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -1463,7 +1463,9 @@ namespace Nop.Web.Controllers
 
             #endregion
 
-            var productReviews = product.ProductReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc);
+            var productReviews = new PagedList<ProductReview>(product.ProductReviews.Where(pr => pr.IsApproved).OrderBy(pr => pr.CreatedOnUtc).ToList(), pageIndex, pageSize);
+            model.PagingFilteringContext.LoadPagedList(productReviews);
+
             foreach (var pr in productReviews)
             {
                 var customer = pr.Customer;
@@ -1629,6 +1631,25 @@ namespace Nop.Web.Controllers
             //default value
             model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
             return View(model);
+        }
+
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult LoadMoreProductReviews(CatalogPagingFilteringModel command, int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            if (product == null || product.Deleted || !product.Published || !product.AllowCustomerReviews)
+                return RedirectToRoute("HomePage");
+            var model = new ProductReviewsModel();
+            PrepareProductReviewsModel(model, product, command.PageNumber - 1, command.PageSize);
+            //only registered users can leave reviews
+            if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToReviewProduct)
+                ModelState.AddModelError("", _localizationService.GetResource("Reviews.OnlyRegisteredUsersCanWriteReviews"));
+            //default value
+            model.AddProductReview.Rating = _catalogSettings.DefaultProductRatingValue;
+            var strHtml = RenderPartialViewToString("_ProductReviews", model);
+
+            return Json(new { success = true, html = strHtml, totalPages = model.PagingFilteringContext.TotalPages }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CustomerReviews()

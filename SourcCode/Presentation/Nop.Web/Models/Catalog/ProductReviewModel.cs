@@ -21,11 +21,11 @@ namespace Nop.Web.Models.Catalog
     [Validator(typeof(ProductReviewsValidator))]
     public partial class ProductReviewsModel : BaseNopModel
     {
-        public ProductReviewsModel()
-        {
-            Items = new List<ProductReviewModel>();
-            AddProductReview = new AddProductReviewModel();
-        }
+        //public ProductReviewsModel()
+        //{
+        //    Items = new List<ProductReviewModel>();
+        //    AddProductReview = new AddProductReviewModel();
+        //}
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

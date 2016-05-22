@@ -302,6 +302,54 @@ namespace Nop.Services.Seo
         }
 
         /// <summary>
+        /// Get SE name
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <param name="convertNonWesternChars">A value indicating whether non western chars should be converted</param>
+        /// <param name="allowUnicodeCharsInUrls">A value indicating whether Unicode chars are allowed</param>
+        /// <returns>Result</returns>
+        public static string RemoveUnicodeString(string name, bool convertNonWesternChars, bool allowUnicodeCharsInUrls)
+        {
+            if (String.IsNullOrEmpty(name))
+                return name;
+            string okChars = "abcdefghijklmnopqrstuvwxyz1234567890 _-";
+            name = name.Trim().ToLowerInvariant();
+
+            if (convertNonWesternChars)
+            {
+                if (_seoCharacterTable == null)
+                    InitializeSeoCharacterTable();
+            }
+
+            var sb = new StringBuilder();
+            foreach (char c in name.ToCharArray())
+            {
+                string c2 = c.ToString();
+                if (convertNonWesternChars)
+                {
+                    if (_seoCharacterTable.ContainsKey(c2))
+                        c2 = _seoCharacterTable[c2];
+                }
+
+                if (allowUnicodeCharsInUrls)
+                {
+                    if (char.IsLetterOrDigit(c) || okChars.Contains(c2))
+                        sb.Append(c2);
+                }
+                else if (okChars.Contains(c2))
+                {
+                    sb.Append(c2);
+                }
+            }
+            string name2 = sb.ToString();
+            //name2 = name2.Replace(" ", "-");
+            while (name2.Contains("--"))
+                name2 = name2.Replace("--", " ");
+            while (name2.Contains("__"))
+                name2 = name2.Replace("__", " ");
+            return name2;
+        }
+        /// <summary>
         /// Stores Unicode characters and their "normalized"
         /// values to a hash table. Character codes are referenced
         /// by hex numbers because that's the most common way to

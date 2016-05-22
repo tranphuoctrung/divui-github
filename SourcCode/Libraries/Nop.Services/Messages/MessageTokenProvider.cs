@@ -607,7 +607,7 @@ namespace Nop.Services.Messages
             
 
 
-            tokens.Add(new Token("Order.Product(s)", ProductListToHtmlTable(order, languageId, vendorId), true));
+            tokens.Add(new Token("Order.Product(s)", ProductOptionListToHtmlTable(order, languageId, vendorId), true));
 
             var language = _languageService.GetLanguageById(languageId);
             if (language != null && !String.IsNullOrEmpty(language.LanguageCulture))

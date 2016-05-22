@@ -25,6 +25,11 @@ namespace Nop.Web.Infrastructure
                             "customerreviews",
                             new { controller = "Product", action = "CustomerReviews" },
                             new[] { "Nop.Web.Controllers" });
+
+            routes.MapLocalizedRoute("CheckoutOnePAY",
+                            "checkoutonepAY",
+                            new { controller = "Checkout", action = "CheckoutOnePAY" },
+                            new[] { "Nop.Web.Controllers" });
         }
     }
 }

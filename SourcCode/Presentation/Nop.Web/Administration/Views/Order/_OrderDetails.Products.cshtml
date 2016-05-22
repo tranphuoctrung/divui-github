@@ -17,7 +17,8 @@
                     function toggleOrderItemEdit@(item.Id) (editMode) {
                         if (editMode) {
                             $('#pnlEditPvUnitPrice@(item.Id)').show();
-                                $('#pnlEditPvQuantity@(item.Id)').show();
+                            $('#pnlEditPvQuantity@(item.Id)').show();
+                            $('.pnlEditPvAttribute@(item.Id)').show();
                                 $('#pnlEditPvDiscount@(item.Id)').show();
                                 $('#pnlEditPvPrice@(item.Id)').show();
                                 $('#btnEditOrderItem@(item.Id)').hide();
@@ -27,7 +28,8 @@
                             }
                             else {
                                 $('#pnlEditPvUnitPrice@(item.Id)').hide();
-                                $('#pnlEditPvQuantity@(item.Id)').hide();
+                            $('#pnlEditPvQuantity@(item.Id)').hide();
+                            $('.pnlEditPvAttribute@(item.Id)').hide();
                                 $('#pnlEditPvDiscount@(item.Id)').hide();
                                 $('#pnlEditPvPrice@(item.Id)').hide();
                                 $('#btnEditOrderItem@(item.Id)').show();
@@ -98,11 +100,41 @@
                             <td style="width: 25%;">
                                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
                                     <em><a href="@Url.Action("Edit", "Product", new { id = item.ProductId })">@item.ProductName</a></em>
-                                    @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                    @if (item.OrderItemAttributes.Count > 0)
                                     {
-                                        <p>
-                                            @Html.Raw(item.AttributeInfo)
-                                        </p>
+
+                                            for (int i = 0; i < item.OrderItemAttributes.Count; i++)
+                                            {
+                                            <p>
+                                                @item.OrderItemAttributes[i].ProductAttributeName : @item.OrderItemAttributes[i].Value
+                                            </p>
+                                            <div class="pnlEditPvAttribute@(item.Id)">
+                                                <table class="order-edit">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <input type="hidden" name="orderItemAttributes[@i].Id" value="@item.OrderItemAttributes[i].Id" />
+                                                            <input type="hidden" name="orderItemAttributes[@i].ProductAttributeId" value="@item.OrderItemAttributes[i].ProductAttributeId" />
+                                                              
+                                                            <input name="orderItemAttributes[@i].Value" type="text" value="@item.OrderItemAttributes[i].Value" class="adminInput" style="width:100px;" />
+                                                            @*@switch (item.OrderItemAttributes[i].AttributeControlType)
+                                                            {
+                                                                case AttributeControlType.TextBox:
+                                                                    break;
+                                                                case AttributeControlType.Datepicker:
+                                                                    
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            }*@ 
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        }
+
+
+
                                     }
                                     @if (!String.IsNullOrEmpty(item.RecurringInfo))
                                     {

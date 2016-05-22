@@ -1,0 +1,38 @@
+﻿@model ProductReviewsModel
+@using Nop.Web.Models.Catalog;
+@{
+    Layout = null;
+}
+
+@foreach (var review in Model.Items)
+{
+    <article class="review">
+        <div class="review-cont">
+            <h3 class="title">
+                @review.Title
+            </h3>
+            <div class="review-rating">
+                <span class="rating">
+                    @for (int i = 0; i < review.Rating; i++)
+                    {
+                        <i class="icon-star-8 voted"></i>
+                    }
+
+                    @for (int i = 0; i < (5 - review.Rating); i++)
+                    {
+                        <i class="icon-star-8 devote"></i>
+                    }
+
+                </span>
+                <span class="review-date">@review.WrittenOnStr</span>
+            </div>
+            <div class="desc">
+                @review.ReviewText
+            </div>
+            <div class="review-info">
+                <span class="review-by">@T("Reviews.WrittenBy")</span>
+                <strong class="author">@review.CustomerName</strong>
+            </div>
+        </div>
+    </article>
+}

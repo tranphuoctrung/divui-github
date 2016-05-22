@@ -94,10 +94,10 @@
                         <span class="price-display">
                             @Model.DvProductPrice.Price
                         </span>
-                        @if (!(ViewData["IsWishlist"] != null && (bool)ViewData["IsWishlist"] == true))
+                        @*@if (!(ViewData["IsWishlist"] != null && (bool)ViewData["IsWishlist"] == true))
                         {
                             <button type="button" class="btn btn-primary btn-sm view-details" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;"><strong>@T("ShoppingCart.AddToWishlist")</strong></button>
-                        }
+                        }*@
                         
                     </div>
                 </div>

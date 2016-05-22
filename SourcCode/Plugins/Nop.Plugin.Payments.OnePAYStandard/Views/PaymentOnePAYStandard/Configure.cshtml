@@ -1,0 +1,72 @@
+﻿@model ConfigurationModel
+@{
+    Layout = "";
+}
+@using Nop.Plugin.Payments.OnePAYStandard.Models;
+@using Nop.Web.Framework;
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Sandbox):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Sandbox)
+                @Html.ValidationMessageFor(model => model.Sandbox)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UseSandbox):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UseSandbox)
+                @Html.ValidationMessageFor(model => model.UseSandbox)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MerchantID):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MerchantID)
+                @Html.ValidationMessageFor(model => model.MerchantID)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AccessCode):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AccessCode)
+                @Html.ValidationMessageFor(model => model.AccessCode)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.HashCode):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.HashCode)
+                @Html.ValidationMessageFor(model => model.HashCode)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" width="100%">
+                <input type="submit" name="save" class="t-button" value="@T("Admin.Common.Save")" />
+            </td>
+        </tr>
+    </table>
+    
+}

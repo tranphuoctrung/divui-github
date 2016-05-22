@@ -95,7 +95,7 @@
                                 <div class="pickup-info">
                                     <div class="well">
                                         <h5>@psa.ProductAttribute.Name</h5>
-                                        @Html.Raw(@psa.ProductAttribute.Description)
+                                        @*@Html.Raw(@psa.ProductAttribute.Description)*@
                                         @Html.Hidden(string.Format("Pickups[{0}].ProductAttributeId", i), psa.ProductAttribute.ProductAttributeId)
                                         @Html.Hidden(string.Format("Pickups[{0}].ProductId", i), psa.ProductAttribute.ProductId)
                                         @Html.Hidden(string.Format("Pickups[{0}].ProductOptionId", i), option.ProductOptionId)

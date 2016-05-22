@@ -1,11 +1,11 @@
 ﻿@model CheckoutProgressModel
 @using Nop.Web.Models.Checkout;
 <ul class="checkout-process-wrp">
-    <li class="checkout-process checkout-process--cart @((Model.CheckoutProgressStep == CheckoutProgressStep.Cart || Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep != CheckoutProgressStep.Complete) ? @Html.Raw("is-current") : null) ">
+    <li class="checkout-process checkout-process--cart @((Model.CheckoutProgressStep == CheckoutProgressStep.Cart) ? @Html.Raw("is-current") : null) ">
         <div class="dot">1</div>
         <div class="label">@T("ShoppingCart")</div>
     </li>
-    <li class="checkout-process checkout-process--info @((Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep == CheckoutProgressStep.Complete )? @Html.Raw("is-current") : null) " >
+    <li class="checkout-process checkout-process--info @((Model.CheckoutProgressStep == CheckoutProgressStep.Confirm)? @Html.Raw("is-current") : null) " >
         <div class="dot">2</div>
         <div class="label">@T("ShoppingCart.CustomerInfo")</div>
     </li>

@@ -185,9 +185,7 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null,
-            IList<int> collectionIds = null,
-            IList<int> attractionIds = null)
+            bool? overridePublished = null)
         {
             filterableSpecificationAttributeOptionIds = new List<int>();
 
@@ -211,15 +209,6 @@ namespace Nop.Services.Catalog
             if (categoryIds != null && categoryIds.Contains(0))
                 categoryIds.Remove(0);
 
-            //validate "collectionIds" parameter
-            if (collectionIds != null && collectionIds.Contains(0))
-                collectionIds.Remove(0);
-
-
-            //validate "attractionIds" parameter
-            if (attractionIds != null && attractionIds.Contains(0))
-                attractionIds.Remove(0);
-
             //Access control list. Allowed customer roles
             var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
 
@@ -232,10 +221,6 @@ namespace Nop.Services.Catalog
 
                 //pass category identifiers as comma-delimited string
                 string commaSeparatedCategoryIds = categoryIds == null ? "" : string.Join(",", categoryIds);
-
-                string commaSeparatedCollectionIds = collectionIds == null ? "" : string.Join(",", collectionIds);
-
-                string commaSeparatedAttractionIds = attractionIds == null ? "" : string.Join(",", attractionIds);
 
 
                 //pass customer role identifiers as comma-delimited string
@@ -259,21 +244,6 @@ namespace Nop.Services.Catalog
                 pCategoryIds.ParameterName = "CategoryIds";
                 pCategoryIds.Value = commaSeparatedCategoryIds != null ? (object)commaSeparatedCategoryIds : DBNull.Value;
                 pCategoryIds.DbType = DbType.String;
-                
-
-                //prepare parameters
-                var pCollectionIds = _dataProvider.GetParameter();
-                pCollectionIds.ParameterName = "CollectionIds";
-                pCollectionIds.Value = commaSeparatedCollectionIds != null ? (object)commaSeparatedCollectionIds : DBNull.Value;
-                pCollectionIds.DbType = DbType.String;
-
-
-                //prepare parameters
-                var pAttractionIds = _dataProvider.GetParameter();
-                pAttractionIds.ParameterName = "AttractionIds";
-                pAttractionIds.Value = commaSeparatedAttractionIds != null ? (object)commaSeparatedAttractionIds : DBNull.Value;
-                pAttractionIds.DbType = DbType.String;
-
 
                 var pManufacturerId = _dataProvider.GetParameter();
                 pManufacturerId.ParameterName = "ManufacturerId";
@@ -411,8 +381,6 @@ namespace Nop.Services.Catalog
                 pFilterableSpecificationAttributeOptionIds.Size = int.MaxValue - 1;
                 pFilterableSpecificationAttributeOptionIds.DbType = DbType.String;
 
-
-
                 var pTotalRecords = _dataProvider.GetParameter();
                 pTotalRecords.ParameterName = "TotalRecords";
                 pTotalRecords.Direction = ParameterDirection.Output;
@@ -422,8 +390,6 @@ namespace Nop.Services.Catalog
                 var products = _dbContext.ExecuteStoredProcedureList<Product>(
                     "DvProductLoadAllPaged",
                     pCategoryIds,
-                    pCollectionIds,
-                    pAttractionIds,
                     pManufacturerId,
                     pStoreId,
                     pVendorId,
@@ -624,26 +590,6 @@ namespace Nop.Services.Catalog
                             select p;
                 }
 
-
-                //collection filtering
-                if (collectionIds != null && collectionIds.Count > 0)
-                {
-                    query = from p in query
-                            from pc in p.ProductCollections.Where(pc => collectionIds.Contains(pc.CollectionId))
-                            where (!featuredProducts.HasValue || featuredProducts.Value == pc.IsFeaturedProduct)
-
-                            select p;
-                }
-
-                //attraction filtering
-                if (attractionIds != null && attractionIds.Count > 0)
-                {
-                    query = from p in query
-                            from pc in p.ProductAttractions.Where(pc => attractionIds.Contains(pc.AttractionId))
-                            where (!featuredProducts.HasValue || featuredProducts.Value == pc.IsFeaturedProduct)
-                            select p;
-                }
-
                 //manufacturer filtering
                 if (manufacturerId > 0)
                 {
@@ -746,6 +692,16 @@ namespace Nop.Services.Catalog
                     //creation date
                     query = query.OrderByDescending(p => p.CreatedOnUtc);
                 }
+                else if (orderBy == ProductSortingEnum.ReviewDesc)
+                {
+                    //product review
+                    query = query.OrderByDescending(p => p.ApprovedRatingSum);
+                }
+                else if (orderBy == ProductSortingEnum.ReviewAsc)
+                {
+                    //product review
+                    query = query.OrderBy(p => p.ApprovedRatingSum);
+                }
                 else
                 {
                     //actually this code is not reachable
@@ -773,6 +729,6 @@ namespace Nop.Services.Catalog
                 #endregion
             }
         }
-        
+
     }
 }

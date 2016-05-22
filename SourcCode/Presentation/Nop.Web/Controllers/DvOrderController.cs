@@ -31,6 +31,7 @@ using Nop.Core.Domain.Media;
 using Nop.Web.Models.Media;
 using Nop.Web.Models.Catalog;
 using Nop.Services.Customers;
+using Nop.Services.Divui.Catalog;
 
 namespace Nop.Web.Controllers
 {
@@ -42,6 +43,7 @@ namespace Nop.Web.Controllers
         private readonly IPictureService _pictureService;
         private readonly IProductService _productService;
         private readonly CustomerSettings _customerSettings;
+        private readonly IProductOptionService _productOptionService;
         #endregion
 
         #region Constructors
@@ -76,7 +78,8 @@ namespace Nop.Web.Controllers
             ICacheManager cacheManager,
             IPictureService pictureService,
             IProductService productService,
-            CustomerSettings customerSettings)
+            CustomerSettings customerSettings,
+            IProductOptionService productOptionService)
         {
             this._orderService = orderService;
             this._shipmentService = shipmentService;
@@ -110,7 +113,7 @@ namespace Nop.Web.Controllers
             this._pictureService = pictureService;
             this._productService = productService;
             this._customerSettings = customerSettings;
-
+            this._productOptionService = productOptionService;
         }
 
         #endregion
@@ -299,7 +302,7 @@ namespace Nop.Web.Controllers
 
             //total
             var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
-            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency);//, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
             //checkout attributes
             model.CheckoutAttributeInfo = order.CheckoutAttributeDescription;
@@ -333,7 +336,9 @@ namespace Nop.Web.Controllers
                 {
                     ProductOptionId = option.Id,
                     ProductOptionName = option.GetLocalized(po => po.Name),
-                    SeName = option.Product.GetSeName()
+                    SeName = option.Product.GetSeName(),
+                    Sku = option.Product.Sku,
+                    ProductGroupId = option.Product.Id
                 };
 
                 var items = orderItems.Where(p => p.Product.ProductOptions.Contains(option)).ToList();
@@ -489,10 +494,10 @@ namespace Nop.Web.Controllers
                 optionModel.Total = items.Sum(i => i.PriceInclTax);
                 optionModel.strTotal = _priceFormatter.FormatPrice(optionModel.Total);
 
-                optionModel.AdultNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Adult);
-                optionModel.ChildNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Child);
-                optionModel.KidNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Kid);
-                optionModel.SeniorNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Senior);
+                optionModel.AdultNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Adult).Sum(it => it.Quantity);
+                optionModel.ChildNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Child).Sum(it => it.Quantity);
+                optionModel.KidNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Kid).Sum(it => it.Quantity);
+                optionModel.SeniorNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Senior).Sum(it => it.Quantity);
 
                 model.OptionItems.Add(optionModel);
             }
@@ -540,6 +545,34 @@ namespace Nop.Web.Controllers
         }
         #endregion
 
-        
+        #region Print voucher and guide
+
+        public ActionResult PrintGuideToUse(int orderId, int productOptionId, int type = 1)
+        {
+            var order = _orderService.GetOrderById(orderId);
+
+            if (order == null || order.Deleted || _workContext.CurrentCustomer.Id != order.CustomerId)
+                return new HttpUnauthorizedResult();
+
+            var productOption = _productOptionService.GetProductOptionById(productOptionId);
+
+            var productGroup = productOption.Product;
+            if (productGroup == null || productGroup.Deleted )
+                return new HttpUnauthorizedResult();
+
+            var model = PrepareOrderDetailsModel(order);
+
+            model.ProductOptionId = productOptionId;
+            model.GuideToUse = productGroup.GuideToUse;
+            model.Tip = productGroup.Tip;
+            model.PrintMode = true;
+            model.PrintType = type;
+            //var strHtml = "";
+
+            return View("_GuidToUse", model);
+
+            //return Json(new { success = true, html = strHtml}, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

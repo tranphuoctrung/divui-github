@@ -397,6 +397,71 @@
             </div>
 
         </div>
+        @if(Model.ProductReviews.Items.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <section class="customer-review">
+                        <h2>@T("Product.CustomerReviews")</h2>
+                        <div class="customer-review-feed">
+                            <div id="productReviewList">
+                                @Html.Partial("_ProductReviews", Model.ProductReviews)
+                            </div>
+                            
+                            @if (Model.ProductReviews.PagingFilteringContext.TotalPages > 2)
+                            {
+                                <div class="viewmore">
+                                    <button type="button" id="btnLoadProductReviews" class="btn btn-block btn-default">@T("Reviews.ViewMore")</button>
+                                    <input type="hidden" value="2" id="pageNumber" />
+                                    <input type="hidden" value="@Model.Id" id="productId" />
+                                    <input type="hidden" value="@Model.ProductReviews.PagingFilteringContext.PageSize" id="pageSize" />
+                                    <script>
+
+
+                                    $(document).ready(function () {
+                                        $('#btnLoadProductReviews').click(function () {
+                                            $.ajax({
+                                                url: "/Product/LoadMoreProductReviews",
+                                                type: "post",
+                                                data: { productId: $('#productId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                                                beforeSend: function(){
+                                                    $('#ajaxBusy').show();
+                                                },
+                                                success: function (response) {
+                                                    $('#ajaxBusy').hide();
+                                                    if (response.success) {
+                                                        $('#productReviewList').append(response.html);
+                                                        var number = $('#pageNumber').val();
+                                                        if (response.totalPages > number  ) {
+                                                            $('#pageNumber').val(number + 1);
+                                                        }
+                                                        else{
+                                                            $('#btnLoadProductReviews').hide();
+                                                        }
+                                                        
+                                                        
+                                                    }
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    $('#ajaxBusy').hide();
+                                                    console.log(textStatus, errorThrown);
+                                                }
+
+
+                                            });
+                                        });
+                                    });
+
+
+                                    </script>
+                                </div>
+                            }
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+        }
         @Html.Widget("productdetails_bottom", Model.Id)
     </div>
 </div>

@@ -42,6 +42,7 @@ using Nop.Web.Models.Media;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Core.Domain.Media;
 using Nop.Core.Caching;
+using Nop.Services.Messages;
 
 namespace Nop.Web.Controllers
 {
@@ -53,7 +54,7 @@ namespace Nop.Web.Controllers
         private readonly TaxSettings _taxSettings;
         private readonly ShoppingCartSettings _shoppingCartSettings;
         private readonly IDiscountService _discountService;
-
+        private readonly IWorkflowMessageService _workflowMessageService;
         private readonly IDownloadService _downloadService;
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly IDateTimeHelper _dateTimeHelper;
@@ -111,7 +112,8 @@ namespace Nop.Web.Controllers
             MediaSettings mediaSettings,
             ICacheManager cacheManager,
             IPictureService pictureService,
-            IAddressService addressService)
+            IAddressService addressService,
+            IWorkflowMessageService workflowMessageService)
         {
             this._workContext = workContext;
             this._storeContext = storeContext;
@@ -157,6 +159,7 @@ namespace Nop.Web.Controllers
             this._cacheManager = cacheManager;
             this._pictureService = pictureService;
             this._addressService = addressService;
+            this._workflowMessageService = workflowMessageService;
         }
 
         #endregion
@@ -591,7 +594,8 @@ namespace Nop.Web.Controllers
                 };
 
                 _paymentService.PostProcessPayment(postProcessPaymentRequest);
-                
+
+
                 if (_webHelper.IsRequestBeingRedirected || _webHelper.IsPostBeingDone)
                 {
                     //redirection or POST has been done in PostProcessPayment
@@ -599,7 +603,38 @@ namespace Nop.Web.Controllers
                 }
 
                 return RedirectToRoute("CheckoutCompleted", new { orderId = placeOrderResult.PlacedOrder.Id });
-                
+
+                //var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(placeOrderResult.PlacedOrder.PaymentMethodSystemName);
+
+                //if(paymentmethod != null)
+                //{
+                //    if (paymentMethod.PaymentMethodType == PaymentMethodType.Redirection)
+                //    {
+
+                //        //Redirection will not work because it's AJAX request.
+                //        //That's why we don't process it here (we redirect a user to another page where he'll be redirected)
+
+                //        //redirect
+
+                //        paymentMethod.PostProcessPayment(postProcessPaymentRequest);
+
+                //        if (_webHelper.IsRequestBeingRedirected || _webHelper.IsPostBeingDone)
+                //        {
+                //            //redirection or POST has been done in PostProcessPayment
+                //            return Content("Redirected");
+                //        }
+                //    }
+                //    else
+                //    {
+                //        _paymentService.PostProcessPayment(postProcessPaymentRequest);
+                //        //success
+                //        return RedirectToRoute("CheckoutCompleted", new { orderId = placeOrderResult.PlacedOrder.Id });
+                //    }
+                //}
+
+
+
+
             }
             else
             {
@@ -877,6 +912,7 @@ namespace Nop.Web.Controllers
             var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(order.PaymentMethodSystemName);
             model.PaymentMethod = paymentMethod != null ? paymentMethod.GetLocalizedFriendlyName(_localizationService, _workContext.WorkingLanguage.Id) : order.PaymentMethodSystemName;
             model.PaymentMethodStatus = order.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext);
+            model.PaymentStatus = order.PaymentStatus;
             model.CanRePostProcessPayment = _paymentService.CanRePostProcessPayment(order);
             //custom values
             model.CustomValues = order.DeserializeCustomValues();
@@ -997,7 +1033,7 @@ namespace Nop.Web.Controllers
 
             //total
             var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
-            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency);//, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
             //checkout attributes
             model.CheckoutAttributeInfo = order.CheckoutAttributeDescription;
@@ -1187,10 +1223,10 @@ namespace Nop.Web.Controllers
                 optionModel.Total = items.Sum(i => i.PriceInclTax);
                 optionModel.strTotal = _priceFormatter.FormatPrice(optionModel.Total);
 
-                optionModel.AdultNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Adult);
-                optionModel.ChildNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Child);
-                optionModel.KidNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Kid);
-                optionModel.SeniorNumber = items.Count(o => o.Product.AgeRangeType == DvAgeRangeType.Senior);
+                optionModel.AdultNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Adult).Sum(it => it.Quantity);
+                optionModel.ChildNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Child).Sum(it => it.Quantity);
+                optionModel.KidNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Kid).Sum(it => it.Quantity);
+                optionModel.SeniorNumber = items.Where(o => o.Product.AgeRangeType == DvAgeRangeType.Senior).Sum(it => it.Quantity);
 
                 model.OptionItems.Add(optionModel);
             }
@@ -1200,6 +1236,31 @@ namespace Nop.Web.Controllers
             return model;
         }
 
-        
+
+        public ActionResult CheckoutOnePAY()
+        {
+            //validation
+            if ((_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed))
+                return new HttpUnauthorizedResult();
+
+            //model
+            var model = new CheckoutCompletedModel();
+
+            var orders = _orderService.GetOrdersByCustomerId(_workContext.CurrentCustomer.Id);
+            if (orders.Count == 0)
+                return RedirectToRoute("HomePage");
+            else
+            {
+                // get order new created.
+                var lastOrder = orders[0];
+
+                // get order by id
+                var order = _orderService.GetOrderById(Convert.ToInt32(lastOrder.Id));
+
+                return RedirectToRoute("CheckoutCompleted", new { orderId = order.Id });
+            }
+        }
+
+
     }
 }

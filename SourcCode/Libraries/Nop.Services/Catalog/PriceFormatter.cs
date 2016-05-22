@@ -229,7 +229,7 @@ namespace Nop.Services.Catalog
                 return string.Format(formatStr, currencyString);
             }
             
-            return currencyString;
+            return currencyString.Replace(",00", "");
         }
 
         /// <summary>

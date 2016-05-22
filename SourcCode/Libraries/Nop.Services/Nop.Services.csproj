@@ -123,6 +123,7 @@
       <HintPath>..\..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -270,9 +271,12 @@
     <Compile Include="Divui\Catalog\IDvCategoryService.cs" />
     <Compile Include="Divui\Catalog\IProductOptionService.cs" />
     <Compile Include="Divui\Catalog\IDvProductService.cs" />
+    <Compile Include="Divui\Messages\MessageTokenProvider.cs" />
     <Compile Include="Divui\Orders\IOrderProcessingService.cs" />
+    <Compile Include="Divui\Orders\IOrderService.cs" />
     <Compile Include="Divui\Orders\IShoppingCartService.cs" />
     <Compile Include="Divui\Orders\OrderProcessingService.cs" />
+    <Compile Include="Divui\Orders\OrderService.cs" />
     <Compile Include="Divui\Orders\ShoppingCartService.cs" />
     <Compile Include="Divui\Security\DvStandardPermissionProvider.cs" />
     <Compile Include="Divui\ExportImport\DvExportManager.cs" />

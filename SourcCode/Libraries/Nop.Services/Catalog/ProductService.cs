@@ -949,6 +949,16 @@ namespace Nop.Services.Catalog
                     //creation date
                     query = query.OrderByDescending(p => p.CreatedOnUtc);
                 }
+                else if (orderBy == ProductSortingEnum.ReviewDesc)
+                {
+                    //product review
+                    query = query.OrderByDescending(p => p.ApprovedRatingSum);
+                }
+                else if (orderBy == ProductSortingEnum.ReviewAsc)
+                {
+                    //product review
+                    query = query.OrderBy(p => p.ApprovedRatingSum);
+                }
                 else
                 {
                     //actually this code is not reachable

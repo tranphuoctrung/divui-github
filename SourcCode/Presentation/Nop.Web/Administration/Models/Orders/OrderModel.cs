@@ -229,11 +229,11 @@ namespace Nop.Admin.Models.Orders
 
         public partial class OrderItemModel : BaseNopEntityModel
         {
-            public OrderItemModel()
-            {
-                ReturnRequestIds = new List<int>();
-                PurchasedGiftCardIds = new List<int>();
-            }
+            //public OrderItemModel()
+            //{
+            //    ReturnRequestIds = new List<int>();
+            //    PurchasedGiftCardIds = new List<int>();
+            //}
             public int ProductId { get; set; }
             public string ProductName { get; set; }
             public string VendorName { get; set; }

@@ -58,5 +58,7 @@ namespace Nop.Services.Catalog
         /// <returns>Product a category mapping collection</returns>
         IPagedList<ProductCategory> GetProductCategoriesByCategoryIds(List<int> categoryIds,
             int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false);
+
+        Category GetCategoryByName(string name, int languageId);
     }
 }

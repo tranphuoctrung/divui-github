@@ -29,5 +29,15 @@
         /// Product creation date
         /// </summary>
         CreatedOn = 15,
+
+        /// <summary>
+        /// Product review
+        /// </summary>
+        ReviewDesc = 16,
+
+        /// <summary>
+        /// Product review
+        /// </summary>
+        ReviewAsc = 17
     }
 }

@@ -140,6 +140,7 @@
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\DvCategoryController.cs" />
+    <Compile Include="Controllers\DvOrderController.cs" />
     <Compile Include="Controllers\DvProductController.cs" />
     <Compile Include="Controllers\DvSettingController.cs" />
     <Compile Include="Controllers\JbimagesController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Models\Divui\Catalog\DvCategoryModel.cs" />
     <Compile Include="Models\Divui\Catalog\DvSpecificationAttributeModel.cs" />
     <Compile Include="Models\Divui\Catalog\ProductSpecificationAttributeModel.cs" />
+    <Compile Include="Models\Divui\Orders\OrderModel.cs" />
     <Compile Include="Models\Divui\Settings\CatalogSettingsModel.cs" />
     <Compile Include="Models\Home\DashboardModel.cs" />
     <Compile Include="Models\Messages\TestMessageTemplateModel.cs" />

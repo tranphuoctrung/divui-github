@@ -18,7 +18,7 @@
                             <img class="img-responsive" src="@Model.Picture.FullSizeImageUrl">
                         </div>
                         <div class="acc-activity-review-info">
-                            <h6 class="acc-activity-review-info-title"><a href="#">Vé tham quan Garden By The Bay - Khu vườn trên Vịnh</a></h6>
+                            <h6 class="acc-activity-review-info-title"><a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })">@Model.ProductName</a></h6>
                             <ul class="acc-activity-review-info-detail">
                                 <li>@T("Order.SelectedDate"): @Model.Date</li>
                                 <li>@T("Order.OrderNumber"): @Model.OrderId</li>
@@ -31,9 +31,12 @@
                 
                 @if (Model.AddProductReview.SuccessfullyAdded)
                 {
-                    <div class="alert alert-info" role="alert">
-                        @Model.AddProductReview.Result
+                    <div class="col-md-6">
+                        <div class="alert alert-info" role="alert">
+                            @Model.AddProductReview.Result
+                        </div>
                     </div>
+                    
                 }
                 else
                 {
@@ -45,13 +48,13 @@
                             @Html.HiddenFor(model => model.OrderId)
                             @Html.HiddenFor(model => model.ProductId)
 
-                            var validationSummary = Html.ValidationSummary(true);
+                            @*var validationSummary = Html.ValidationSummary(true);
                             if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
                             {
                                 <div class="alert alert-warning" role="alert">
                                     @validationSummary
                                 </div>
-                            }
+                            }*@
 
                             <div class="acc-activity-review-cont-wrp">
                                 <div class="activity-review-rating-scale">

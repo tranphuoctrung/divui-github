@@ -1,0 +1,260 @@
+﻿@model OrderDetailsModel
+@using Nop.Web.Models.Order
+@{
+    //if (!Model.PrintMode)
+    //{
+    //    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    //}
+    //else
+    //{
+
+    //}
+    Layout = "~/Views/Shared/_Print.cshtml";
+    //title
+    Html.AddTitleParts(T("PageTitle.OrderDetails").Text);
+}
+@if (Model.PrintMode)
+{
+   <script type="text/javascript">
+       $(document).ready(function () {
+           window.print();
+       });
+   </script>
+}
+<div class="width:796px;margin: 0 auto;">
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="font-family:'Helvetica', Arial, Tahoma;font-size:9px;line-height:13px">
+        <tbody>
+            <tr>
+                <td>
+                    <!-- Header -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
+                        <tbody>
+                            <tr>
+                                <td>
+
+                                    <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 0">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%"><img src="~/Content/images/logo.png"></td>
+                                                <td align="right">
+                                                    @if (Model.PrintType == 1)
+                                                    {
+                                                        @Html.Raw(T("Print.GuideToUse.Note").Text)
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><!-- /Header -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="padding:20px 0; border-top: #333 solid 3px">
+                        <tbody>
+                            <tr>
+                                <td><strong style="font-size:24px">@(Model.PrintType == 1 ? T("Print.GuideToUse") : T("Print.Tip"))</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Voucher -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border:#333 solid 1px; border-radius:20px; margin-bottom:20px">
+                        <tbody>
+                            <tr>
+                                <td>
+
+                                    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:#333 solid 1px">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2" width="75%" style="padding:10px;">
+                                                    <p style="font-size:12px">
+                                                        @{
+                                                            var option = Model.OptionItems.FirstOrDefault(op => op.ProductOptionId == Model.ProductOptionId);
+
+                                                        }
+                                                        <b>@option.ProductOptionName</b>
+                                                    </p>
+                                                    <p style="font-size:12px">
+
+                                                        @if (option.PickupAttribute != null)
+                                                        {
+                                                            <text>
+                                                                @T("Checkout.Order.Pickup") : @option.PickupAttribute.Value
+                                                            </text>
+                                                            
+                                                        }
+                                                    </p>
+
+                                                </td>
+                                                <td align="right" valign="top" style="padding:10px">
+                                                    @if (option.SelectedDateAttribute != null)
+                                                    {
+                                                        <p>
+                                                            @T("Print.Order.SelectedDate")
+                                                        </p>
+
+                                                        <p style="font-size:12px;font-weight:bold">@option.SelectedDateAttribute.Value</p>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td width="30%" valign="top" style="padding:10px">
+
+                                                    <!-- Number of ticket -->
+                                                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <p>@T("Print.Order.CustomerNumber")</p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="50%" style="font-size:12px;font-weight:bold;padding-right:10px;text-align:right">@option.AdultNumber</td>
+                                                                <td width="50%" style="font-size:12px;font-weight:bold">
+                                                                    @T("Print.Order.Adult")
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <!-- /Number of ticket -->
+
+                                                </td>
+                                                <td width="40%" style="padding:10px;border-left:#333 solid 1px;border-right:#333 solid 1px" valign="top">
+
+                                                    <!-- Purchase by -->
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <p>@T("Print.Order.Customer")</p>
+                                                                    <p style="font-size:12px;font-weight:bold">
+                                                                        @Model.BillingAddress.FullName
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- /Purchase by -->
+
+                                                </td>
+                                                <td width="30%" style="padding:10px" valign="top">
+
+                                                    <p>@T("Print.Order.OrderNumber")</p>
+                                                    <p><strong>@Model.Id</strong></p>
+
+
+                                                    <p>@T("Print.Order.Sku")</p>
+                                                    <p><strong>@option.Sku</strong></p>
+
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><!-- /Voucher -->
+                    <!-- Tour Specification -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border:#333 solid 1px; border-radius:20px;margin-bottom:10px">
+                        <tbody>
+                            <tr>
+                                <td>
+
+                                    <!-- How to used -->
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td bgcolor="#33333" style="border-top-left-radius:20px; border-top-right-radius:20px; color:white; font-size:12px; font-weight:bold; padding:10px 20px">@T("Print.GuideToUse")</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.Raw(Model.GuideToUse)
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table><!-- /How to used -->
+                                    <!-- How to get there -->
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td bgcolor="#33333" style="color:white; font-size:12px; font-weight:bold; padding:10px 20px">@T("Print.Tip")</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 0 20px;">
+                                                    @Html.Raw(Model.Tip)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table><!-- /How to get there -->
+                                    <!-- Contact Us -->
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td bgcolor="#333" style="background:#333; color:white; font-size:12px; font-weight:bold;padding:10px 20px">Bạn cần trợ giúp?</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:10px 20px">
+
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="50%" valign="top">
+
+                                                                    <p><strong>@T("Print.Contact.Divui")</strong></p>
+                                                                    <p>
+                                                                       @Html.Raw(T("Print.Contact.Divui.Hotline").Text)
+                                                                    </p>
+
+                                                                </td>
+                                                                <td width="50%" valign="top">
+
+                                                                    <p><strong>@T("Print.Contact.Partner")</strong></p>
+                                                                    <p>
+                                                                        @Html.Raw(T("Print.Contact.Partner.Hotline").Text)
+                                                                    </p>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table><!-- /Contact us -->
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--/Tour Specification -->
+                    <!-- Note -->
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:right;font-size:10px">@T("Print.Date"): @DateTime.Now.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        </tbody>
+                    </table><!--/Note-->
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

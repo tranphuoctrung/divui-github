@@ -2356,6 +2356,11 @@
     <Content Include="Themes\DefaultClean\Views\Checkout\_DiscountBox.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Product\CustomerReviews.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Product\ProductReviews.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Product\_ProductReviews.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Topic\CheckoutTopicBlock.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Shared\_WhyBook.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Order\_GuidToUse.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Shared\_Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\fontello\" />

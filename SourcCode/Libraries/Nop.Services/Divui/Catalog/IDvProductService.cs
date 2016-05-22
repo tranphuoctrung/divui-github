@@ -85,10 +85,8 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null,
-            IList<int> collectionIds = null,
-            IList<int> attractionIds = null);
+            bool? overridePublished = null);
 
-        
+
     }
 }

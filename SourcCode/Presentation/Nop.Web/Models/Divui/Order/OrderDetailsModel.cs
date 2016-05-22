@@ -1,4 +1,5 @@
 ﻿using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Payments;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Media;
@@ -29,7 +30,18 @@ namespace Nop.Web.Models.Order
 
         public List<OrderItemOptionModel> OptionItems { get; set; }
 
-        
+        public int OrderItemId { get; set; }
+
+        public int ProductOptionId { get; set; }
+
+
+        public string GuideToUse { get; set; }
+
+        public string Tip { get; set; }
+
+        public int PrintType { get; set; }
+
+        public PaymentStatus PaymentStatus { get; set; }
 
         #region Nested Classes
 
@@ -42,7 +54,13 @@ namespace Nop.Web.Models.Order
             public int ProductOptionId { get; set; }
 
             public string ProductOptionName { get; set; }
+
+            public int ProductGroupId { get; set; }
+
             public string SeName { get; set; }
+
+            public string Sku { get; set; }
+
             public decimal Total { get; set; }
 
             public string strTotal { get; set; }

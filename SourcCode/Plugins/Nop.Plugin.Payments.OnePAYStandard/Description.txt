@@ -1,0 +1,8 @@
+﻿Group: Payment methods
+FriendlyName: Trực tiếp qua ATM nội địa (OnePAY)
+SystemName: Payments.OnePAYStandard
+Version: 2.00
+SupportedVersions: 3.70
+Author: trungtp
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.OnePAYStandard.dll
