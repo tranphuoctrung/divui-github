@@ -566,10 +566,13 @@ namespace Nop.Web.Extensions
                                         if (finalPriceWithDiscount < model.DvProductPrice.PriceValue)
                                         {
                                             model.DvProductPrice = productSimple.ProductPrice;
-                                            model.DvProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
-                                            model.DvProductPrice.SaveValue = finalPriceWithoutDiscount - oldPrice;
-                                            model.DvProductPrice.strSaveValue = priceFormatter.FormatPrice(finalPriceWithoutDiscount - oldPrice);
-
+                                            if(finalPriceWithoutDiscount > 0 && oldPrice > 0)
+                                            {
+                                                model.DvProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
+                                                model.DvProductPrice.SaveValue = finalPriceWithoutDiscount - oldPrice;
+                                                model.DvProductPrice.strSaveValue = priceFormatter.FormatPrice(finalPriceWithoutDiscount - oldPrice);
+                                            }
+                                                
                                         }
 
                                     }

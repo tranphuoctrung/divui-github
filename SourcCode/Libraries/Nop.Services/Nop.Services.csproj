@@ -248,10 +248,6 @@
     <Compile Include="Discounts\Cache\DiscountRequirementEventConsumer.cs" />
     <Compile Include="Discounts\DiscountRequirementValidationResult.cs" />
     <Compile Include="Discounts\DiscountValidationResult.cs" />
-    <Compile Include="Divui\Catalog\AttractionExtensions.cs" />
-    <Compile Include="Divui\Catalog\CollectionExtensions.cs" />
-    <Compile Include="Divui\Catalog\AttractionService.cs" />
-    <Compile Include="Divui\Catalog\CollectionService.cs" />
     <Compile Include="Divui\Catalog\BannerSerive.cs" />
     <Compile Include="Divui\Catalog\DvCategoryService.cs" />
     <Compile Include="Divui\Catalog\DvProductAttributeService.cs" />
@@ -265,9 +261,7 @@
     <Compile Include="Divui\Catalog\PriceSetupService.cs" />
     <Compile Include="Divui\Catalog\ProductOptionService.cs" />
     <Compile Include="Divui\Catalog\DvProductService.cs" />
-    <Compile Include="Divui\Catalog\IAttractionService.cs" />
     <Compile Include="Divui\Catalog\IBannerService.cs" />
-    <Compile Include="Divui\Catalog\ICollectionService.cs" />
     <Compile Include="Divui\Catalog\IDvCategoryService.cs" />
     <Compile Include="Divui\Catalog\IProductOptionService.cs" />
     <Compile Include="Divui\Catalog\IDvProductService.cs" />
@@ -279,8 +273,6 @@
     <Compile Include="Divui\Orders\OrderService.cs" />
     <Compile Include="Divui\Orders\ShoppingCartService.cs" />
     <Compile Include="Divui\Security\DvStandardPermissionProvider.cs" />
-    <Compile Include="Divui\ExportImport\DvExportManager.cs" />
-    <Compile Include="Divui\ExportImport\IDvExportManager.cs" />
     <Compile Include="Infrastructure\AzureWebsitesMachineNameProvider.cs" />
     <Compile Include="Infrastructure\DefaultMachineNameProvider.cs" />
     <Compile Include="Infrastructure\IMachineNameProvider.cs" />

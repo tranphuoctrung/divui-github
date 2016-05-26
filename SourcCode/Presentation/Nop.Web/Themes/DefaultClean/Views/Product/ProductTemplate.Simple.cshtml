@@ -1,6 +1,7 @@
 ﻿@model ProductDetailsModel
 @using Nop.Core
 @using Nop.Core.Domain.Seo;
+@using Nop.Core.Domain.Divui.Catalog;
 @using Nop.Core.Infrastructure;
 @using Nop.Services.Localization;
 @using Nop.Web.Models.Catalog;
@@ -54,13 +55,13 @@
     <meta itemprop="name" content="this is product content">
     <meta itemprop="description" content="this is product description">
     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-        <meta content="300.000" itemprop="price">
-        <meta content="VND" itemprop="priceCurrency">
+        <meta content="@Model.ProductPrice.Price" itemprop="price">
+        <meta content="@Model.ProductPrice.CurrencyCode" itemprop="priceCurrency">
     </div>
     <div itemprop="aggregateRating" itemscop itemtype="http://schema.org/AggregateRating">
-        <meta content="4.587" itemprop="ratingValue">
+        <meta content="@Model.ProductReviewOverview.RatingSum" itemprop="ratingValue">
         <meta content="5" itemprop="bestRating">
-        <meta content="452" itemprop="reviewCount">
+        <meta content="@Model.ProductReviewOverview.TotalReviews" itemprop="reviewCount">
     </div><!-- /Schema -->
     <header class="product-header">
         <div class="product-header-container container">
@@ -68,45 +69,61 @@
                 <div class="product-feature-price-review">
                     <div class="product-feature-price-review-placement"></div>
                     <div class="product-feature-price-review-content">
-                        <div class="product-feature-review">
-                            <div class="top"></div>
-                            <article class="review">
-                                <h4 class="title">
-                                    "Lịch diễn dày đặc, coi đã đời!!!"
-                                </h4>
-                                <div class="review-rating">
-                                    <span class="rating">
-                                        <i class="icon-star-8 voted"></i>
-                                        <i class="icon-star-8 voted"></i>
-                                        <i class="icon-star-8 voted"></i>
-                                        <i class="icon-star-8 voted"></i>
-                                        <i class="icon-star-8 devote"></i>
-                                    </span>
-                                    <span class="date">19/10/2015</span>
-                                </div>
-                                <div class="review-info">
-                                    <span class="reviewed-by">Nhận xét bởi</span>
-                                    <strong class="author">Nguyen Minh Phuc</strong>
-                                </div>
-                            </article>
-                        </div>
+                        @{ var pr = Model.ProductReviews.Items.FirstOrDefault();}
+                        @if (pr != null)
+                        {
+                            <div class="product-feature-review">
+                                <div class="top"></div>
+                                <article class="review">
+                                    <h4 class="title">
+                                        @pr.Title
+                                    </h4>
+                                    <div class="review-rating">
+                                        <span class="rating">
+
+                                            @for (int i = 0; i < pr.Rating; i++)
+                                            {
+                                                <i class="icon-star-8 voted"></i>
+                                            }
+
+                                            @for (int i = 0; i < (5 - pr.Rating); i++)
+                                            {
+                                                <i class="icon-star-8 devote"></i>
+                                            }
+
+                                        </span>
+
+                                        <span class="date">@pr.WrittenOnStr</span>
+                                    </div>
+                                    <div class="review-info">
+                                        <span class="reviewed-by">@T("Products.WrittenBy")</span>
+                                        <strong class="author">@pr.CustomerName</strong>
+                                    </div>
+                                </article>
+                            </div>
+                        }
+
                         <div class="product-feature-price">
                             <div class="bottom"></div>
                             <div class="price-details">
                                 <div class="price-from">
-                                    <span>Giá chỉ từ</span>
-                                    <span class="old-price">200.000đ</span>
+                                    <span>@T("Products.FromPrice")</span>
+                                    <span class="old-price">@Html.Raw(Model.ProductPrice.OldPrice)</span>
                                 </div>
                                 <div class="actual-price">
-                                    <strong class="actual-price-display">300.000đ</strong>
-                                    <span class="price-explanation">/ người lớn</span>
+                                    <strong class="actual-price-display">@Html.Raw(Model.ProductPrice.Price)</strong>
+                                    <span class="price-explanation">/ @T("Products.Adult")</span>
                                 </div>
-                                <span class="price-saving">
-                                    <i class="icon-thumbs-up"></i> Tiết kiệm 20% so với đặt trực tiếp
-                                </span>
+                                @if (Model.ProductPrice.SavePercent > 0)
+                                {
+                                    <span class="price-saving">
+                                        <i class="icon-thumbs-up"></i> @string.Format(T("Products.Saving").Text, Model.ProductPrice.SavePercent)
+                                    </span>
+                                }
+
                             </div>
                             <div class="product-feature-booking">
-                                <a class="btn btn-lg btn-block btn-warning"><strong>ĐẶT VÉ NGAY</strong></a>
+                                <a href="#product-booking" class="btn btn-lg btn-block btn-warning"><strong>@T("Products.ProductBooking.Booking")</strong></a>
                             </div>
                         </div>
                     </div>
@@ -121,27 +138,38 @@
             <div class="col-sm-6">
                 @if (Model.ProductReviewOverview.AllowCustomerReviews)
                 {
-                    <div class="product-feature-review">
-                        <article class="review">
-                            <h4 class="title">
-                                "Lịch diễn dày đặc, coi đã đời!!!"
-                            </h4>
-                            <div class="review-rating">
-                                <span class="rating">
-                                    <i class="icon-star-8 voted"></i>
-                                    <i class="icon-star-8 voted"></i>
-                                    <i class="icon-star-8 voted"></i>
-                                    <i class="icon-star-8 voted"></i>
-                                    <i class="icon-star-8 devote"></i>
-                                </span>
-                                <span class="date">19/10/2015</span>
-                            </div>
-                            <div class="review-info">
-                                <span class="reviewed-by">Nhận xét bởi</span>
-                                <strong class="author">Nguyen Minh Phuc</strong>
-                            </div>
-                        </article>
-                    </div>
+                    if (pr != null)
+                    {
+                        <div class="product-feature-review">
+                            <div class="top"></div>
+                            <article class="review">
+                                <h4 class="title">
+                                    @pr.Title
+                                </h4>
+                                <div class="review-rating">
+                                    <span class="rating">
+
+                                        @for (int i = 0; i < pr.Rating; i++)
+                                        {
+                                            <i class="icon-star-8 voted"></i>
+                                        }
+
+                                        @for (int i = 0; i < (5 - pr.Rating); i++)
+                                        {
+                                            <i class="icon-star-8 devote"></i>
+                                        }
+
+                                    </span>
+
+                                    <span class="date">@pr.WrittenOnStr</span>
+                                </div>
+                                <div class="review-info">
+                                    <span class="reviewed-by">@T("Products.WrittenBy")</span>
+                                    <strong class="author">@pr.CustomerName</strong>
+                                </div>
+                            </article>
+                        </div>
+                    }
                 }
 
             </div>
@@ -150,15 +178,15 @@
                 <div class="product-feature-price">
                     <div class="price-details">
                         <div class="price-from">
-                            <span>Giá chỉ từ</span>
+                            <span>@T("Products.FromPrice")</span>
                             <span class="old-price">@Html.Raw(Model.ProductPrice.OldPrice)</span>
                         </div>
                         <div class="actual-price">
                             <strong class="actual-price-display">@Html.Raw(Model.ProductPrice.Price)</strong>
-                            <span class="price-explanation">/ người lớn</span>
+                            <span class="price-explanation">/ @T("Products.Adult")</span>
                         </div>
                         <span class="price-saving">
-                            <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
+                            <i class="icon-thumbs-up"></i>@string.Format(T("Products.Saving").Text, Model.ProductPrice.SavePercent)
                         </span>
                     </div>
                     <div class="product-feature-booking">
@@ -229,9 +257,9 @@
                     @Html.Partial("_ProductSpecifications", Model.ProductSpecifications, dataDictAttributes)
                 }
 
-                <section class="product-booking">
+                <section class="product-booking" id="product-booking">
                     <div class="product-book-wrp">
-                        <div class="box offers-form">
+                        <div class="box offers-form" id="bookingengine-search">
                             <div class="availability-container">
                                 <header class="box-title">
                                     <h2>@T("Products.ProductBooking.Title")</h2>
@@ -242,232 +270,51 @@
                                         <fieldset class="data-fields form-group">
                                             <label>
                                                 <span class="label">@T("Products.ProductBooking.PickDate")</span>
-                                                <input class="date-pick form-control" type="text" placeholder="ngay/thang/nam" data-name="starDate">
+                                                <input id="date" class="date-pick form-control" type="text" placeholder="ngay/thang/nam" data-name="starDate">
                                                 <span class="icon icon-calendar"></span>
                                             </label>
-                                            <button type="submit" class="btn btn-warning"><strong>@T("Products.ProductBooking.CheckPrice")</strong></button>
+                                            <button type="submit" id="btncheckprice" class="btn btn-warning"><strong>@T("Products.ProductBooking.CheckPrice")</strong></button>
                                         </fieldset>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
-                        <!-- Begin Box Offer -->
-                        <div class="box offers">
-                            <div class="offers-container">
-                                <div class="offers-table">
-                                    <div class="offers-table-row">
-                                        <div class="offers-table-row-title row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <div class="offers-title-wrp">
-                                                    <header class="offers-title">
-                                                        <h3 class="title">Sở thú Safari & Thủy cung Marine World +Buffet trưa +Đưa đón</h3>
-                                                    </header>
-                                                    <div class="offers-feature-info">
-                                                        <span class="offer-duration">
-                                                            <i class="icon icon-clock-5"></i>
-                                                            @{
-                                                                var tourDuration = Model.ProductSpecifications.Where(ps => ps.SystemName == "TourDuration").FirstOrDefault();
-                                                                if (tourDuration != null)
-                                                                {
-                                                                    @Html.Raw(string.Format("{0}: {1}", tourDuration.SpecificationAttributeName, tourDuration.ValueRaw))
-                                                                }
-                                                            }
-                                                        </span>
+                        <div class="col-md-12">
+                            <div class="alert alert-notice" id="dateValidator" style="display: none;">
+                                <p>
+                                    @T("Products.DateValidator.Description").Text
+                                </p>
+                            </div>
+                        </div>
+                        <div id="bookingengine-options">
+                            @foreach (var option in Model.ProductOptions)
+                            {
+                            <!-- Begin Box Offer -->
+                                <div class="box offers">
+                                    <div class="offers-container">
+                                        <div class="offers-table">
+                                            <div class="offers-table-row">
+                                                <div class="offers-table-row-title row">
+                                                    <div class="col-md-8 col-sm-8">
+                                                        <div class="offers-title-wrp">
+                                                            <header class="offers-title">
+                                                                <h3 class="title">@option.Name</h3>
+                                                            </header>
+                                                        </div>
                                                     </div>
-                                                    <span class="offers-desc">
-                                                        This is offer desc
-                                                    </span>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4 offers-title-price">
-                                                <div class="offers-price-details">
-                                                    <!--
-                                                    <div class="price-from">
-                                                      <span>Giá chỉ từ</span>
-                                                      <span class="old-price">200.000đ</span>
-                                                    </div>-->
-                                                    <div class="actual-price">
-                                                        <strong class="actual-price-display">693.000đ</strong>
-                                                        <span class="price-explanation">Giá cho 1 người lớn</span>
-                                                    </div>
-                                                    <!--
-                                                    <span class="price-saving">
-                                                      <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
-                                                    </span>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="offers-type-row row">
-                                            <div class="error-msgs-offers alert alert-danger alert-dismissible" role="alert" style="display:none">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <strong>Chu y! Vui long chon ngay khoi hanh....</strong>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 offer-types-wrp">
-                                                <div class="offer-types">
 
-                                                    <label class="select">
-                                                        <span class="label">Chọn thời gian</span>
-                                                        <span class="label-description">&nbsp</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>10h - 20h</option>
-                                                            <option>12h - 14h</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                    <!--
-                                                    <label class="select">
-                                                      <span class="label">Người lớn</span>
-                                                      <span class="label-description">Từ 12 tuổi</span>
-                                                      <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                        <option>1 (x) 200.000d</option>
-                                                        <option>2 (x) 200.000d</option>
-                                                        <option>3 (x) 200.000d</option>
-                                                      </select>
-                                                    </label>-->
-                                                    <label class="select">
-                                                        <span class="label">Trẻ em</span>
-                                                        <span class="label-description">Từ 3-5 tuổi</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>Chọn số lượng</option>
-                                                            <option>1 (x) 200.000d</option>
-                                                            <option>2 (x) 200.000d</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                    <label class="select">
-                                                        <span class="label">Trẻ em</span>
-                                                        <span class="label-description">Từ 3-5 tuổi</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>Chọn số lượng</option>
-                                                            <option>1 (x) 200.000d</option>
-                                                            <option>2 (x) 200.000d</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4 book-offer-wrp">
-                                                <div class="price-total">
-                                                    <span>Tổng cộng:</span>
-                                                    <span class="total-value">300.000đ</span>
-                                                </div>
-                                                <button class="btn btn-warning"><strong>CHỌN LOẠI VÉ NÀY</strong></button>
-                                                <p class="price-promise"><i class=" icon-ok-circled"></i>Cam kết giá rẻ nhất!</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div> <!-- End Box Offer -->
-                        <!-- Begin Box Offer -->
-                        <div class="box offers">
-                            <div class="offers-container">
-                                <div class="offers-table">
-                                    <div class="offers-table-row">
-                                        <div class="offers-table-row-title row">
-                                            <div class="col-md-8 col-sm-8">
-                                                <div class="offers-title-wrp">
-                                                    <header class="offers-title">
-                                                        <h3 class="title">Sở thú Safari & Thủy cung Marine World +Buffet trưa +Đưa đón</h3>
-                                                    </header>
-                                                    <div class="offers-feature-info">
-                                                        <span class="offer-duration">
-                                                            <i class="icon icon-clock-5"></i>Thời lượng: 2h (Ước lượng)
-                                                        </span>
-                                                    </div>
-                                                    <span class="offers-desc">
-                                                        This is offer desc
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4 offers-title-price">
-                                                <div class="offers-price-details">
-                                                    <!--
-                                                    <div class="price-from">
-                                                      <span>Giá chỉ từ</span>
-                                                      <span class="old-price">200.000đ</span>
-                                                    </div>-->
-                                                    <div class="actual-price">
-                                                        <strong class="actual-price-display">693.000đ</strong>
-                                                        <span class="price-explanation">Giá cho 1 người lớn</span>
-                                                    </div>
-                                                    <!--
-                                                    <span class="price-saving">
-                                                      <i class="icon-thumbs-up"></i>Tiết kiệm 20% so với đặt trực tiếp
-                                                    </span>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="offers-type-row row">
-                                            <div class="error-msgs-offers alert alert-danger alert-dismissible" role="alert" style="display:none">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <strong>Chu y! Vui long chon ngay khoi hanh....</strong>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 offer-types-wrp">
-                                                <div class="offer-types">
+                                </div> <!-- End Box Offer -->
+                            }
 
-                                                    <label class="select">
-                                                        <span class="label">Chọn thời gian</span>
-                                                        <span class="label-description">&nbsp</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>10h - 20h</option>
-                                                            <option>12h - 14h</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                    <!--
-                                                    <label class="select">
-                                                      <span class="label">Người lớn</span>
-                                                      <span class="label-description">Từ 12 tuổi</span>
-                                                      <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                        <option>1 (x) 200.000d</option>
-                                                        <option>2 (x) 200.000d</option>
-                                                        <option>3 (x) 200.000d</option>
-                                                      </select>
-                                                    </label>-->
-                                                    <label class="select">
-                                                        <span class="label">Trẻ em</span>
-                                                        <span class="label-description">Từ 3-5 tuổi</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>Chọn số lượng</option>
-                                                            <option>1 (x) 200.000d</option>
-                                                            <option>2 (x) 200.000d</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                    <label class="select">
-                                                        <span class="label">Trẻ em</span>
-                                                        <span class="label-description">Từ 3-5 tuổi</span>
-                                                        <select name="select" class="offer-type-list form-control" data-type="Adult">
-                                                            <option>Chọn số lượng</option>
-                                                            <option>1 (x) 200.000d</option>
-                                                            <option>2 (x) 200.000d</option>
-                                                            <option>3 (x) 200.000d</option>
-                                                        </select>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4 book-offer-wrp">
-                                                <div class="price-total">
-                                                    <span>Tổng cộng:</span>
-                                                    <span class="total-value">300.000đ</span>
-                                                </div>
-                                                <button class="btn btn-warning"><strong>CHỌN LOẠI VÉ NÀY</strong></button>
-                                                <p class="price-promise"><i class=" icon-ok-circled"></i>Cam kết giá rẻ nhất!</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- End Box Offer -->
-                        <!-- Begin Box Offer -->
-                        <div class="box offers">
-                            <div class="offers-container">
-                                <div class="offers-table">
-                                    <buttom class="btn btn-block btn-default"><strong>XEM TẤT CẢ CÁC LOẠI VÉ</strong></buttom>
-                                </div>
-                            </div>
-                        </div> <!-- End Box Offer -->
+
+                        </div>
+
+
                     </div>
                 </section>
 
@@ -494,54 +341,167 @@
                 </section>
             </div>
             <div class="col-md-4">
-                <div class="sub-col-box why-book">
-                    <h4 class="title">Tự tin đặt vé với ĐI VUI</h4>
-                    <ul>
-                        <li class="icon save">
-                            <div class="why-book-cont-wrp">
-                                <h5 class="title">Giá rẻ hơn đặt trực tiếp</h5>
-                                <p>Bạn tiết kiệm được 1 khoảng "kha khá" - từ 10% - 30% cho chuyến đi của mình :)</p>
-                            </div>
-                        </li>
-                        <li class="icon voucher24">
-                            <div class="why-book-cont-wrp">
-                                <h5 class="title">Nhận vé trong vòng 24h qua email</h5>
-                                <p>365 ngày kể cả Lễ, Tết hay Chủ nhật, Đi Vui luôn sẵn sàng.</p>
-                            </div>
-                        </li>
-                        <li class="icon support">
-                            <div class="why-book-cont-wrp">
-                                <h5 class="title">Đồng hành cùng bạn suốt chuyến đi</h5>
-                                <p>Cho dù bạn đang ở đâu, vào giờ nào, các chuyên viên tư vấn của ĐI VUI luôn sẵn sàng hỗ trợ bạn.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                @Html.Partial("_WhyBook")
                 <div class="sub-col-box engage-box">
                     <ul>
-                        <li><a href=""><i class="icon icon-heart-filled"></i>Thêm sản phẩm này vào danh sách yêu thích</a></li>
-                        <li><a href=""><i class="icon icon-mail-2"></i>Gửi câu hỏi cho sản phẩm này</a></li>
+                        <li><a href=""><i class="icon icon-heart-filled"></i>@T("Product.AddToWhishlist")</a></li>
+                        <li><a href=""><i class="icon icon-mail-2"></i>@T("Product.SendQuestions")</a></li>
                     </ul>
                 </div>
-                <div class="location-banner-container">
-                    <section class="location-banner" style="background-image: url('https://cdn2.getyourguide.com/img/location_img-169-2388153728-48.jpg')">
-                        <a class="location-banner-headline" href="#">
-                            Bangkok
-                        </a>
-                        <a class="location-banner-button btn btn-default btn-sm" href="#">Xem tat ca 132 hoat dong</a>
-                    </section>
-                </div>
-                <div class="location-banner-container">
-                    <section class="location-banner" style="background-image: url('https://cdn2.getyourguide.com/img/location_img-3802-1577549692-48.jpg')">
-                        <a class="location-banner-headline" href="#">
-                            Chùa Phật Ngọc
-                        </a>
-                        <a class="location-banner-button btn btn-default btn-sm" href="#">Xem tat ca 132 hoat dong</a>
-                    </section>
-                </div>
+
+                @if (Model.ProductDestination != null)
+                {
+                    <div class="location-banner-container">
+                        <section class="location-banner" style="background-image: url('@Model.ProductDestination.PictureModel.FullSizeImageUrl')">
+                            <a class="location-banner-headline" href="@Url.RouteUrl("Category", new { SeName = Model.ProductDestination.SeName })">
+                                @Model.ProductDestination.Name
+                            </a>
+                            <a class="location-banner-button btn btn-default btn-sm" href="@Url.RouteUrl("Category", new { SeName = Model.ProductDestination.SeName })">@string.Format(T("Products.Destination.ViewAll").Text, Model.ProductDestination.NumberOfProducts)</a>
+                        </section>
+                    </div>
+                }
+                @if (Model.ProductAttraction != null)
+                {
+                    <div class="location-banner-container">
+                        <section class="location-banner" style="background-image: url('@Model.ProductAttraction.PictureModel.FullSizeImageUrl')">
+                            <a class="location-banner-headline" href="@Url.RouteUrl("Category", new { SeName = Model.ProductAttraction.SeName })">
+                                @Model.ProductAttraction.Name
+                            </a>
+                            <a class="location-banner-button btn btn-default btn-sm" href="@Url.RouteUrl("Category", new { SeName = Model.ProductAttraction.SeName })">@string.Format(T("Products.Attraction.ViewAll").Text, Model.ProductAttraction.NumberOfProducts)</a>
+                        </section>
+                    </div>
+                }
+
             </div>
 
         </div>
+        @if (Model.ProductReviews.Items.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <section class="customer-review">
+                        <h2>@T("Product.CustomerReviews")</h2>
+                        <div class="customer-review-feed">
+                            <div id="productReviewList">
+                                @Html.Partial("_ProductReviews", Model.ProductReviews)
+                            </div>
+
+                            @if (Model.ProductReviews.PagingFilteringContext.TotalPages > 2)
+                            {
+                                <div class="viewmore">
+                                    <button type="button" id="btnLoadProductReviews" class="btn btn-block btn-default">@T("Reviews.ViewMore")</button>
+                                    <input type="hidden" value="2" id="pageNumber" />
+                                    <input type="hidden" value="@Model.Id" id="productId" />
+                                    <input type="hidden" value="@Model.ProductReviews.PagingFilteringContext.PageSize" id="pageSize" />
+                                    <script>
+
+
+                                    $(document).ready(function () {
+                                        $('#btnLoadProductReviews').click(function () {
+                                            $.ajax({
+                                                url: "/Product/LoadMoreProductReviews",
+                                                type: "post",
+                                                data: { productId: $('#productId').val(), PageNumber: $('#pageNumber').val(), PageSize: $('#pageSize').val() },
+                                                beforeSend: function(){
+                                                    $('#ajaxBusy').show();
+                                                },
+                                                success: function (response) {
+                                                    $('#ajaxBusy').hide();
+                                                    if (response.success) {
+                                                        $('#productReviewList').append(response.html);
+                                                        var number = $('#pageNumber').val();
+                                                        if (response.totalPages > number  ) {
+                                                            $('#pageNumber').val(number + 1);
+                                                        }
+                                                        else{
+                                                            $('#btnLoadProductReviews').hide();
+                                                        }
+
+
+                                                    }
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    $('#ajaxBusy').hide();
+                                                    console.log(textStatus, errorThrown);
+                                                }
+
+
+                                            });
+                                        });
+                                    });
+
+
+                                    </script>
+                                </div>
+                            }
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        }
         @Html.Widget("productdetails_bottom", Model.Id)
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowDate = new Date();
+        var today = new Date(@DateTime.Now.Year, @(DateTime.Now.Month - 1), @(DateTime.Now.Day + 1));
+
+        //$('#date').datepicker('setDate', 'today');
+
+        $("#date").datepicker({
+            'startDate': 'today',
+            'setDate': 'today',
+            format: 'dd/mm/yyyy'
+        });
+        $("#date").datepicker("update", today);
+        $("#dateValidator").hide();
+
+        $('#btncheckprice').click(function (e) {
+            e.preventDefault();
+            var selectedDate = $("#date").datepicker("getDate");
+            var checkDate = new Date(@DateTime.Now.Year, @(DateTime.Now.Month - 1), @(DateTime.Now.Day + 1));
+            if(selectedDate < checkDate || $("#date").val() == "")
+            {
+                $("#dateValidator").show();
+                return false;
+            }
+            else
+            {
+                $("#dateValidator").hide();
+
+            }
+            $("#bookingengine-options").html("");
+            $("#bookingengine-options").html("<img src='/content/images/optionsloading.gif' style='margin: 0 auto;'>");
+
+            var dates = [];
+
+            $.ajax({
+                type: "POST",
+                data: {
+                    productId: @Model.Id,
+                    date: $("#date").val()
+                },
+                url: '/Product/ProductOptions',
+                success: function (response) {
+                    if(response.success){
+                        $("#bookingengine-options").html(response.data);
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+
+            $("#btncheckprice").html("@T("Products.ProductBooking.UpdatePrice").Text");
+            $("#btncheckprice").removeClass("btn-warning");
+            $("#btncheckprice").removeClass("btn-default");
+            $("#btncheckprice").addClass("btn-default");
+
+            return true;
+
+        });
+    });
+</script>

@@ -389,8 +389,10 @@ namespace Nop.Web.Controllers
 
                 //all pictures
                 var pictureModels = new List<PictureModel>();
-                foreach (var picture in pictures)
+                for (int i = 1; i < pictures.Count; i++)
                 {
+                    var picture = pictures[i];
+
                     var pictureModel = new PictureModel
                     {
                         ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
@@ -533,7 +535,8 @@ namespace Nop.Web.Controllers
                                 if (finalPriceWithDiscount < model.ProductPrice.PriceValue)
                                 {
                                     model.ProductPrice = productSimple.ProductPrice;
-                                    model.ProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
+                                    if(finalPriceWithoutDiscount > 0 && oldPrice > 0)
+                                        model.ProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
                                 }
                                     
                             }
@@ -1255,7 +1258,8 @@ namespace Nop.Web.Controllers
                                     if (finalPriceWithDiscount < model.ProductPrice.PriceValue)
                                     {
                                         model.ProductPrice = productSimple.ProductPrice;
-                                        model.ProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
+                                        if(oldPrice > 0  && finalPriceWithoutDiscount > 0)
+                                            model.ProductPrice.SavePercent = oldPrice * 100 / finalPriceWithoutDiscount;
                                     }
 
                                 }

@@ -65,15 +65,11 @@
     <Compile Include="Mapping\Catalog\PredefinedProductAttributeValueMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
-    <Compile Include="Mapping\Divui\Catalog\AttractionMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\AvailabilitySetupMap.cs" />
-    <Compile Include="Mapping\Divui\Catalog\CollectionMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\BannerMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\OrderItemAttributeMappingMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\PriceSetupMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\ProductOptionMap.cs" />
-    <Compile Include="Mapping\Divui\Catalog\ProductCollectionMap.cs" />
-    <Compile Include="Mapping\Divui\Catalog\ProductAttractionMap.cs" />
     <Compile Include="Mapping\Divui\Catalog\CategorySpecificationAttributeMap.cs" />
     <Compile Include="Mapping\Divui\Discounts\DvDiscountMap.cs" />
     <Compile Include="Mapping\Divui\Orders\ShoppingCartItemAttributeMappingMap.cs" />

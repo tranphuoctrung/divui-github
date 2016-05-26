@@ -33,13 +33,6 @@ namespace Nop.Data.Mapping.Discounts
                 .WithMany(p => p.AppliedDiscounts)
                 .Map(m => m.ToTable("Discount_AppliedToProducts"));
 
-            this.HasMany(dr => dr.AppliedToCollections)
-                .WithMany(p => p.AppliedDiscounts)
-                .Map(m => m.ToTable("Discount_AppliedToCollections"));
-
-            this.HasMany(dr => dr.AppliedToAttractions)
-                .WithMany(p => p.AppliedDiscounts)
-                .Map(m => m.ToTable("Discount_AppliedToAttractions"));
         }
     }
 }

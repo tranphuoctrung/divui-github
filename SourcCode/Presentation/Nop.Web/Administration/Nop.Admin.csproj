@@ -130,8 +130,6 @@
     <Compile Include="Controllers\ActivityLogController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseAdminController.cs" />
-    <Compile Include="Controllers\AttractionController.cs" />
-    <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AddressAttributeController.cs" />
     <Compile Include="Controllers\CustomerAttributeController.cs" />
@@ -965,18 +963,6 @@
     <Content Include="Views\Product\EditProductOption.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.ProductOption.cshtml" />
     <Content Include="Views\Product\ProductGroupAddPopup.cshtml" />
-    <Content Include="Views\Collection\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\Collection\Create.cshtml" />
-    <Content Include="Views\Collection\Edit.cshtml" />
-    <Content Include="Views\Collection\List.cshtml" />
-    <Content Include="Views\Collection\ProductAddPopup.cshtml" />
-    <Content Include="Views\Collection\Tree.cshtml" />
-    <Content Include="Views\Attraction\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\Attraction\Create.cshtml" />
-    <Content Include="Views\Attraction\Edit.cshtml" />
-    <Content Include="Views\Attraction\List.cshtml" />
-    <Content Include="Views\Attraction\ProductAddPopup.cshtml" />
-    <Content Include="Views\Attraction\Tree.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.Collections.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.Attractions.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.Destinations.cshtml" />
@@ -1354,10 +1340,7 @@
   <ItemGroup>
     <Content Include="Views\Product\ProductAttributeConditionPopup.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\DvCategory\" />
-    <Folder Include="Views\DvSetting\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

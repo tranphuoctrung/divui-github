@@ -367,46 +367,5 @@ namespace Nop.Web.Extensions
             destination.FullName = model.FullName;
             return destination;
         }
-
-
-        //collection
-        public static CollectionModel ToModel(this Collection entity)
-        {
-            if (entity == null)
-                return null;
-
-            var model = new CollectionModel
-            {
-                Id = entity.Id,
-                Name = entity.GetLocalized(x => x.Name),
-                Description = entity.GetLocalized(x => x.Description),
-                ShortDescription = entity.GetLocalized(x => x.ShortDescription),
-                MetaKeywords = entity.GetLocalized(x => x.MetaKeywords),
-                MetaDescription = entity.GetLocalized(x => x.MetaDescription),
-                MetaTitle = entity.GetLocalized(x => x.MetaTitle),
-                SeName = entity.GetSeName(),
-            };
-            return model;
-        }
-
-        //attraction
-        public static AttractionModel ToModel(this Attraction entity)
-        {
-            if (entity == null)
-                return null;
-
-            var model = new AttractionModel
-            {
-                Id = entity.Id,
-                Name = entity.GetLocalized(x => x.Name),
-                Description = entity.GetLocalized(x => x.Description),
-                ShortDescription = entity.GetLocalized(x => x.ShortDescription),
-                MetaKeywords = entity.GetLocalized(x => x.MetaKeywords),
-                MetaDescription = entity.GetLocalized(x => x.MetaDescription),
-                MetaTitle = entity.GetLocalized(x => x.MetaTitle),
-                SeName = entity.GetSeName(),
-            };
-            return model;
-        }
     }
 }

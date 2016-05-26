@@ -21,8 +21,6 @@ namespace Nop.Admin.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, NopConfig config)
         {
             builder.RegisterType<ProductOptionService>().As<IProductOptionService>().InstancePerLifetimeScope();
-            builder.RegisterType<CollectionService>().As<ICollectionService>().InstancePerLifetimeScope();
-            builder.RegisterType<AttractionService>().As<IAttractionService>().InstancePerLifetimeScope();
             builder.RegisterType<PriceSetupService>().As<IPriceSetupService>().InstancePerLifetimeScope();
             builder.RegisterType<AvailabilitySetupService>().As<IAvailabilitySetupService>().InstancePerLifetimeScope();
 

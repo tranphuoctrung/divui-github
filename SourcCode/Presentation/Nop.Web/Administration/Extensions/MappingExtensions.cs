@@ -1158,44 +1158,7 @@ namespace Nop.Admin.Extensions
         }
 
         #endregion
-
-        #region Collection
-
-        public static CollectionModel ToModel(this Collection entity)
-        {
-            return entity.MapTo<Collection, CollectionModel>();
-        }
-
-        public static Collection ToEntity(this CollectionModel model)
-        {
-            return model.MapTo<CollectionModel, Collection>();
-        }
-
-        public static Collection ToEntity(this CollectionModel model, Collection destination)
-        {
-            return model.MapTo(destination);
-        }
-
-        #endregion
-
-        #region Attraction
-
-        public static AttractionModel ToModel(this Attraction entity)
-        {
-            return entity.MapTo<Attraction, AttractionModel>();
-        }
-
-        public static Attraction ToEntity(this AttractionModel model)
-        {
-            return model.MapTo<AttractionModel, Attraction>();
-        }
-
-        public static Attraction ToEntity(this AttractionModel model, Attraction destination)
-        {
-            return model.MapTo(destination);
-        }
-
-        #endregion
+        
 
         #region Banner
 

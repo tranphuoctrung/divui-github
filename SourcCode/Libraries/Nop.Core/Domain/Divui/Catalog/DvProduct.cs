@@ -9,10 +9,6 @@ namespace Nop.Core.Domain.Catalog
 {
     public partial class Product
     {
-        private ICollection<ProductCollection> _productCollections;
-
-        private ICollection<ProductAttraction> _productAttractions;
-
         private ICollection<ProductOption> _productOptions;
 
         private ICollection<PriceSetup> _priceSetups;
@@ -53,24 +49,7 @@ namespace Nop.Core.Domain.Catalog
             }
         }
 
-        /// <summary>
-        /// Gets or sets the collection of ProductCollection
-        /// </summary>
-        public virtual ICollection<ProductCollection> ProductCollections
-        {
-            get { return _productCollections ?? (_productCollections = new List<ProductCollection>()); }
-            protected set { _productCollections = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the collection of ProductAttraction
-        /// </summary>
-        public virtual ICollection<ProductAttraction> ProductAttractions
-        {
-            get { return _productAttractions ?? (_productAttractions = new List<ProductAttraction>()); }
-            protected set { _productAttractions = value; }
-        }
-
+        
         /// <summary>
         /// Gets or sets the collection of ProductOptions
         /// </summary>

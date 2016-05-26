@@ -630,7 +630,7 @@ namespace Nop.Services.Media
             
             var query = from p in _pictureRepository.Table
                         join pp in _productPictureRepository.Table on p.Id equals pp.PictureId
-                        orderby pp.DisplayOrder
+                        orderby pp.DisplayOrder ascending
                         where pp.ProductId == productId
                         select p;
 

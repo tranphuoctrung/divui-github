@@ -28,7 +28,6 @@ namespace Nop.Admin.Controllers
     {
         #region Fields
 
-        private readonly IAttractionService _attractionService;
         private readonly ICategoryTemplateService _categoryTemplateService;
         private readonly IManufacturerService _manufacturerService;
         private readonly IProductService _productService;

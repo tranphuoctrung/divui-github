@@ -11,23 +11,6 @@ namespace Nop.Services.Catalog
     public partial interface IProductService
     {
         /// <summary>
-        /// Get (visible) product number in certain category
-        /// </summary>
-        /// <param name="collectionIds">Category identifiers</param>
-        /// <param name="storeId">Store identifier; 0 to load all records</param>
-        /// <returns>Product number</returns>
-        int GetCollectionProductNumber(IList<int> collectionIds = null, int storeId = 0);
-
-        /// <summary>
-        /// Get (visible) product number in certain category
-        /// </summary>
-        /// <param name="attractionIds">Category identifiers</param>
-        /// <param name="storeId">Store identifier; 0 to load all records</param>
-        /// <returns>Product number</returns>
-        int GetAttractionProductNumber(IList<int> attractionIds = null, int storeId = 0);
-
-
-        /// <summary>
         /// Search products
         /// </summary>
         /// <param name="filterableSpecificationAttributeOptionIds">The specification attribute option identifiers applied to loaded products (all pages)</param>

@@ -107,10 +107,8 @@
     <Compile Include="Domain\Customers\CustomerAttributeValue.cs" />
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />
     <Compile Include="Domain\Customers\Events.cs" />
-    <Compile Include="Domain\Divui\Catalog\Attraction.cs" />
     <Compile Include="Domain\Divui\Catalog\AvailabilitySetup.cs" />
     <Compile Include="Domain\Divui\Catalog\CategoryType.cs" />
-    <Compile Include="Domain\Divui\Catalog\Collection.cs" />
     <Compile Include="Domain\Divui\Catalog\DvAgeRangeType.cs" />
     <Compile Include="Domain\Divui\Catalog\Banner.cs" />
     <Compile Include="Domain\Divui\Catalog\DvCatalogSettings.cs" />
@@ -124,8 +122,6 @@
     <Compile Include="Domain\Divui\Catalog\DvProduct.cs" />
     <Compile Include="Domain\Divui\Catalog\DvProductAttribute.cs" />
     <Compile Include="Domain\Divui\Catalog\DvProductType.cs" />
-    <Compile Include="Domain\Divui\Catalog\ProductAttraction.cs" />
-    <Compile Include="Domain\Divui\Catalog\ProductCollection.cs" />
     <Compile Include="Domain\Divui\Catalog\CategorySpecificationAttribute.cs" />
     <Compile Include="Domain\Divui\Customers\DvCustomerRole.cs" />
     <Compile Include="Domain\Divui\Discounts\DvDiscount.cs" />

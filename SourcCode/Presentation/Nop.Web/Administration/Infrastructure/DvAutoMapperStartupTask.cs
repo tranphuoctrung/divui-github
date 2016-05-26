@@ -78,49 +78,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.Products, mo => mo.Ignore())
                 .ForMember(dest => dest.Product, mo => mo.Ignore())
                 ;
-
-            //collection
-            Mapper.CreateMap<Collection, CollectionModel>()
-                .ForMember(dest => dest.AvailableCollectionTemplates, mo => mo.Ignore())
-                .ForMember(dest => dest.Locales, mo => mo.Ignore())
-                .ForMember(dest => dest.Breadcrumb, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableCollections, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableDiscounts, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedDiscountIds, mo => mo.Ignore())
-                .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
-                .ForMember(dest => dest.AvailableCustomerRoles, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedCustomerRoleIds, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
-                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
-            Mapper.CreateMap<CollectionModel, Collection>()
-                .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
-                .ForMember(dest => dest.UpdatedOnUtc, mo => mo.Ignore())
-                .ForMember(dest => dest.Deleted, mo => mo.Ignore())
-                .ForMember(dest => dest.AppliedDiscounts, mo => mo.Ignore());
-
-
-            //attraction
-            Mapper.CreateMap<Attraction, AttractionModel>()
-                .ForMember(dest => dest.AvailableAttractionTemplates, mo => mo.Ignore())
-                .ForMember(dest => dest.Locales, mo => mo.Ignore())
-                .ForMember(dest => dest.Breadcrumb, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableAttractions, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableDiscounts, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedDiscountIds, mo => mo.Ignore())
-                .ForMember(dest => dest.SeName, mo => mo.MapFrom(src => src.GetSeName(0, true, false)))
-                .ForMember(dest => dest.AvailableCustomerRoles, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedCustomerRoleIds, mo => mo.Ignore())
-                .ForMember(dest => dest.AvailableStores, mo => mo.Ignore())
-                .ForMember(dest => dest.SelectedStoreIds, mo => mo.Ignore())
-                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
-            Mapper.CreateMap<AttractionModel, Attraction>()
-                .ForMember(dest => dest.CreatedOnUtc, mo => mo.Ignore())
-                .ForMember(dest => dest.UpdatedOnUtc, mo => mo.Ignore())
-                .ForMember(dest => dest.Deleted, mo => mo.Ignore())
-                .ForMember(dest => dest.AppliedDiscounts, mo => mo.Ignore());
-
-
+            
             //products
             Mapper.CreateMap<Product, ProductModel>()
                 .ForMember(dest => dest.ProductTypeName, mo => mo.Ignore())
@@ -176,8 +134,6 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.ApprovedTotalReviews, mo => mo.Ignore())
                 .ForMember(dest => dest.NotApprovedTotalReviews, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductCategories, mo => mo.Ignore())
-                .ForMember(dest => dest.ProductCollections, mo => mo.Ignore())
-                .ForMember(dest => dest.ProductAttractions, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductManufacturers, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductPictures, mo => mo.Ignore())
                 .ForMember(dest => dest.ProductReviews, mo => mo.Ignore())
