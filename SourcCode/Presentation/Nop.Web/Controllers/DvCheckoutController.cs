@@ -164,6 +164,7 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region Methods
         public ActionResult Index()
         {
             var cart = _workContext.CurrentCustomer.ShoppingCartItems
@@ -1261,6 +1262,7 @@ namespace Nop.Web.Controllers
             }
         }
 
+        #endregion
 
     }
 }

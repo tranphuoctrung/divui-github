@@ -11,7 +11,8 @@ namespace Nop.Web.Controllers
 {
     public partial class TopicController
     {
-        // GET: DvTopic
+        #region Methods
+
         [ChildActionOnly]
         public ActionResult HomePageTopicBlock(string systemName, string classItem, string classTitle, string classDesc)
         {
@@ -75,5 +76,7 @@ namespace Nop.Web.Controllers
 
             return PartialView(cacheModel);
         }
+
+        #endregion
     }
 }

@@ -45,6 +45,8 @@ namespace Nop.Web.Controllers
 {
     public partial class CommonController
     {
+        #region Methods
+
         [ChildActionOnly]
         public ActionResult HeaderLinks()
         {
@@ -93,5 +95,7 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
-	}
+
+        #endregion
+    }
 }

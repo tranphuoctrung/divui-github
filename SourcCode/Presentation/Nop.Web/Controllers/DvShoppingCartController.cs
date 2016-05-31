@@ -159,7 +159,7 @@ namespace Nop.Web.Controllers
 
         #endregion
 
-        #region Utiles
+        #region Utilities
         [NonAction]
         protected virtual IEnumerable<ProductOverviewModel> DvPrepareProductOverviewModels(IEnumerable<Product> products,
             bool preparePriceModel = true, bool preparePictureModel = true,
@@ -681,9 +681,197 @@ namespace Nop.Web.Controllers
         }
 
 
-        #endregion
-        
+        /// <summary>
+        /// Parse product attributes on the product details page
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <param name="form">Form</param>
+        /// <returns>Parsed attributes</returns>
+        [NonAction]
+        protected virtual string DvParseProductAttributes(Product product, FormCollection form, int productAdultId, ref List<ShoppingCartItemAttributeMapping> shoppingCartItemAttributeMappings)
+        {
+            shoppingCartItemAttributeMappings = new List<ShoppingCartItemAttributeMapping>();
+            string attributesXml = "";
 
+            #region Product attributes
+
+            var productAttributes = _productAttributeService.GetProductAttributeMappingsByProductId(productAdultId != 0 ? productAdultId : product.Id);
+            foreach (var attribute in productAttributes)
+            {
+                string controlId = string.Format("product_attribute_{0}", attribute.Id);
+                var shoppingCartAttribute = new ShoppingCartItemAttributeMapping()
+                {
+                    AttributeControlTypeId = attribute.AttributeControlTypeId,
+                    ProductAttributeId = attribute.ProductAttributeId
+                };
+
+                switch (attribute.AttributeControlType)
+                {
+                    case AttributeControlType.DropdownList:
+                    case AttributeControlType.RadioList:
+                    case AttributeControlType.ColorSquares:
+                        {
+                            var ctrlAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            {
+                                int selectedAttributeId = int.Parse(ctrlAttributes);
+                                if (selectedAttributeId > 0)
+                                    attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                        attribute, selectedAttributeId.ToString());
+
+                                shoppingCartAttribute.Value = selectedAttributeId.ToString();
+                            }
+                        }
+                        break;
+                    case AttributeControlType.Checkboxes:
+                        {
+                            var ctrlAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            {
+                                foreach (var item in ctrlAttributes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                    int selectedAttributeId = int.Parse(item);
+                                    if (selectedAttributeId > 0)
+                                        attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                            attribute, selectedAttributeId.ToString());
+                                    shoppingCartAttribute.Value = selectedAttributeId.ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case AttributeControlType.ReadonlyCheckboxes:
+                        {
+                            //load read-only (already server-side selected) values
+                            var attributeValues = _productAttributeService.GetProductAttributeValues(attribute.Id);
+                            foreach (var selectedAttributeId in attributeValues
+                                .Where(v => v.IsPreSelected)
+                                .Select(v => v.Id)
+                                .ToList())
+                            {
+                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                    attribute, selectedAttributeId.ToString());
+                                shoppingCartAttribute.Value = selectedAttributeId.ToString();
+                            }
+                        }
+                        break;
+                    case AttributeControlType.TextBox:
+                    case AttributeControlType.MultilineTextbox:
+                        {
+                            var ctrlAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            {
+                                string enteredText = ctrlAttributes.Trim();
+                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                    attribute, enteredText);
+                                shoppingCartAttribute.Value = enteredText;
+                            }
+                        }
+                        break;
+                    case AttributeControlType.Datepicker:
+                        {
+                            var day = form[controlId + "_day"];
+                            var month = form[controlId + "_month"];
+                            var year = form[controlId + "_year"];
+                            DateTime? selectedDate = null;
+                            try
+                            {
+                                selectedDate = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
+                            }
+                            catch { }
+                            if (selectedDate.HasValue)
+                            {
+                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                    attribute, selectedDate.Value.ToString("D"));
+
+                                shoppingCartAttribute.Value = selectedDate.Value.ToString("dd/MM/yyyy");
+                            }
+                        }
+                        break;
+                    case AttributeControlType.FileUpload:
+                        {
+                            Guid downloadGuid;
+                            Guid.TryParse(form[controlId], out downloadGuid);
+                            var download = _downloadService.GetDownloadByGuid(downloadGuid);
+                            if (download != null)
+                            {
+                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
+                                        attribute, download.DownloadGuid.ToString());
+
+                                shoppingCartAttribute.Value = download.DownloadGuid.ToString();
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                shoppingCartItemAttributeMappings.Add(shoppingCartAttribute);
+            }
+            //validate conditional attributes (if specified)
+            foreach (var attribute in productAttributes)
+            {
+                var conditionMet = _productAttributeParser.IsConditionMet(attribute, attributesXml);
+                if (conditionMet.HasValue && !conditionMet.Value)
+                {
+                    attributesXml = _productAttributeParser.RemoveProductAttribute(attributesXml, attribute);
+                }
+            }
+
+            #endregion
+
+            #region Gift cards
+
+            if (product.IsGiftCard)
+            {
+                string recipientName = "";
+                string recipientEmail = "";
+                string senderName = "";
+                string senderEmail = "";
+                string giftCardMessage = "";
+                foreach (string formKey in form.AllKeys)
+                {
+                    if (formKey.Equals(string.Format("giftcard_{0}.RecipientName", product.Id), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        recipientName = form[formKey];
+                        continue;
+                    }
+                    if (formKey.Equals(string.Format("giftcard_{0}.RecipientEmail", product.Id), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        recipientEmail = form[formKey];
+                        continue;
+                    }
+                    if (formKey.Equals(string.Format("giftcard_{0}.SenderName", product.Id), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        senderName = form[formKey];
+                        continue;
+                    }
+                    if (formKey.Equals(string.Format("giftcard_{0}.SenderEmail", product.Id), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        senderEmail = form[formKey];
+                        continue;
+                    }
+                    if (formKey.Equals(string.Format("giftcard_{0}.Message", product.Id), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        giftCardMessage = form[formKey];
+                        continue;
+                    }
+                }
+
+                attributesXml = _productAttributeParser.AddGiftCardAttribute(attributesXml,
+                    recipientName, recipientEmail, senderName, senderEmail, giftCardMessage);
+            }
+
+            #endregion
+
+            return attributesXml;
+        }
+
+
+        #endregion
+
+        #region Methods
+
+        #region Cart
 
         [ValidateInput(false)]
         [HttpPost, ActionName("Cart")]
@@ -1113,193 +1301,7 @@ namespace Nop.Web.Controllers
             #endregion
         }
 
-
-
-
-        /// <summary>
-        /// Parse product attributes on the product details page
-        /// </summary>
-        /// <param name="product">Product</param>
-        /// <param name="form">Form</param>
-        /// <returns>Parsed attributes</returns>
-        [NonAction]
-        protected virtual string DvParseProductAttributes(Product product, FormCollection form, int productAdultId, ref List<ShoppingCartItemAttributeMapping> shoppingCartItemAttributeMappings)
-        {
-            shoppingCartItemAttributeMappings = new List<ShoppingCartItemAttributeMapping>();
-            string attributesXml = "";
-
-            #region Product attributes
-
-            var productAttributes = _productAttributeService.GetProductAttributeMappingsByProductId(productAdultId != 0 ? productAdultId : product.Id);
-            foreach (var attribute in productAttributes)
-            {
-                string controlId = string.Format("product_attribute_{0}", attribute.Id);
-                var shoppingCartAttribute = new ShoppingCartItemAttributeMapping()
-                {
-                    AttributeControlTypeId = attribute.AttributeControlTypeId,
-                    ProductAttributeId = attribute.ProductAttributeId
-                };
-
-                switch (attribute.AttributeControlType)
-                {
-                    case AttributeControlType.DropdownList:
-                    case AttributeControlType.RadioList:
-                    case AttributeControlType.ColorSquares:
-                        {
-                            var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
-                            {
-                                int selectedAttributeId = int.Parse(ctrlAttributes);
-                                if (selectedAttributeId > 0)
-                                    attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                        attribute, selectedAttributeId.ToString());
-
-                                shoppingCartAttribute.Value = selectedAttributeId.ToString();
-                            }
-                        }
-                        break;
-                    case AttributeControlType.Checkboxes:
-                        {
-                            var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
-                            {
-                                foreach (var item in ctrlAttributes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                                {
-                                    int selectedAttributeId = int.Parse(item);
-                                    if (selectedAttributeId > 0)
-                                        attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                            attribute, selectedAttributeId.ToString());
-                                    shoppingCartAttribute.Value = selectedAttributeId.ToString();
-                                }
-                            }
-                        }
-                        break;
-                    case AttributeControlType.ReadonlyCheckboxes:
-                        {
-                            //load read-only (already server-side selected) values
-                            var attributeValues = _productAttributeService.GetProductAttributeValues(attribute.Id);
-                            foreach (var selectedAttributeId in attributeValues
-                                .Where(v => v.IsPreSelected)
-                                .Select(v => v.Id)
-                                .ToList())
-                            {
-                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                    attribute, selectedAttributeId.ToString());
-                                shoppingCartAttribute.Value = selectedAttributeId.ToString();
-                            }
-                        }
-                        break;
-                    case AttributeControlType.TextBox:
-                    case AttributeControlType.MultilineTextbox:
-                        {
-                            var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
-                            {
-                                string enteredText = ctrlAttributes.Trim();
-                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                    attribute, enteredText);
-                                shoppingCartAttribute.Value = enteredText;
-                            }
-                        }
-                        break;
-                    case AttributeControlType.Datepicker:
-                        {
-                            var day = form[controlId + "_day"];
-                            var month = form[controlId + "_month"];
-                            var year = form[controlId + "_year"];
-                            DateTime? selectedDate = null;
-                            try
-                            {
-                                selectedDate = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
-                            }
-                            catch { }
-                            if (selectedDate.HasValue)
-                            {
-                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                    attribute, selectedDate.Value.ToString("D"));
-
-                                shoppingCartAttribute.Value = selectedDate.Value.ToString("dd/MM/yyyy");
-                            }
-                        }
-                        break;
-                    case AttributeControlType.FileUpload:
-                        {
-                            Guid downloadGuid;
-                            Guid.TryParse(form[controlId], out downloadGuid);
-                            var download = _downloadService.GetDownloadByGuid(downloadGuid);
-                            if (download != null)
-                            {
-                                attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
-                                        attribute, download.DownloadGuid.ToString());
-
-                                shoppingCartAttribute.Value = download.DownloadGuid.ToString();
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                shoppingCartItemAttributeMappings.Add(shoppingCartAttribute);
-            }
-            //validate conditional attributes (if specified)
-            foreach (var attribute in productAttributes)
-            {
-                var conditionMet = _productAttributeParser.IsConditionMet(attribute, attributesXml);
-                if (conditionMet.HasValue && !conditionMet.Value)
-                {
-                    attributesXml = _productAttributeParser.RemoveProductAttribute(attributesXml, attribute);
-                }
-            }
-
-            #endregion
-
-            #region Gift cards
-
-            if (product.IsGiftCard)
-            {
-                string recipientName = "";
-                string recipientEmail = "";
-                string senderName = "";
-                string senderEmail = "";
-                string giftCardMessage = "";
-                foreach (string formKey in form.AllKeys)
-                {
-                    if (formKey.Equals(string.Format("giftcard_{0}.RecipientName", product.Id), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        recipientName = form[formKey];
-                        continue;
-                    }
-                    if (formKey.Equals(string.Format("giftcard_{0}.RecipientEmail", product.Id), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        recipientEmail = form[formKey];
-                        continue;
-                    }
-                    if (formKey.Equals(string.Format("giftcard_{0}.SenderName", product.Id), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        senderName = form[formKey];
-                        continue;
-                    }
-                    if (formKey.Equals(string.Format("giftcard_{0}.SenderEmail", product.Id), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        senderEmail = form[formKey];
-                        continue;
-                    }
-                    if (formKey.Equals(string.Format("giftcard_{0}.Message", product.Id), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        giftCardMessage = form[formKey];
-                        continue;
-                    }
-                }
-
-                attributesXml = _productAttributeParser.AddGiftCardAttribute(attributesXml,
-                    recipientName, recipientEmail, senderName, senderEmail, giftCardMessage);
-            }
-
-            #endregion
-
-            return attributesXml;
-        }
+        #endregion
 
         #region Wishlist
         [NopHttpsRequirement(SslRequirement.Yes)]
@@ -1321,6 +1323,8 @@ namespace Nop.Web.Controllers
             model.Products = DvPrepareProductOverviewModels(products).ToList();
             return View(model);
         }
+        #endregion
+
         #endregion
     }
 }

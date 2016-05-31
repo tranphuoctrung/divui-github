@@ -146,6 +146,8 @@ namespace Nop.Web.Controllers
 
         #endregion
 
+        #region Utilities
+
         [NonAction]
         protected virtual List<int> GetChildCategoryIds(int parentCategoryId)
         {
@@ -1006,6 +1008,9 @@ namespace Nop.Web.Controllers
             return model;
         }
 
+
+        #endregion
+
         #region Product details page
 
         [NopHttpsRequirement(SslRequirement.No)]
@@ -1678,7 +1683,6 @@ namespace Nop.Web.Controllers
 
 
         #endregion
-
 
     }
 }
