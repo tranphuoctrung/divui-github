@@ -50,6 +50,7 @@ namespace Nop.Services.Messages
         private readonly IOrderService _orderService;
         private readonly IPaymentService _paymentService;
         private readonly IProductAttributeParser _productAttributeParser;
+        private readonly IProductAttributeService _productAttributeService;
         private readonly IAddressAttributeFormatter _addressAttributeFormatter;
         private readonly IStoreService _storeService;
         private readonly IStoreContext _storeContext;
@@ -84,7 +85,8 @@ namespace Nop.Services.Messages
             TaxSettings taxSettings,
             CurrencySettings currencySettings,
             ShippingSettings shippingSettings,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IProductAttributeService productAttributeService)
         {
             this._languageService = languageService;
             this._localizationService = localizationService;
@@ -106,6 +108,7 @@ namespace Nop.Services.Messages
             this._currencySettings = currencySettings;
             this._shippingSettings = shippingSettings;
             this._eventPublisher = eventPublisher;
+            this._productAttributeService = productAttributeService;
         }
 
         #endregion

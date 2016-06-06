@@ -96,19 +96,25 @@ namespace Nop.Services.Messages
                 {
                     if (orderItem.Product.AgeRange == (int)DvAgeRangeType.Adult)
                     {
-                        var pickupAttribute = orderItem.OrderItemAttributeMappings.FirstOrDefault(p => p.ProductAttribute.SystemName == ProductAttributeSystemNames.Pickup);
-                        if (pickupAttribute != null)
+                        foreach (var item in orderItem.OrderItemAttributeMappings)
                         {
-                            strPickupAttribute = string.Format("{0}: {1}", pickupAttribute.ProductAttribute.GetLocalized(x => x.Name), pickupAttribute.Value);
-                            sb.AppendLine("<br />");
-                            sb.AppendLine(strPickupAttribute);
-                        }
-
-                        var startDateAttribute = orderItem.OrderItemAttributeMappings.FirstOrDefault(p => p.ProductAttribute.SystemName == ProductAttributeSystemNames.StartDate);
-                        if (startDateAttribute != null)
-                        {
-                            sb.AppendLine("<br />");
-                            sb.AppendLine(strStartDateAttribute);
+                            var attribute = _productAttributeService.GetProductAttributeById(item.ProductAttributeId);
+                            if(attribute != null)
+                            {
+                                if (attribute.SystemName == ProductAttributeSystemNames.Pickup)
+                                {
+                                    strPickupAttribute = string.Format("{0}: {1}", attribute.GetLocalized(x => x.Name), item.Value);
+                                    sb.AppendLine("<br />");
+                                    sb.AppendLine(strPickupAttribute);
+                                }
+                                if (attribute.SystemName == ProductAttributeSystemNames.StartDate)
+                                {
+                                    strStartDateAttribute = string.Format("{0}: {1}", attribute.GetLocalized(x => x.Name), item.Value);
+                                    sb.AppendLine("<br />");
+                                    sb.AppendLine(strStartDateAttribute);
+                                }
+                            }
+                            
                         }
                     }
                 }
