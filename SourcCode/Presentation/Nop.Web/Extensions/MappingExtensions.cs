@@ -14,7 +14,7 @@ using Nop.Services.Localization;
 using Nop.Services.Seo;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
-
+using Nop.Services.Customers;
 namespace Nop.Web.Extensions
 {
     public static class MappingExtensions
@@ -126,7 +126,7 @@ namespace Nop.Web.Extensions
                 if (customer == null)
                     throw new Exception("Customer cannot be null when prepopulating an address");
                 model.Email = customer.Email;
-                model.FullName = address.FullName;
+                model.FullName = customer.GetFullName();
                 model.FirstName = customer.GetAttribute<string>(SystemCustomerAttributeNames.FirstName);
                 model.LastName = customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName);
                 model.Company = customer.GetAttribute<string>(SystemCustomerAttributeNames.Company);

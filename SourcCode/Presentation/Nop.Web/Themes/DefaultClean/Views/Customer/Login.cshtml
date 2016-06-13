@@ -21,21 +21,7 @@
 <div class="container login-page">
     <div class="row">
         <div class="login-cont">
-            @*@if (Model.CheckoutAsGuest)
-            {
-                <div class="new-wrapper checkout-as-guest-or-register-block">
-                    <div class="title">
-                        <strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
-                    </div>
-                    <div class="text">
-                        @Html.Action("TopicBlock", "Topic", new { systemName = "CheckoutAsGuestOrRegister" })
-                    </div>
-                    <div class="buttons">
-                        <input type="button" class="button-1 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
-                        <input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
-                    </div>
-                </div>
-            }
+            @*
             else
             {
                 
@@ -44,6 +30,12 @@
             <h1 class="login-title">@T("Account.Login.Welcome")</h1>
             <p class="login-intro">@T("Account.Login.Info")</p>
             <div class="login-form">
+                @if (Model.CheckoutAsGuest)
+                {
+                    <input type="button" class="btn btn-info btn-block" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
+                    
+                    <div class="or">@T("Account.Login.Or")</div>
+                }
                 <form class="facebook-form">
                     @*@Html.Action("ExternalMethods", "ExternalAuthentication")*@
                     <a class="btn btn-block btn-facebook" href="@Url.RouteUrl("Plugin.ExternalAuth.Facebook.Login", new { ReturnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"] })">@T("Account.Login.Facebook")</a>
