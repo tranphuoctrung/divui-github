@@ -260,19 +260,24 @@ namespace Nop.Services.Orders
                                 RentalEndDateUtc = sc.RentalEndDateUtc
                             };
                             order.OrderItems.Add(orderItem);
-                            foreach (var sca in sc.ShoppingCartItemAttributeMappings)
+
+                            if(sc.ShoppingCartItemAttributeMappings != null)
                             {
-                                orderItem.OrderItemAttributeMappings.Add(new OrderItemAttributeMapping()
+                                foreach (var sca in sc.ShoppingCartItemAttributeMappings)
                                 {
-                                    OrderItemId = orderItem.Id,
-                                    ProductAttributeId = sca.ProductAttributeId,
-                                    Value = sca.Value,
-                                    AttributeControlTypeId = sca.AttributeControlTypeId,
-                                    DisplayOrder = sca.DisplayOrder,
-                                    IsRequired = true
-                                });
-                            
+                                    orderItem.OrderItemAttributeMappings.Add(new OrderItemAttributeMapping()
+                                    {
+                                        OrderItemId = orderItem.Id,
+                                        ProductAttributeId = sca.ProductAttributeId,
+                                        Value = sca.Value,
+                                        AttributeControlTypeId = sca.AttributeControlTypeId,
+                                        DisplayOrder = sca.DisplayOrder,
+                                        IsRequired = true
+                                    });
+
+                                }
                             }
+                            
 
                             _orderService.UpdateOrder(order);
 

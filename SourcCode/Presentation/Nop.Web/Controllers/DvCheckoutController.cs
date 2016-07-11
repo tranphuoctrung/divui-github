@@ -518,10 +518,13 @@ namespace Nop.Web.Controllers
             {
                 foreach (var cartItem in cart)
                 {
-                    var attributeMapping = cartItem.ShoppingCartItemAttributeMappings.Where(a => a.ProductAttributeId == pickup.ProductAttributeId && cartItem.ProductId == pickup.ProductId).FirstOrDefault();
-                    if (attributeMapping != null)
+                    if(cartItem.ShoppingCartItemAttributeMappings != null && cartItem.ShoppingCartItemAttributeMappings.Count > 0)
                     {
-                        attributeMapping.Value = pickup.Value;
+                        var attributeMapping = cartItem.ShoppingCartItemAttributeMappings.Where(a => a.ProductAttributeId == pickup.ProductAttributeId && cartItem.ProductId == pickup.ProductId).FirstOrDefault();
+                        if (attributeMapping != null)
+                        {
+                            attributeMapping.Value = pickup.Value;
+                        }
                     }
                 }
             }
